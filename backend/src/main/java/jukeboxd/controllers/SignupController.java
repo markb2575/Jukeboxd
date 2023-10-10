@@ -13,6 +13,8 @@ public class SignupController {
 
   @RequestMapping(path="/signup", method=RequestMethod.POST)
   public SignupResponse signup(@RequestBody Map<String, Object> credentials) {
+    System.out.println(credentials.get("username"));
+    System.out.println(credentials.get("password"));
 //    if (credentials.get("username") && credentials.get("password") not in database) {
 //      insert credentials to database
 //      return new SignupResponse(true);

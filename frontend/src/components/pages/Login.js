@@ -2,17 +2,19 @@ import { Link } from "react-router-dom"
 function Login() {
   const handleLogin = (e) => {
     e.preventDefault()
-    e.preventDefault()
     //create a request to login with the following object
     var credentials = {
       username: e.target[0].value,
-      email: e.target[1].value
+      password: e.target[1].value
     }
-    console.log(credentials)
-    // fetch('httpfs://example.com/api/v1/users', {
-    //   method: 'POST',
-    //   body: JSON.stringify(credentials)
-    // });
+
+    fetch(process.env.REACT_APP_HOST + "/login", {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+      headers: {'Content-Type': 'application/json'}
+    }).then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
   }
   return (
     <div>

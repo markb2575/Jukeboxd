@@ -11,9 +11,10 @@ import java.util.Map;
 @RestController
 public class LoginController {
 
-  @RequestMapping(path="/login", method=RequestMethod.GET)
+  @RequestMapping(path="/login", method=RequestMethod.POST)
   public LoginResponse login(@RequestBody Map<String, Object> credentials) {
     System.out.println(credentials.get("username"));
+    System.out.println(credentials.get("password"));
 //    if (credentials.get("username") && credentials.get("password") in database) {
 //      return new LoginResponse(true);
 //    }
