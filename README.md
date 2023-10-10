@@ -6,3 +6,4 @@
 * When making pushes to GitHub don't push any node_modules because they take up a lot of space and can be installed with `npm install`
 
 # Local Development For Back End
+* Requires Java 17
