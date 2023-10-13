@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
+
 function SignUp() {
+  let navigate = useNavigate();
   const [error, setError] = useState("")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const handleCreateAccount = (e) => {
     e.preventDefault()
     //create a request to create account with the following object
@@ -20,29 +24,41 @@ function SignUp() {
       body: JSON.stringify(credentials),
       headers: {'Content-Type': 'application/json'}
     }).then(response => {
-      console.log(response)
+        if (response.status === 200) {
+            console.log(response)
+            navigate("/")
+          } else {
+            setError("Username already taken, try something different")
+            setPassword("")
+            setUsername("")
+          }
     })
     .catch(error => console.error(error));
     
 
   }
   return (
-    <div>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleCreateAccount}>
-        <div>
-          <label>Username</label>
-          <input />
-        </div>
-        <div>
-          <label>Password</label>
-          <input />
-        </div>
-        <div>
-          <button type="submit">Create Account</button>
-        </div>
-      </form>
-      <Link to="/login">Already have an account?</Link>
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="col-md-6 col-lg-4">
+      <h2>Create an Account</h2>
+        <form onSubmit={handleCreateAccount} className="mt-4">
+          {error && <p style={{lineHeight:.8}} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
+          <div className="mb-3">
+            <label className="form-label">Username</label>
+            <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          </div>
+          <div className="mb-3">
+            <button type="submit" className="btn btn-primary btn-block">Create Account</button>
+          </div>
+        </form>
+        <p className="">
+          <Link to="/login">Already have an account?</Link>
+        </p>
+      </div>
     </div>
   );
 }

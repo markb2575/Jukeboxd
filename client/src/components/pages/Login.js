@@ -35,6 +35,7 @@ function Login() {
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6 col-lg-4">
+      <h2>Login</h2>
         <form onSubmit={handleLogin} className="mt-4">
           {error && <p style={{lineHeight:.8}} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
           <div className="mb-3">
@@ -49,7 +50,7 @@ function Login() {
             <button type="submit" className="btn btn-primary btn-block">Login</button>
           </div>
         </form>
-        <p className="text-center">
+        <p className="">
           <Link to="/signup">Need an account?</Link>
         </p>
       </div>

@@ -27,7 +27,8 @@ router.post('/signup', async (req, res) => {
     let credentials = req.body;
     try {
         const exists = await db.pool.query("select * from User where userID ='" + credentials.username + "'")
-        if (exists.length != 0) res.status(400).send()
+        console.log(exists)
+        if (exists.length === 1) return res.status(400).send()
         const hashed = await bcrypt.hash(credentials.password, await bcrypt.genSalt())
         await db.pool.query("insert into User(userID, password) values (?,?)", [credentials.username, hashed]);
         const token = jwt.sign(credentials.username, process.env.JWT_SECRET);
