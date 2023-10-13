@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 //const db = require('./db')
 const app = express()
@@ -5,7 +6,7 @@ const port = 8080
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const routesHandler = require('./routes/handler');
+const routesHandler = require('./routes/user');
  
 app.use(cors()); // TODO Might need to be changed
 app.use(bodyParser.json());
@@ -55,5 +56,6 @@ app.delete('/tasks', async (req, res) => {
     } 
 });
 */
+
  
 app.listen(port, () => console.log(`Listening on port ${port}`));
