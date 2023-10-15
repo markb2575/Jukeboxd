@@ -6,6 +6,16 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 
+router.get('/', auth, async (req, res) => {
+    try {
+      const user = await req.user;
+      return res.json({"username": user});
+    } catch (err) {
+      console.error(err.message);
+      res.status(500);
+    }
+  });
+
 router.post('/login', async (req, res) => {
     let credentials = req.body;
     try {
@@ -14,7 +24,7 @@ router.post('/login', async (req, res) => {
         if (hash.length == 0) return res.status(401).send()
         if (await bcrypt.compare(credentials.password, hash[0].password)) {
             var token = jwt.sign({username:credentials.username}, process.env.JWT_SECRET, {expiresIn:'7d'})
-            return res.json({ "token": token });
+            return res.json({"token": token});
         }
         // password does not match hash in database
         res.status(401).send()
