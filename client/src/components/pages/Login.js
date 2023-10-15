@@ -21,7 +21,10 @@ function Login() {
       headers: {'Content-Type': 'application/json'}
     }).then(response => {
       if (response.status === 200) {
-        console.log(response)
+        response.json().then(res => {
+            localStorage.setItem('token', res.token);
+        })
+        // localStorage.setItem('token', response);
         navigate("/")
       } else {
         setError("Your username or password was incorrect")

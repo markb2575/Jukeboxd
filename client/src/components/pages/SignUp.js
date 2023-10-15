@@ -26,7 +26,7 @@ function SignUp() {
     }).then(response => {
         if (response.status === 200) {
             console.log(response)
-            navigate("/")
+            navigate("/login")
           } else {
             setError("Username already taken, try something different")
             setPassword("")

@@ -13,8 +13,8 @@ router.post('/login', async (req, res) => {
         // userID could not be found
         if (hash.length == 0) return res.status(401).send()
         if (await bcrypt.compare(credentials.password, hash[0].password)) {
-            const token = jwt.sign(credentials.username, process.env.JWT_SECRET);
-            return res.status(200).send({token: token})
+            var token = jwt.sign({username:credentials.username}, process.env.JWT_SECRET, {expiresIn:'7d'})
+            return res.json({ "token": token });
         }
         // password does not match hash in database
         res.status(401).send()
@@ -31,8 +31,7 @@ router.post('/signup', async (req, res) => {
         if (exists.length === 1) return res.status(400).send()
         const hashed = await bcrypt.hash(credentials.password, await bcrypt.genSalt())
         await db.pool.query("insert into User(userID, password) values (?,?)", [credentials.username, hashed]);
-        const token = jwt.sign(credentials.username, process.env.JWT_SECRET);
-        return res.status(200).send({token: token})
+        return res.status(200).send()
     } catch (err) {
         throw err;
     }
