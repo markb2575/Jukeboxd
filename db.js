@@ -4,11 +4,14 @@ var mariadb = require('mariadb');
 // Create a connection pool
 var pool = 
   mariadb.createPool({
-    host: "127.0.0.1",
+    //host: "127.0.0.1", // IF USING LOCAL DB
+    host: "172.16.122.21",
     port: 3306,
-    user: "root",
+    user: "test2",
+    //user: "test", // IF USING LOCAL DB
     password: "password",
-    database: "Test"
+    database: "test"
+    //database: "Test" // IF USING LOCAL DB
   });
  
 // Expose a method to establish connection with MariaDB SkySQL
