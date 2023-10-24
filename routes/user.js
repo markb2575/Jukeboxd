@@ -47,4 +47,18 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+router.get('/findUser/:username', async (req, res) => {
+    let params = req.params;
+    console.log("params",params)
+    try {
+        const user = await db.pool.query("select * from User where userID ='" + params.username + "'");
+        // if username could not be found
+        console.log(user)
+        if (user.length == 0) return res.status(404).send()
+        return res.status(200).send()
+    } catch (err) {
+        throw err;
+    }
+});
+
 module.exports = router;
