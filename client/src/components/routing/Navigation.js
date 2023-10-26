@@ -25,17 +25,17 @@ export default function Navigation() {
                 } else {
                     // user has token but it is invalid
                     localStorage.removeItem("token");
-                    if (location.pathname != "/login" && location.pathname != "/signup") {
+                    if (location.pathname !== "/login" && location.pathname !== "/signup") {
                         navigate("/login");
                     }
                 }
             });
         } else {
-            if (location.pathname != "/login" && location.pathname != "/signup") {
+            if (location.pathname !== "/login" && location.pathname !== "/signup") {
                 navigate("/login");
             }
         }
-    }, [navigate]);
+    }, [navigate, location.pathname]);
     return (
         <Routes>
             <Route path="/" element={<Home username={username}/>} />
