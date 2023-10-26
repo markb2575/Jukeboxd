@@ -1,10 +1,11 @@
-import { Routes, Route, useNavigate} from "react-router"
+import { Routes, Route, useNavigate, useLocation} from "react-router"
 import { Home, Login, SignUp, Profile, Error } from "../pages"
 import { useEffect, useState } from "react";
 
 
 export default function Navigation() {
     let navigate = useNavigate();
+    let location = useLocation()
     const [username, setUsername] = useState("");
     useEffect(() => {
         if (localStorage.token) {
@@ -22,12 +23,17 @@ export default function Navigation() {
                         console.log(e);
                     });
                 } else {
+                    // user has token but it is invalid
                     localStorage.removeItem("token");
-                    navigate("/login");
+                    if (location.pathname != "/login" && location.pathname != "/signup") {
+                        navigate("/login");
+                    }
                 }
             });
         } else {
-            navigate("/login");
+            if (location.pathname != "/login" && location.pathname != "/signup") {
+                navigate("/login");
+            }
         }
     }, [navigate]);
     return (
