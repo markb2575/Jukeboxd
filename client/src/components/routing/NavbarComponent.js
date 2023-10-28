@@ -48,12 +48,14 @@ function NavbarComponent() {
         navigate("/login");
     };
 
-    const handleSearch = () => {
-        // Use the searchString state when the "Submit" button is clicked
-        console.log("Search String:", searchString);
-        // You can perform other actions, like sending the search string to an API
-        navigate("/search?q=" + searchString);
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const trimmedQuery = searchString.trim();
+        if (trimmedQuery) {
+            navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+        }
     };
+
     return (
 
         <Navbar expand="lg" className="bg-body-tertiary">
@@ -63,7 +65,7 @@ function NavbarComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
-                        <Form inline="true">
+                        <Form inline="true" onSubmit={handleSearch}>
                             <Row>
                                 <Col xs="auto">
                                     <Form.Control
@@ -76,7 +78,7 @@ function NavbarComponent() {
                                     />
                                 </Col>
                                 <Col xs="auto">
-                                    <Button type="submit" onClick={handleSearch}>Submit</Button>
+                                    <Button type="submit" >Submit</Button>
                                 </Col>
                             </Row>
                         </Form>

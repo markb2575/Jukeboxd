@@ -1,0 +1,70 @@
+.result {
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.user-result,
+.song-result,
+.album-result,
+.artist-result {
+  padding: 10px;
+  margin: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: calc(300%);
+  text-align: center;
+}
+
+.user-result p,
+.song-result p,
+.album-result p,
+.artist-result p {
+  margin: 5px 0;
+}
+
+.album-cover {
+  max-width: 100px;
+  max-height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+.search-results li {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-text {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.search-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+button.active {
+  background-color: #007bff;
+  /* Change this to your desired active button style */
+  color: #fff;
+  /* Change this to your desired text color for the active button */
+}
