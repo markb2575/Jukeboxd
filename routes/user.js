@@ -176,7 +176,7 @@ router.get('/search/artists/:query', async (req, res) => {
     
     // Use a parameterized query to safely search for users
     const artists = await db.pool.query(
-      `SELECT name AS artist_name, spotify_artist_ID AS id FROM Artists WHERE name LIKE ?`,
+      `SELECT name AS artist_name, spotify_artist_ID AS artist_id FROM Artists WHERE name LIKE ?`,
       [`%${query}%`] // Use parameterized query
     );
     
