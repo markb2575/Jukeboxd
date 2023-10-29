@@ -58,7 +58,7 @@ CREATE TABLE ListenedAlbum (
 	datetime DATETIME,
     PRIMARY KEY (user_ID, album_ID),
     FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
-    FOREIGN KEY (album_ID) REFERENCES Users(album_ID)
+    FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
 CREATE TABLE ListenedTrack (
@@ -66,9 +66,9 @@ CREATE TABLE ListenedTrack (
     track_ID INT NOT NULL,
     rating INT,
 	datetime DATETIME,
-    PRIMARY KEY (user_ID, album_ID),
+    PRIMARY KEY (user_ID, track_ID),
     FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
-    FOREIGN KEY (track_ID) REFERENCES Users(track_ID)
+    FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
 );
 
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frank Sinatra', '1Mxqyy3pSjf8kZZL4QVxS0');
