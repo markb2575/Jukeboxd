@@ -51,6 +51,26 @@ CREATE TABLE Tracks (
 	FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
+CREATE TABLE ListenedAlbum (
+	user_ID INT NOT NULL,
+    album_ID INT NOT NULL,
+    rating INT,
+	datetime DATETIME,
+    PRIMARY KEY (user_ID, album_ID),
+    FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+    FOREIGN KEY (album_ID) REFERENCES Users(album_ID)
+);
+
+CREATE TABLE ListenedTrack (
+	user_ID INT NOT NULL,
+    track_ID INT NOT NULL,
+    rating INT,
+	datetime DATETIME,
+    PRIMARY KEY (user_ID, album_ID),
+    FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+    FOREIGN KEY (track_ID) REFERENCES Users(track_ID)
+);
+
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frank Sinatra', '1Mxqyy3pSjf8kZZL4QVxS0');
 INSERT INTO Albums (name, spotify_album_ID, release_date, artist_ID, image_URL) VALUES ('Strangers In The Night (Expanded Edition)', '1Mxqyy3pSjf8kZZL4QVxS0', '1966-05-01', 1, 'https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9');
 INSERT INTO Tracks (name, spotify_track_ID, album_ID, track_number, disc_number, duration, explicit) VALUES ('Strangers In The Night', '74VR3AkGPhbYXnxcOYa16x', 1, 1, 1, 157866, FALSE);

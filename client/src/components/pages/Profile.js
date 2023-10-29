@@ -94,7 +94,7 @@ function Profile({ username }) {
                 null
             ) : (
                 viewingOwnProfile ? (
-                    <h1>Welcome to your Profile!</h1>
+                    <h1>Welcome to your profile, {username}!</h1>
                 ) : (
                     <div>
                         <h1>Welcome to {profileName}'s Profile!</h1>
