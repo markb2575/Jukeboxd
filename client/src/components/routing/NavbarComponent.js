@@ -6,8 +6,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 function NavbarComponent() {
 
@@ -62,28 +60,24 @@ function NavbarComponent() {
             <Container>
                 <Navbar.Brand onClick={() => navigate("/")}>Jukeboxd</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link onClick={() => navigate("/")}>Home</Nav.Link>
-                        <Form inline="true" onSubmit={handleSearch}>
-                            <Row>
-                                <Col xs="auto">
-                                    <Form.Control
-                                        id="searchString"
-                                        type="text"
-                                        placeholder="Search"
-                                        className=" mr-sm-2"
-                                        value={searchString} // Bind the value to the state
-                                        onChange={(e) => setSearchString(e.target.value)} // Update the state on change
-                                    />
-                                </Col>
-                                <Col xs="auto">
-                                    <Button type="submit" >Submit</Button>
-                                </Col>
-                            </Row>
+                <Navbar.Collapse className="justify-content-end">
+                    <Nav className="justify-content-end">
+                        <Form className="d-flex" onSubmit={handleSearch}>
+
+                            <Form.Control
+                                id="searchString"
+                                type="text"
+                                placeholder="Search"
+                                className="me-2"
+                                value={searchString} // Bind the value to the state
+                                onChange={(e) => setSearchString(e.target.value)} // Update the state on change
+                            />
+
+                            <Button type="submit" >Submit</Button>
+
                         </Form>
                         <NavDropdown title={username} id="basic-nav-dropdown">
-                            <NavDropdown.Item onClick={() => navigate(`/user/${username}`)}>Profile</NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => navigate(`/user/${username}`, { replace: true })}>Profile</NavDropdown.Item>
                             <NavDropdown.Item onClick={handleLogout}>
                                 Log Out
                             </NavDropdown.Item>

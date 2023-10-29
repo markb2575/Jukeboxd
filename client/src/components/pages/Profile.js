@@ -29,7 +29,7 @@ function Profile({ username }) {
 
     useEffect(() => {
         // console.log("in useeffect")
-        // setProfileName(pathname.split("/user/")[1])
+        setProfileName(pathname.split("/user/")[1])
         if (profileName.length === 0 || username.length === 0) return
         // console.log(pathname, profileName, username)
         //check if profileName exists in database, if not, navigate to error page

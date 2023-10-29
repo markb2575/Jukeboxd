@@ -37,7 +37,7 @@ function Search() {
   };
 
   const fetchSearchResults = (searchQuery, filter) => {
-    fetch(`http://localhost:8080/user/search/${filter}/${searchQuery}`, {
+    fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
