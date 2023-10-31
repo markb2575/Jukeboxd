@@ -45,10 +45,15 @@ router.get('/tracks/:query', async (req, res) => {
       console.log(query);
       
       // Use a parameterized query to safely search for users
-      const songs = await db.pool.query(
-        `SELECT T.name AS song_name, A.name AS artist_name, AL.name AS album_name, AL.release_date AS song_date, AL.image_URL, T.spotify_track_ID AS track_id, AL.spotify_album_ID AS album_id, A.spotify_artist_ID AS artist_id FROM Tracks AS T JOIN Albums AS AL ON T.album_ID = AL.album_ID JOIN Artists AS A ON AL.artist_ID = A.artist_ID WHERE T.name LIKE ?`,
-        [`%${query}%`] // Use parameterized query
-      );
+     const songs = await db.pool.query(
+  `SELECT T.name AS song_name, A.name AS artist_name, AL.name AS album_name, AL.release_date AS song_date, AL.image_URL, T.spotify_track_ID AS track_id, AL.spotify_album_ID AS album_id, A.spotify_artist_ID AS artist_id
+   FROM Tracks AS T
+   JOIN Albums AS AL ON T.album_ID = AL.album_ID
+   JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+   JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+   WHERE T.name LIKE ?`,
+  [`%${query}%`] // Use parameterized query
+);
       
       // Check if there are results
       if (songs.length > 0) {
@@ -98,8 +103,12 @@ router.get('/albums/:query', async (req, res) => {
       
       // Use a parameterized query to safely search for users
        const albums = await db.pool.query(
-        `SELECT AL.name AS album_name, A.name AS artist_name, AL.release_date AS release_date, AL.image_URL, AL.spotify_album_ID AS album_id, A.spotify_artist_id AS artist_id FROM Albums AS AL JOIN Artists AS A ON AL.artist_ID = A.artist_ID WHERE AL.name LIKE ?`,
-        [`%${query}%`] // Use parameterized query
+      `SELECT AL.name AS album_name, A.name AS artist_name, AL.release_date AS release_date, AL.image_URL, AL.spotify_album_ID AS album_id, A.spotify_artist_ID AS artist_id
+        FROM Albums AS AL
+        JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+        JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+        WHERE AL.name LIKE ?`,
+      [`%${query}%`] // Use parameterized query
       );
       
       // Check if there are results
@@ -124,8 +133,12 @@ router.get('/all/:query', async (req, res) => {
       
       // Use a parameterized query to safely search for users
       const albums = await db.pool.query(
-        `SELECT AL.name AS album_name, A.name AS artist_name, AL.release_date AS release_date, AL.image_URL, AL.spotify_album_ID AS album_id, A.spotify_artist_id AS artist_id FROM Albums AS AL JOIN Artists AS A ON AL.artist_ID = A.artist_ID WHERE AL.name LIKE ?`,
-        [`%${query}%`] // Use parameterized query
+      `SELECT AL.name AS album_name, A.name AS artist_name, AL.release_date AS release_date, AL.image_URL, AL.spotify_album_ID AS album_id, A.spotify_artist_ID AS artist_id
+        FROM Albums AS AL
+        JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+        JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+        WHERE AL.name LIKE ?`,
+      [`%${query}%`] // Use parameterized query
       );
   
       const artists = await db.pool.query(
@@ -134,9 +147,14 @@ router.get('/all/:query', async (req, res) => {
       );
   
       const songs = await db.pool.query(
-        `SELECT T.name AS song_name, A.name AS artist_name, AL.name AS album_name, AL.release_date AS song_date, AL.image_URL, T.spotify_track_ID AS track_id, AL.spotify_album_ID AS album_id, A.spotify_artist_ID AS artist_id FROM Tracks AS T JOIN Albums AS AL ON T.album_ID = AL.album_ID JOIN Artists AS A ON AL.artist_ID = A.artist_ID WHERE T.name LIKE ?`,
-        [`%${query}%`] // Use parameterized query
-      );
+  `SELECT T.name AS song_name, A.name AS artist_name, AL.name AS album_name, AL.release_date AS song_date, AL.image_URL, T.spotify_track_ID AS track_id, AL.spotify_album_ID AS album_id, A.spotify_artist_ID AS artist_id
+   FROM Tracks AS T
+   JOIN Albums AS AL ON T.album_ID = AL.album_ID
+   JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+   JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+   WHERE T.name LIKE ?`,
+  [`%${query}%`] // Use parameterized query
+);
   
       const users = await db.pool.query(
         `SELECT username FROM Users WHERE username LIKE ?`,
