@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import Button from "react-bootstrap/esm/Button";
-
+import { ListGroup } from "react-bootstrap"
 function Album({ username }) {
   const { pathname } = useLocation();
   let navigate = useNavigate();
@@ -13,6 +12,7 @@ function Album({ username }) {
   const [artistName, setArtistName] = useState("")
   const [releaseDate, setReleaseDate] = useState("")
   const [artistID, setArtistID] = useState(null)
+  const [songs, setSongs] = useState(null)
 
   // const checkStatus = useCallback(() => {
   //     fetch(`http://localhost:8080/user/follower=${username}&followee=${profileName}`, {
@@ -35,7 +35,7 @@ function Album({ username }) {
     // console.log("in useeffect")
     setAlbumID(pathname.split("/album/")[1])
     if (albumID.length === 0 || username.length === 0) return
-    console.log(albumID, username)
+  
     //check if albumID exists in database, if not, navigate to error page
     fetch(`http://localhost:8080/album/getAlbum/${albumID}`, {
       method: 'GET',
@@ -49,13 +49,16 @@ function Album({ username }) {
         return
       }
       response.json().then(res => {
-        res = res[0]
-        console.log(res)
-        setArtistID(res.artistID)
-        setArtistName(res.artistName)
-        setImageURL(res.image_URL)
-        setAlbumName(res.albumName)
-        setReleaseDate(res.release_date.split("T")[0])
+        // res = res[0]
+        const album = res.album[0]
+        // setSongs(res.songs[0])
+        // Toggle below for hardcoded songs to display
+        setSongs([{"trackName": "song 1", "spotify_track_ID": "1926598"},{"trackName": "song 2", "spotify_track_ID": "6454353"},{"trackName": "song 2", "spotify_track_ID": "5465234"}]) 
+        setArtistID(album.artistID)
+        setArtistName(album.artistName)
+        setImageURL(album.image_URL)
+        setAlbumName(album.albumName)
+        setReleaseDate(album.release_date.split("T")[0])
         setLoading(false)
       }).catch(e => {
         console.log(e);
@@ -118,6 +121,11 @@ function Album({ username }) {
           }} />
           <h1>Now viewing {albumName} by <Link to={`/artist/${artistID}`}>{artistName}</Link></h1>
           <h5>Released in {releaseDate}</h5>
+          <ListGroup>
+            {songs.map((result, index) => (
+                <Link key={index} to={`/track/${result.spotify_track_ID}`}><ListGroup.Item>{result.trackName}</ListGroup.Item></Link>
+            ))}
+          </ListGroup>
         </div>
 
       )}

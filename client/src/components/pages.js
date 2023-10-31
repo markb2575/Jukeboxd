@@ -6,6 +6,7 @@ import Search from "./pages/Search"
 import Error from "./pages/Error"
 import Album from "./pages/Album"
 import Artist from "./pages/Artist"
+import Track from "./pages/Track"
 
 export {
   Home,
@@ -15,5 +16,6 @@ export {
   Search,
   Error,
   Album,
-  Artist
+  Artist,
+  Track
 }
