@@ -108,9 +108,11 @@ function Search() {
             <div className="result" key={index}>
               {result.username && (
                 <div className="user-result">
+                  <p>User: 
                   <Link to={`/user/${result.username}`}>
-                    {<p>Username: {result.username}</p>}
+                    {result.username}
                   </Link>
+                  </p>
 
                 </div>
               )}
@@ -118,16 +120,9 @@ function Search() {
                 <div className="song-result">
                   <img src={result.image_URL} alt="Album Cover" className="album-cover" />
                   <div className="result-text">
-                    <Link to={`/track/${result.track_id}`}>
-                      {<p>Song: {result.song_name}</p>}
-                    </Link>
-                    <Link to={`/artist/${result.artist_id}`}>
-                      {<p>Artist: {result.artist_name}</p>}
-                    </Link>
-                    <Link to={`/album/${result.album_id}`}>
-                      {<p>Album: {result.album_name}</p>}
-                    </Link>
-
+                    <p>Song: {result.song_name}</p>
+                    <p>Artists: {result.artist_names}</p>
+                    <p>Album: {result.album_name}</p>
                     <p>Date: {new Date(result.song_date).toLocaleDateString()}</p>
                   </div>
                 </div>
@@ -136,21 +131,33 @@ function Search() {
                 <div className="album-result">
                   <img src={result.image_URL} alt="Album Cover" className="album-cover" />
                   <div className="result-text">
-                    <Link to={`/album/${result.album_id}`}>
-                      {<p>Album: {result.album_name}</p>}
-                    </Link>
-                    <Link to={`/artist/${result.artist_id}`}>
-                      {<p>Artist: {result.artist_name}</p>}
-                    </Link>
+                    <p>Album:
+                      <Link to={`/album/${result.album_id}`}>
+                        {result.album_name}
+                      </Link>
+                    </p>
+                    <div className="artist-names">
+                      <p>Artist(s):
+                        {result.artist_names.split(',').map((artist, i) => (
+                          <Link key={i} to={`/artist/${result.artist_ids.split(',')[i]}`}>
+                            {artist}
+                            {i < result.artist_names.split(',').length - 1 && ', '}
+                          </Link>
+                        ))}
+                      </p>
+                    </div>
                     <p>Date: {new Date(result.release_date).toLocaleDateString()}</p>
                   </div>
                 </div>
               )}
-              {result.artist_name && !result.song_name && !result.album_name && (
+
+              {result.artist_name && (
                 <div className="artist-result">
+                  <p>Artist: 
                   <Link to={`/artist/${result.artist_id}`}>
-                    {<p>Artist: {result.artist_name}</p>}
+                    {result.artist_name}
                   </Link>
+                  </p>
                 </div>
               )}
             </div>
