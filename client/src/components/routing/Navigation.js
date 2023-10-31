@@ -1,7 +1,6 @@
 import { Routes, Route, useNavigate, useLocation} from "react-router"
-import { Home, Login, SignUp, Profile, Search, Error } from "../pages"
+import { Home, Login, SignUp, Profile, Search, Error, Album, Artist } from "../pages"
 import { useEffect, useState } from "react";
-
 
 export default function Navigation() {
     let navigate = useNavigate();
@@ -42,6 +41,8 @@ export default function Navigation() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/user/:username" element={<Profile username={username}/>} />
+            <Route path="/album/:albumID" element={<Album username={username}/>} />
+            <Route path="/artist/:artistID" element={<Artist username={username}/>} />
             <Route path="/search" element={<Search />} />
             <Route path="/404" element={<Error username={username}/>} />
         </Routes>

@@ -4,6 +4,8 @@ import SignUp from "./pages/SignUp"
 import Profile from "./pages/Profile"
 import Search from "./pages/Search"
 import Error from "./pages/Error"
+import Album from "./pages/Album"
+import Artist from "./pages/Artist"
 
 export {
   Home,
@@ -11,5 +13,7 @@ export {
   SignUp,
   Profile,
   Search,
-  Error
+  Error,
+  Album,
+  Artist
 }
