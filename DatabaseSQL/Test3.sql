@@ -2,12 +2,12 @@ DROP DATABASE IF EXISTS Test;
 CREATE DATABASE IF NOT EXISTS Test;
 USE Test;
 
-# CREATE USER 'test'@'localhost' IDENTIFIED BY 'password';
-# GRANT ALL PRIVILEGES ON Test.* TO 'test'@'localhost';
+-- # CREATE USER 'test'@'localhost' IDENTIFIED BY 'password';
+-- # GRANT ALL PRIVILEGES ON Test.* TO 'test'@'localhost';
 
 
 CREATE TABLE Users (
-	user_ID INT AUTO_INCREMENT PRIMARY KEY,
+  user_ID INT AUTO_INCREMENT PRIMARY KEY,
   username varchar(25) NOT NULL UNIQUE,
   password varchar(255) NOT NULL,
   role INT
@@ -22,15 +22,18 @@ CREATE TABLE Followers (
 );
 
 CREATE TABLE Artists (
-	artist_ID INT AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(100) NOT NULL,
-	spotify_artist_ID varchar(100) NOT NULL
+  artist_ID INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  spotify_artist_ID varchar(100) NOT NULL,
+  user_ID INT,
+  description VARCHAR(500),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID)
 );
 
 CREATE TABLE Albums (
-	album_ID INT AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-	spotify_album_ID varchar(100) NOT NULL,
+  album_ID INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  spotify_album_ID varchar(100) NOT NULL,
   release_date DATE,
   image_URL varchar(100)
 );
@@ -44,34 +47,62 @@ CREATE TABLE Album_Artists (
 );
 
 CREATE TABLE Tracks (
-	track_ID INT AUTO_INCREMENT PRIMARY KEY,
-	spotify_track_ID varchar(100) NOT NULL,
-	name VARCHAR(100) NOT NULL,
-	album_ID INT,
-	track_number INT NOT NULL,
-	disc_number INT NOT NULL,
-	explicit BOOLEAN NOT NULL,
-	duration INT NOT NULL,
-	# year INT NOT NULL,
-	# release_date DATE NOT NULL,
-	FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
+  track_ID INT AUTO_INCREMENT PRIMARY KEY,
+  spotify_track_ID varchar(100) NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  album_ID INT,
+  track_number INT NOT NULL,
+  disc_number INT NOT NULL,
+  explicit BOOLEAN NOT NULL,
+  duration INT NOT NULL,
+  # year INT NOT NULL,
+  # release_date DATE NOT NULL,
+  FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
+);
+
+CREATE TABLE Track_Artists (
+  track_ID INT NOT NULL,
+  artist_ID INT NOT NULL,
+  PRIMARY KEY (track_ID, artist_ID),
+  FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID),
+  FOREIGN KEY (artist_ID) REFERENCES Artists(artist_ID)
 );
 
 CREATE TABLE ListenedAlbum (
-	user_ID INT NOT NULL,
+  user_ID INT NOT NULL,
   album_ID INT NOT NULL,
   rating INT,
-	datetime DATETIME,
+  datetime DATETIME,
   PRIMARY KEY (user_ID, album_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
 CREATE TABLE ListenedTrack (
-	user_ID INT NOT NULL,
+  user_ID INT NOT NULL,
   track_ID INT NOT NULL,
   rating INT,
-	datetime DATETIME,
+  datetime DATETIME,
+  PRIMARY KEY (user_ID, track_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
+);
+
+CREATE TABLE ReviewedAlbum (
+  user_ID INT NOT NULL,
+  album_ID INT NOT NULL,
+  review VARCHAR(500),
+  datetime DATETIME,
+  PRIMARY KEY (user_ID, album_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
+);
+
+CREATE TABLE ReviewedTrack (
+  user_ID INT NOT NULL,
+  track_ID INT NOT NULL,
+  review VARCHAR(500),
+  datetime DATETIME,
   PRIMARY KEY (user_ID, track_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
