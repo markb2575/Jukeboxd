@@ -50,7 +50,6 @@ router.get('/tracks/:query', async (req, res) => {
     T.name AS song_name,
     GROUP_CONCAT(A.name) AS artist_names,
     AL.name AS album_name,
-    AL.release_date AS song_date,
     AL.image_URL,
     T.spotify_track_ID AS track_id,
     AL.spotify_album_ID AS album_id,
@@ -116,7 +115,6 @@ router.get('/albums/:query', async (req, res) => {
       `SELECT
     AL.name AS album_name,
     GROUP_CONCAT(A.name) AS artist_names,
-    AL.release_date AS release_date,
     AL.image_URL,
     AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
@@ -153,7 +151,6 @@ router.get('/all/:query', async (req, res) => {
       `SELECT
     AL.name AS album_name,
     GROUP_CONCAT(A.name) AS artist_names,
-    AL.release_date AS release_date,
     AL.image_URL,
     AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
@@ -175,7 +172,6 @@ GROUP BY AL.album_ID;`,
     T.name AS song_name,
     GROUP_CONCAT(A.name) AS artist_names,
     AL.name AS album_name,
-    AL.release_date AS song_date,
     AL.image_URL,
     T.spotify_track_ID AS track_id,
     AL.spotify_album_ID AS album_id,

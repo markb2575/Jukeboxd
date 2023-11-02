@@ -11,6 +11,9 @@ function Search() {
   const [noResults, setNoResults] = useState(false);
   const location = useLocation();
   const [filter, setFilter] = useState('all'); // 'all' is the default filter
+  const [pageNum, setPageNum] = useState(1);
+  const pageSize = 100; //Can be changed
+
 
 
 
@@ -36,8 +39,22 @@ function Search() {
     fetchSearchResults(query, newFilter);
   };
 
+  const handleNext = () => {
+    if (pageNum < Math.ceil(searchResults.length / pageSize)) {
+      setPageNum(pageNum+1);
+      fetchSearchResults(query, filter);
+    }
+  }
+
+  const handlePrev = () => {
+    if (pageNum > 1) {
+      setPageNum(pageNum-1);
+      fetchSearchResults(query, filter);
+    }
+  }
+
   const fetchSearchResults = (searchQuery, filter) => {
-    fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
+    fetch(`http://localhost:8080/search/${filter}/${query}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -67,51 +84,71 @@ function Search() {
     <div>
       <NavbarComponent />
       <div>
-        <h3>Filter by:</h3>
-        <button
-          onClick={() => handleFilterChange('all')}
-          className={filter === 'all' ? 'active' : ''}
-        >
-          All
-        </button>
-        <button
-          onClick={() => handleFilterChange('tracks')}
-          className={filter === 'tracks' ? 'active' : ''}
-        >
-          Tracks
-        </button>
-        <button
-          onClick={() => handleFilterChange('albums')}
-          className={filter === 'albums' ? 'active' : ''}
-        >
-          Albums
-        </button>
-        <button
-          onClick={() => handleFilterChange('artists')}
-          className={filter === 'artists' ? 'active' : ''}
-        >
-          Artists
-        </button>
-        <button
-          onClick={() => handleFilterChange('users')}
-          className={filter === 'users' ? 'active' : ''}
-        >
-          Users
-        </button>
+        <h4>Filter by:&#20;
+          <button
+            onClick={() => handleFilterChange('all')}
+            className={filter === 'all' ? 'active' : ''}
+          >
+            All
+          </button>
+          <button
+            onClick={() => handleFilterChange('tracks')}
+            className={filter === 'tracks' ? 'active' : ''}
+          >
+            Tracks
+          </button>
+          <button
+            onClick={() => handleFilterChange('albums')}
+            className={filter === 'albums' ? 'active' : ''}
+          >
+            Albums
+          </button>
+          <button
+            onClick={() => handleFilterChange('artists')}
+            className={filter === 'artists' ? 'active' : ''}
+          >
+            Artists
+          </button>
+          <button
+            onClick={() => handleFilterChange('users')}
+            className={filter === 'users' ? 'active' : ''}
+          >
+            Users
+          </button>
+        </h4>
+        {noResults ? (
+          <h5>No results found.</h5>
+        ) : (
+          <h5>
+            Page {pageNum} of {Math.ceil(searchResults.length / pageSize)} &#20;
+            <button
+            onClick={handlePrev}
+          >
+            Prev
+          </button>
+          <button
+          onClick={handleNext}
+          >
+            Next
+          </button>
+          </h5>
+        )}
+
       </div>
-      <h1>Search Results for: {query}</h1>
+
       {noResults ? (
-        <p>No results found.</p>
+        <p></p>
       ) : (
+
         <div className="search-results">
           {searchResults.map((result, index) => (
             <div className="result" key={index}>
               {result.username && (
                 <div className="user-result">
-                  <p>User: 
-                  <Link to={`/user/${result.username}`}>
-                    {result.username}
-                  </Link>
+                  <p>User:
+                    <Link to={`/user/${result.username}`}>
+                      {result.username}
+                    </Link>
                   </p>
 
                 </div>
@@ -123,7 +160,6 @@ function Search() {
                     <p>Song: {result.song_name}</p>
                     <p>Artists: {result.artist_names}</p>
                     <p>Album: {result.album_name}</p>
-                    <p>Date: {new Date(result.song_date).toLocaleDateString()}</p>
                   </div>
                 </div>
               )}
@@ -146,17 +182,16 @@ function Search() {
                         ))}
                       </p>
                     </div>
-                    <p>Date: {new Date(result.release_date).toLocaleDateString()}</p>
                   </div>
                 </div>
               )}
 
               {result.artist_name && (
                 <div className="artist-result">
-                  <p>Artist: 
-                  <Link to={`/artist/${result.artist_id}`}>
-                    {result.artist_name}
-                  </Link>
+                  <p>Artist:
+                    <Link to={`/artist/${result.artist_id}`}>
+                      {result.artist_name}
+                    </Link>
                   </p>
                 </div>
               )}
