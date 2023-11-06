@@ -41,20 +41,22 @@ function Search() {
 
   const handleNext = () => {
     if (pageNum < Math.ceil(searchResults.length / pageSize)) {
-      setPageNum(pageNum+1);
+      const n = pageNum+1;
+      setPageNum(n);
       fetchSearchResults(query, filter);
     }
   }
 
   const handlePrev = () => {
     if (pageNum > 1) {
-      setPageNum(pageNum-1);
+      const n = pageNum-1;
+      setPageNum(n);
       fetchSearchResults(query, filter);
     }
   }
 
   const fetchSearchResults = (searchQuery, filter) => {
-    fetch(`http://localhost:8080/search/${filter}/${query}`, {
+    fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -73,6 +75,9 @@ function Search() {
       .then((data) => {
         setNoResults(false);
         setSearchResults(data);
+        if(pageNum > Math.ceil(data.length / pageSize)){
+          setPageNum(Math.ceil(data.length / pageSize));
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -141,7 +146,7 @@ function Search() {
       ) : (
 
         <div className="search-results">
-          {searchResults.map((result, index) => (
+          {searchResults.slice((pageSize*(pageNum-1)), (pageSize*(pageNum))).map((result, index) => (
             <div className="result" key={index}>
               {result.username && (
                 <div className="user-result">
