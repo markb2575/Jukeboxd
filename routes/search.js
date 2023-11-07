@@ -4,49 +4,50 @@ const auth = require('./middleware')
 const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
-    try {
-      const user = await req.user;
-      return res.json({"username": user});
-    } catch (err) {
-      console.error(err.message);
-      res.status(500);
-    }
+  try {
+    const user = await req.user;
+    return res.json({ "username": user });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500);
+  }
 });
 
 router.get('/users/:query', async (req, res) => {
-    try {
-      const query = req.params.query; // Use req.params.query to access the query parameter
-      console.log(query);
-      
-      // Use a parameterized query to safely search for users
-      const users = await db.pool.query(
-        `SELECT username FROM Users WHERE username LIKE ?`,
-        [`%${query}%`] // Use parameterized query
-      );
-      
-      // Check if there are results
-      if (users.length > 0) {
-        console.log(users);
-        return res.status(200).json(users);
-      } else {
-        // No users found
-        
-        res.status(404).json({ error: 'No users found' });
-      }
-    } catch (error) {
-      console.error('Error:', query, error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    const query = req.params.query; // Use req.params.query to access the query parameter
+    console.log(query);
+
+    // Use a parameterized query to safely search for users
+    const users = await db.pool.query(
+      `SELECT username FROM Users WHERE username LIKE ? ORDER BY username`,
+      [`%${query}%`]
+    );
+
+
+    // Check if there are results
+    if (users.length > 0) {
+      console.log(users);
+      return res.status(200).json(users);
+    } else {
+      // No users found
+
+      res.status(404).json({ error: 'No users found' });
     }
+  } catch (error) {
+    console.error('Error:', query, error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
-  
+
 router.get('/tracks/:query', async (req, res) => {
-    try {
-      const query = req.params.query; // Use req.params.query to access the query parameter
-      console.log(query);
-      
-      // Use a parameterized query to safely search for users
-     const songs = await db.pool.query(
-  `SELECT
+  try {
+    const query = req.params.query; // Use req.params.query to access the query parameter
+    console.log(query);
+
+    // Use a parameterized query to safely search for users
+    const songs = await db.pool.query(
+      `SELECT
     T.name AS song_name,
     GROUP_CONCAT(A.name) AS artist_names,
     AL.name AS album_name,
@@ -54,121 +55,128 @@ router.get('/tracks/:query', async (req, res) => {
     T.spotify_track_ID AS track_id,
     AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-FROM Tracks AS T
-JOIN Albums AS AL ON T.album_ID = AL.album_ID
-LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-WHERE T.name LIKE ?
-GROUP BY T.spotify_track_ID, AL.album_ID;
-`,
-  [`%${query}%`] // Use parameterized query
-);
-      
-      // Check if there are results
-      if (songs.length > 0) {
-        console.log(songs);
-        return res.status(200).json(songs);
-      } else {
-        // No songs found
-        
-        res.status(404).json({ error: 'No songs found' });
-      }
-    } catch (error) {
-      console.error('Error:', query, error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  FROM Tracks AS T
+  JOIN Albums AS AL ON T.album_ID = AL.album_ID
+  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+  WHERE T.name LIKE ?
+  GROUP BY T.spotify_track_ID, AL.album_ID
+  ORDER BY T.name;`,
+      [`%${query}%`]
+    );
+
+
+    // Check if there are results
+    if (songs.length > 0) {
+      console.log(songs);
+      return res.status(200).json(songs);
+    } else {
+      // No songs found
+
+      res.status(404).json({ error: 'No songs found' });
     }
+  } catch (error) {
+    console.error('Error:', query, error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
-  
+
 router.get('/artists/:query', async (req, res) => {
-    try {
-      const query = req.params.query; // Use req.params.query to access the query parameter
-      console.log(query);
-      
-      // Use a parameterized query to safely search for users
-      const artists = await db.pool.query(
-        `SELECT name AS artist_name, spotify_artist_ID AS artist_id FROM Artists WHERE name LIKE ?`,
-        [`%${query}%`] // Use parameterized query
-      );
-      
-      // Check if there are results
-      if (artists.length > 0) {
-        console.log(artists);
-        return res.status(200).json(artists);
-      } else {
-        // No artists found
-        
-        res.status(404).json({ error: 'No artists found' });
-      }
-    } catch (error) {
-      console.error('Error:', query, error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    const query = req.params.query; // Use req.params.query to access the query parameter
+    console.log(query);
+
+    // Use a parameterized query to safely search for users
+    const artists = await db.pool.query(
+      `SELECT name AS artist_name, spotify_artist_ID AS artist_id FROM Artists WHERE name LIKE ? ORDER BY name`,
+      [`%${query}%`]
+    );
+
+
+    // Check if there are results
+    if (artists.length > 0) {
+      console.log(artists);
+      return res.status(200).json(artists);
+    } else {
+      // No artists found
+
+      res.status(404).json({ error: 'No artists found' });
     }
+  } catch (error) {
+    console.error('Error:', query, error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
-  
+
 router.get('/albums/:query', async (req, res) => {
-    try {
-      const query = req.params.query; // Use req.params.query to access the query parameter
-      console.log(query);
-      
-      // Use a parameterized query to safely search for users
-       const albums = await db.pool.query(
+  try {
+    const query = req.params.query; // Use req.params.query to access the query parameter
+    console.log(query);
+
+    // Use a parameterized query to safely search for users
+    const albums = await db.pool.query(
       `SELECT
     AL.name AS album_name,
     GROUP_CONCAT(A.name) AS artist_names,
     AL.image_URL,
     AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-FROM Albums AS AL
-LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-WHERE AL.name LIKE ?
-GROUP BY AL.album_ID;`,
-      [`%${query}%`] // Use parameterized query
-      );
-      
-      // Check if there are results
-      if (albums.length > 0) {
-        console.log(albums);
-        return res.status(200).json(albums);
-      } else {
-        // No albums found
-        
-        res.status(404).json({ error: 'No albums found' });
-      }
-    } catch (error) {
-      console.error('Error:', query, error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  FROM Albums AS AL
+  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+  WHERE AL.name LIKE ?
+  GROUP BY AL.album_ID
+  ORDER BY AL.name;`,
+      [`%${query}%`]
+    );
+
+
+    // Check if there are results
+    if (albums.length > 0) {
+      console.log(albums);
+      return res.status(200).json(albums);
+    } else {
+      // No albums found
+
+      res.status(404).json({ error: 'No albums found' });
     }
+  } catch (error) {
+    console.error('Error:', query, error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
-  
+
 router.get('/all/:query', async (req, res) => {
-    try {
-      const query = req.params.query; // Use req.params.query to access the query parameter
-      console.log(query);
-      
-      // Use a parameterized query to safely search for users
-      const albums = await db.pool.query(
+  try {
+    const query = req.params.query; // Use req.params.query to access the query parameter
+    console.log(query);
+
+    // Use a parameterized query to safely search for users
+    const albums = await db.pool.query(
       `SELECT
     AL.name AS album_name,
     GROUP_CONCAT(A.name) AS artist_names,
     AL.image_URL,
     AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-FROM Albums AS AL
-LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-WHERE AL.name LIKE ?
-GROUP BY AL.album_ID;`,
-      [`%${query}%`] // Use parameterized query
-      );
-  
-      const artists = await db.pool.query(
-        `SELECT name AS artist_name, spotify_artist_ID AS artist_id FROM Artists WHERE name LIKE ?`,
-        [`%${query}%`] // Use parameterized query
-      );
-  
-      const songs = await db.pool.query(
-  `SELECT
+  FROM Albums AS AL
+  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+  WHERE AL.name LIKE ?
+  GROUP BY AL.album_ID
+  ORDER BY AL.name;`,
+      [`%${query}%`]
+    );
+
+
+    const artists = await db.pool.query(
+      `SELECT name AS artist_name, spotify_artist_ID AS artist_id FROM Artists WHERE name LIKE ? ORDER BY name`,
+      [`%${query}%`]
+    );
+
+
+    const songs = await db.pool.query(
+      `SELECT
     T.name AS song_name,
     GROUP_CONCAT(A.name) AS artist_names,
     AL.name AS album_name,
@@ -176,37 +184,39 @@ GROUP BY AL.album_ID;`,
     T.spotify_track_ID AS track_id,
     AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-FROM Tracks AS T
-JOIN Albums AS AL ON T.album_ID = AL.album_ID
-LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-WHERE T.name LIKE ?
-GROUP BY T.spotify_track_ID, AL.album_ID;
-`,
-  [`%${query}%`] // Use parameterized query
-);
-  
-      const users = await db.pool.query(
-        `SELECT username FROM Users WHERE username LIKE ?`,
-        [`%${query}%`] // Use parameterized query
-      );
-  
-      const all = users.concat(songs, artists, albums);
-  
-      
-      // Check if there are results
-      if (all.length > 0) {
-        console.log(all);
-        return res.status(200).json(all);
-      } else {
-        // No results found
-        
-        res.status(404).json({ error: 'No results found' });
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  FROM Tracks AS T
+  JOIN Albums AS AL ON T.album_ID = AL.album_ID
+  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+  WHERE T.name LIKE ?
+  GROUP BY T.spotify_track_ID, AL.album_ID
+  ORDER BY T.name;`,
+      [`%${query}%`]
+    );
+
+
+    const users = await db.pool.query(
+      `SELECT username FROM Users WHERE username LIKE ? ORDER BY username`,
+      [`%${query}%`]
+    );
+
+
+    const all = users.concat(songs, artists, albums);
+
+
+    // Check if there are results
+    if (all.length > 0) {
+      console.log(all);
+      return res.status(200).json(all);
+    } else {
+      // No results found
+
+      res.status(404).json({ error: 'No results found' });
     }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 

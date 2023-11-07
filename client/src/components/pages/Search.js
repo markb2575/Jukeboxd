@@ -12,7 +12,7 @@ function Search() {
   const location = useLocation();
   const [filter, setFilter] = useState('all'); // 'all' is the default filter
   const [pageNum, setPageNum] = useState(1);
-  const pageSize = 100; //Can be changed
+  const pageSize = 50; //Can be changed
 
 
 
