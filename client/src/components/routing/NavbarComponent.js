@@ -50,6 +50,11 @@ function NavbarComponent() {
         e.preventDefault();
         const trimmedQuery = searchString.trim();
         if (trimmedQuery) {
+            //If new search, clear persistent vars
+            window.localStorage.setItem('page', JSON.stringify(1));
+            window.localStorage.setItem('filter', JSON.stringify('all'));
+            window.localStorage.setItem('scroll', JSON.stringify(0));
+
             navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
         }
     };

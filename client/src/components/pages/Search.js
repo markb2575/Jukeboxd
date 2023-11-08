@@ -1,6 +1,6 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Search.css'
 
 
@@ -13,9 +13,27 @@ function Search() {
   const [filter, setFilter] = useState('all'); // 'all' is the default filter
   const [pageNum, setPageNum] = useState(1);
   const pageSize = 50; //Can be changed
+  const scrollRef = useRef();
+
+  let navigate = useNavigate();
 
 
 
+  useEffect(() => {
+    setFilter(JSON.parse(window.localStorage.getItem('filter')));
+    setPageNum(JSON.parse(window.localStorage.getItem('page')));
+    window.scrollTo(0, JSON.parse(window.localStorage.getItem("scroll")));
+  });
+
+
+//listener for scroll, save scroll position for persistence
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -34,26 +52,39 @@ function Search() {
     }
   }, [query]);
 
+  const handleScroll = () => {
+    window.localStorage.setItem("scroll", JSON.stringify(window.scrollY))
+  };
+
+
+//save filter for persistence, reset back to page 1 on filter change
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
+    window.localStorage.setItem('page', JSON.stringify(1));
+    window.localStorage.setItem('filter', JSON.stringify(newFilter));
+
     fetchSearchResults(query, newFilter);
   };
 
   const handleNext = () => {
     if (pageNum < Math.ceil(searchResults.length / pageSize)) {
-      const n = pageNum+1;
+      const n = pageNum + 1;
+      window.localStorage.setItem('page', JSON.stringify(n));
+
       setPageNum(n);
       fetchSearchResults(query, filter);
     }
-  }
+  };
 
   const handlePrev = () => {
     if (pageNum > 1) {
-      const n = pageNum-1;
+      const n = pageNum - 1;
+      window.localStorage.setItem('page', JSON.stringify(n));
+
       setPageNum(n);
       fetchSearchResults(query, filter);
     }
-  }
+  };
 
   const fetchSearchResults = (searchQuery, filter) => {
     fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
@@ -75,7 +106,7 @@ function Search() {
       .then((data) => {
         setNoResults(false);
         setSearchResults(data);
-        if(pageNum > Math.ceil(data.length / pageSize)){
+        if (pageNum > Math.ceil(data.length / pageSize)) {
           setPageNum(Math.ceil(data.length / pageSize));
         }
       })
@@ -127,15 +158,15 @@ function Search() {
           <h5>
             Page {pageNum} of {Math.ceil(searchResults.length / pageSize)} &#20;
             <button
-            onClick={handlePrev}
-          >
-            Prev
-          </button>
-          <button
-          onClick={handleNext}
-          >
-            Next
-          </button>
+              onClick={handlePrev}
+            >
+              Prev
+            </button>
+            <button
+              onClick={handleNext}
+            >
+              Next
+            </button>
           </h5>
         )}
 
@@ -146,7 +177,7 @@ function Search() {
       ) : (
 
         <div className="search-results">
-          {searchResults.slice((pageSize*(pageNum-1)), (pageSize*(pageNum))).map((result, index) => (
+          {searchResults.slice((pageSize * (pageNum - 1)), (pageSize * (pageNum))).map((result, index) => (
             <div className="result" key={index}>
               {result.username && (
                 <div className="user-result">
