@@ -19,11 +19,11 @@ router.get('/getAlbum/:albumID', async (req, res) => {
         console.log("params", params)
         const album = await db.pool.query(`SELECT albums.name AS albumName, image_URL, release_date, artists.name AS artistName, artists.spotify_artist_ID as artistID FROM albums JOIN album_artists ON albums.album_ID = album_artists.album_ID JOIN artists ON album_artists.artist_ID = artists.artist_ID WHERE albums.spotify_album_ID = '${params.albumID}';`);
         //TODO: select songs by albumID
-        //   const songs = await db.pool.query(`SELECT albums.name AS albumName, image_URL, release_date, artists.name AS artistName, artists.spotify_artist_ID as artistID FROM albums JOIN album_artists ON albums.album_ID = album_artists.album_ID JOIN artists ON album_artists.artist_ID = artists.artist_ID WHERE albums.spotify_album_ID = '${params.albumID}';`);
+        const songs = await db.pool.query(`SELECT tracks.name AS trackName, tracks.spotify_track_ID from tracks, albums WHERE tracks.album_ID = albums.album_ID AND albums.spotify_album_ID = '${params.albumID}';`);
 
-        console.log(album)
+        console.log(songs)
         if (album.length == 0) return res.status(404).send()
-        return res.status(200).json({ "album": album/* , "songs": songs */ })
+        return res.status(200).json({ "album": album, "songs": songs})
     } catch (err) {
         throw err;
     }

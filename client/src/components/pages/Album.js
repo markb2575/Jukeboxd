@@ -7,6 +7,7 @@ function Album({ username }) {
   let navigate = useNavigate();
   const [albumID, setAlbumID] = useState(pathname.split("/album/")[1]);
   const [loading, setLoading] = useState(true);
+  const [albums, setAlbums] = useState(null)
   const [albumName, setAlbumName] = useState("")
   const [imageURL, setImageURL] = useState("")
   const [artistName, setArtistName] = useState("")
@@ -50,10 +51,12 @@ function Album({ username }) {
       }
       response.json().then(res => {
         // res = res[0]
+        console.log(res)
         const album = res.album[0]
-        // setSongs(res.songs[0])
+        setSongs(res.songs)
+        setAlbums(res.album)
         // Toggle below for hardcoded songs to display
-        setSongs([{"trackName": "song 1", "spotify_track_ID": "1926598"},{"trackName": "song 2", "spotify_track_ID": "6454353"},{"trackName": "song 2", "spotify_track_ID": "5465234"}]) 
+        // setSongs([{"trackName": "song 1", "spotify_track_ID": "1926598"},{"trackName": "song 2", "spotify_track_ID": "6454353"},{"trackName": "song 2", "spotify_track_ID": "5465234"}]) 
         setArtistID(album.artistID)
         setArtistName(album.artistName)
         setImageURL(album.image_URL)
@@ -119,7 +122,7 @@ function Album({ username }) {
             "width": "400px",
             "height": "auto"
           }} />
-          <h1>Now viewing {albumName} by <Link to={`/artist/${artistID}`}>{artistName}</Link></h1>
+          <h1>Now viewing {albumName} by {albums.map((result, index) => (<div key={index} style={{display: "inline"}}><Link to={`/artist/${result.artistID}`}>{result.artistName}</Link>{index === albums.length-1 ? null : " and "}</div>))}</h1>
           <h5>Released in {releaseDate}</h5>
           <ListGroup>
             {songs.map((result, index) => (

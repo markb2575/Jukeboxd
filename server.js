@@ -8,7 +8,8 @@ const cors = require("cors");
 
 const user = require('./routes/user');
 const search = require('./routes/search');
-const album = require('./routes/album')
+const album = require('./routes/album');
+const track = require('./routes/track')
  
 app.use(cors()); // TODO Might need to be changed
 app.use(bodyParser.json());
@@ -16,7 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use('/user', user);
-app.use('/album', album)
+app.use('/album', album);
+app.use('/track', track);
 app.use('/search', search);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
