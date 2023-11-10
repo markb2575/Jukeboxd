@@ -26,7 +26,7 @@ function Search() {
   });
 
 
-//listener for scroll, save scroll position for persistence
+  //listener for scroll, save scroll position for persistence
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
@@ -57,7 +57,7 @@ function Search() {
   };
 
 
-//save filter for persistence, reset back to page 1 on filter change
+  //save filter for persistence, reset back to page 1 on filter change
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
     window.localStorage.setItem('page', JSON.stringify(1));
@@ -189,17 +189,31 @@ function Search() {
 
                 </div>
               )}
-              {result.song_name && (
+              {result.track_name && (
                 <div className="song-result">
                   <img src={result.image_URL} alt="Album Cover" className="album-cover" />
                   <div className="result-text">
-                    <p>Song: {result.song_name}</p>
-                    <p>Artists: {result.artist_names}</p>
-                    <p>Album: {result.album_name}</p>
+                    <p>Track: <Link to={`/track/${result.track_id}`}>
+                      {result.track_name}
+                    </Link>
+                    </p>
+                    <p>Artist(s):
+                      {result.artist_names.split('|').map((artist, i) => (
+                        <Link key={i} to={`/artist/${result.artist_ids.split('|')[i]}`}>
+                          {artist}
+                          {i < result.artist_names.split('|').length - 1 && ', '}
+                        </Link>
+                      ))}
+                    </p>
+                    <p>Album:
+                      <Link to={`/album/${result.album_id}`}>
+                        {result.album_name}
+                      </Link>
+                    </p>
                   </div>
                 </div>
               )}
-              {result.album_name && !result.song_name && (
+              {result.album_name && !result.track_name && (
                 <div className="album-result">
                   <img src={result.image_URL} alt="Album Cover" className="album-cover" />
                   <div className="result-text">
@@ -210,10 +224,10 @@ function Search() {
                     </p>
                     <div className="artist-names">
                       <p>Artist(s):
-                        {result.artist_names.split(',').map((artist, i) => (
-                          <Link key={i} to={`/artist/${result.artist_ids.split(',')[i]}`}>
+                        {result.artist_names.split('|').map((artist, i) => (
+                          <Link key={i} to={`/artist/${result.artist_ids.split('|')[i]}`}>
                             {artist}
-                            {i < result.artist_names.split(',').length - 1 && ', '}
+                            {i < result.artist_names.split('|').length - 1 && ', '}
                           </Link>
                         ))}
                       </p>

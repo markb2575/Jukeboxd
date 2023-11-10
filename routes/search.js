@@ -48,20 +48,22 @@ router.get('/tracks/:query', async (req, res) => {
     // Use a parameterized query to safely search for users
     const songs = await db.pool.query(
       `SELECT
-    T.name AS song_name,
-    GROUP_CONCAT(A.name) AS artist_names,
+    T.name AS track_name,
+    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
     AL.name AS album_name,
+    AL.release_date AS song_date,
     AL.image_URL,
     T.spotify_track_ID AS track_id,
     AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-  FROM Tracks AS T
-  JOIN Albums AS AL ON T.album_ID = AL.album_ID
-  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-  WHERE T.name LIKE ?
-  GROUP BY T.spotify_track_ID, AL.album_ID
-  ORDER BY T.name;`,
+    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+FROM Tracks AS T
+JOIN Albums AS AL ON T.album_ID = AL.album_ID
+LEFT JOIN Track_Artists AS TA ON T.track_ID = TA.track_ID
+LEFT JOIN Artists AS A ON TA.artist_ID = A.artist_ID
+WHERE T.name LIKE ?
+GROUP BY T.spotify_track_ID, AL.album_ID;
+
+`,
       [`%${query}%`]
     );
 
@@ -117,16 +119,17 @@ router.get('/albums/:query', async (req, res) => {
     const albums = await db.pool.query(
       `SELECT
     AL.name AS album_name,
-    GROUP_CONCAT(A.name) AS artist_names,
+    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+    AL.release_date AS release_date,
     AL.image_URL,
-    AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-  FROM Albums AS AL
-  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-  WHERE AL.name LIKE ?
-  GROUP BY AL.album_ID
-  ORDER BY AL.name;`,
+    AL.album_ID,
+    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+FROM Albums AS AL
+LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+WHERE AL.name LIKE ?
+GROUP BY AL.album_ID;
+`,
       [`%${query}%`]
     );
 
@@ -155,16 +158,16 @@ router.get('/all/:query', async (req, res) => {
     const albums = await db.pool.query(
       `SELECT
     AL.name AS album_name,
-    GROUP_CONCAT(A.name) AS artist_names,
+    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+    AL.release_date AS release_date,
     AL.image_URL,
-    AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-  FROM Albums AS AL
-  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-  WHERE AL.name LIKE ?
-  GROUP BY AL.album_ID
-  ORDER BY AL.name;`,
+    AL.album_ID,
+    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+FROM Albums AS AL
+LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+WHERE AL.name LIKE ?
+GROUP BY AL.album_ID;`,
       [`%${query}%`]
     );
 
@@ -177,20 +180,21 @@ router.get('/all/:query', async (req, res) => {
 
     const songs = await db.pool.query(
       `SELECT
-    T.name AS song_name,
-    GROUP_CONCAT(A.name) AS artist_names,
+    T.name AS track_name,
+    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
     AL.name AS album_name,
+    AL.release_date AS song_date,
     AL.image_URL,
     T.spotify_track_ID AS track_id,
     AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID) AS artist_ids
-  FROM Tracks AS T
-  JOIN Albums AS AL ON T.album_ID = AL.album_ID
-  LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-  LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-  WHERE T.name LIKE ?
-  GROUP BY T.spotify_track_ID, AL.album_ID
-  ORDER BY T.name;`,
+    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+FROM Tracks AS T
+JOIN Albums AS AL ON T.album_ID = AL.album_ID
+LEFT JOIN Track_Artists AS TA ON T.track_ID = TA.track_ID
+LEFT JOIN Artists AS A ON TA.artist_ID = A.artist_ID
+WHERE T.name LIKE ?
+GROUP BY T.spotify_track_ID, AL.album_ID;
+`,
       [`%${query}%`]
     );
 
