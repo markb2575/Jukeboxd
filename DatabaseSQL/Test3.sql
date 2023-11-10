@@ -49,7 +49,7 @@ CREATE TABLE Album_Artists (
 CREATE TABLE Tracks (
   track_ID INT AUTO_INCREMENT PRIMARY KEY,
   spotify_track_ID varchar(100) NOT NULL,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   album_ID INT,
   track_number INT NOT NULL,
   disc_number INT NOT NULL,
