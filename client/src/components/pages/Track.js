@@ -51,7 +51,9 @@ function Track({ username }) {
             response.json().then(res => {
                 //   res = res[0]
                 // console.log(res.album[0].albumID,res.album[0].name)
-                res.track[0].duration = `${Math.floor(res.track[0].duration/60000)}:${Math.floor(res.track[0].duration%60000/1000)}`
+                var hours = Math.floor(res.track[0].duration/60000)
+                var minutes = Math.floor(res.track[0].duration%60000/1000)
+                res.track[0].duration = `${hours}:${minutes < 10?'0' + minutes:minutes}`
                 setTrack(res.track[0])
                 setAlbum(res.album[0])
                 setArtists(res.artist)
