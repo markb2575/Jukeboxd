@@ -71,10 +71,10 @@ function Home() {
                     <Card>
                         <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
                         <Card.Footer>
+                            <div>
+                                <small>Username</small>
+                            </div>
                             <div className="d-flex justify-content-between">
-                                <div>
-                                    <small>Username</small>
-                                </div>
                                 <div>
                                     <small>Rating</small>
                                 </div>
