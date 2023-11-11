@@ -122,7 +122,7 @@ router.get('/albums/:query', async (req, res) => {
     GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
     AL.release_date AS release_date,
     AL.image_URL,
-    AL.album_ID,
+    AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
 FROM Albums AS AL
 LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
@@ -161,7 +161,7 @@ router.get('/all/:query', async (req, res) => {
     GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
     AL.release_date AS release_date,
     AL.image_URL,
-    AL.album_ID,
+    AL.spotify_album_ID AS album_id,
     GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
 FROM Albums AS AL
 LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
