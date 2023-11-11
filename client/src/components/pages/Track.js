@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import ToggleButton from 'react-bootstrap/ToggleButton';
 import { IoAddCircleOutline, IoAddCircle, IoEarOutline, IoEar, IoStarHalf, IoStarOutline, IoStar } from "react-icons/io5";
 import './Track.css'
 
@@ -19,6 +20,15 @@ function Track({ username }) {
     const [track, setTrack] = useState(null)
     const [artists, setArtists] = useState(null)
     const [album, setAlbum] = useState(null)
+    const [radioValue, setRadioValue] = useState(null);
+
+    const radios = [
+        { name: '1', value: '1' },
+        { name: '2', value: '2' },
+        { name: '3', value: '3' },
+        { name: '4', value: '4' },
+        { name: '5', value: '5' },
+    ];
     // const [releaseDate, setReleaseDate] = useState("")
     // const [artistID, setArtistID] = useState(null)
 
@@ -156,7 +166,10 @@ function Track({ username }) {
 
                 <div>
                     <div className="header">
-                        <h3 className="subHeader">Track:</h3> <h1 className="subHeader">{track.trackName}</h1> <h3 className="subHeader">by</h3> <h2>{artists.map((result, index) => (<div key={index} style={{ display: "inline" }}><Link to={`/artist/${result.artistID}`}>{result.name}</Link>{index === artists.length - 1 ? null : " and "}</div>))}</h2>
+                        <h3 className="subHeader">Track:</h3> <h1 className="subHeader">{track.trackName}</h1>
+                    </div>
+                    <div className="header2">
+                        <h4 className="subHeader">by</h4> <h2>{artists.map((result, index) => (<div key={index} style={{ display: "inline" }}><Link to={`/artist/${result.artistID}`}>{result.name}</Link>{index === artists.length - 1 ? null : " and "}</div>))}</h2>
                     </div>
                     <div>
                         <Container>
@@ -183,43 +196,63 @@ function Track({ username }) {
                                         <ListGroup>
                                             <ListGroup.Item>
                                                 <div className="horizontalSpaceBetween">
-                                                    <Button>Listened</Button>
-                                                    <Button>Watchlist</Button>
+                                                    <h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button>
+                                                    <h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button>
                                                 </div>
                                             </ListGroup.Item>
 
                                             <ListGroup.Item>
                                                 <div className="centeredHorizontal">
+                                                    <h4 className="subHeader">Rate:</h4>
                                                     <ButtonGroup>
-                                                        <Button>1</Button>
-                                                        <Button>2</Button>
-                                                        <Button>3</Button>
-                                                        <Button>4</Button>
-                                                        <Button>5</Button>
+                                                        {radios.map((radio, idx) => (
+                                                            <ToggleButton
+                                                                key={idx}
+                                                                id={`radio-${idx}`}
+                                                                type="radio"
+                                                                variant={'outline-primary'}
+                                                                name="radio"
+                                                                value={radio.value}
+                                                                checked={radioValue === radio.value}
+                                                                onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                                            >
+                                                                {radio.name}
+                                                            </ToggleButton>
+                                                        ))}
                                                     </ButtonGroup>
                                                 </div>
                                             </ListGroup.Item>
 
                                             <ListGroup.Item>
                                                 <div className="centeredHorizontal">
-                                                    <Button>
-                                                        Review
-                                                    </Button>
+                                                    <Button variant="outline-primary" title="Review">Review</Button>
                                                 </div>
                                             </ListGroup.Item>
                                         </ListGroup>
                                     </div>
                                 </Col>
                             </Row>
+                            <Row>
+                                <div className="header">
+                                    <h3>Reviews:</h3>
+                                </div>
+                                <div>
+                                    TODO
+                                </div>
+                            </Row>
                         </Container>
                     </div>
-                    <IoAddCircle size={30}/>
-                    <IoAddCircleOutline size={30}/>
-                    <IoEarOutline size={30}/>
-                    <IoEar size={30}/>
-                    <IoStarHalf size={30}/>
-                    <IoStarOutline size={30}/>
-                    <IoStar size={30}/>
+
+                    <div className="header">
+                        TODO ICONS
+                        <IoAddCircle size={30} />
+                        <IoAddCircleOutline size={30} />
+                        <IoEarOutline size={30} />
+                        <IoEar size={30} />
+                        <IoStarHalf size={30} />
+                        <IoStarOutline size={30} />
+                        <IoStar size={30} />
+                    </div>
                 </div>
             )}
 

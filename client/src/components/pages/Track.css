@@ -23,10 +23,22 @@
     display: flex;
     justify-content: center;
     align-items: baseline;
+    padding: 10px;
+}
+
+.header2 {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding-bottom: 20px;
 }
 
 .subHeader {
     margin-right: 10px;
+}
+
+.subHeader2 {
+    margin-right: 5px;
 }
 
 .centeredVerticalCol {
