@@ -411,9 +411,6 @@ function Track({ username }) {
                                                                 {result.review}
                                                             </Card.Text>
                                                         </Card.Body>
-                                                        <script>
-                                                            var test = '1
-                                                        </script>
                                                         <Card.Footer>{convertMariaDBDatetimeToLocalTime(result.datetime)}</Card.Footer>
                                                     </Card>
                                                 </Col>
