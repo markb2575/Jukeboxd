@@ -220,6 +220,7 @@ const handleListen = () => {
                     if (listened === true) {
                         setListened(false)
                         setRated(false)
+                        setRadioValue('0')
                     }
                 } else {
                     console.log("something happened")
