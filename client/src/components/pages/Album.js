@@ -220,7 +220,7 @@ function Album({ username }) {
           </div>
           <div className="header2">
             <h4 className="subHeader">by</h4> <h2 className="subHeader">{albums.map((result, index) => (<div key={index} style={{ display: "inline" }}><Link to={`/artist/${result.artistID}`}>{result.artistName}</Link>{index === albums.length - 1 ? null : " and "}</div>))}</h2>
-            <h4 className="subHeader">Released in</h4> <h3>{releaseDate}</h3>
+            <h4 className="subHeader">Released in</h4> <h3>{releaseDate.split("-")[1]}-{releaseDate.split("-")[2]}-{releaseDate.split("-")[0]}</h3>
           </div>
           <div>
             <Container>
