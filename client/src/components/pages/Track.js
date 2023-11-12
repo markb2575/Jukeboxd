@@ -10,6 +10,9 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { IoAddCircleOutline, IoAddCircle, IoEarOutline, IoEar, IoStarHalf, IoStarOutline, IoStar } from "react-icons/io5";
+import Form from 'react-bootstrap/Form'
+import Modal from 'react-bootstrap/Modal'
+import Card from 'react-bootstrap/Card'
 import './Track.css'
 
 function Track({ username }) {
@@ -20,42 +23,37 @@ function Track({ username }) {
     const [track, setTrack] = useState(null)
     const [artists, setArtists] = useState(null)
     const [album, setAlbum] = useState(null)
-    const [radioValue, setRadioValue] = useState(null);
+    const [radioValue, setRadioValue] = useState('0'); // Rating
+    const [show, setShow] = useState(false); // Show review box
+    const [reviewText, setReviewText] = useState("")
+    const [reviews, setReviews] = useState(null)
+    const [reviewsExist, setReviewsExist] = useState(false)
+
+    const [reviewed, setReviewed] = useState(false);
+    const [listened, setListened] = useState(false);
+    const [watchlist, setWatchlist] = useState(false);
+    const [rated, setRated] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => {
+        setShow(true)
+    };
 
     const radios = [
+        { name: 'None', value: '0' },
         { name: '1', value: '1' },
         { name: '2', value: '2' },
         { name: '3', value: '3' },
         { name: '4', value: '4' },
         { name: '5', value: '5' },
     ];
-    // const [releaseDate, setReleaseDate] = useState("")
-    // const [artistID, setArtistID] = useState(null)
-
-    // const checkStatus = useCallback(() => {
-    //     fetch(`http://localhost:8080/user/follower=${username}&followee=${profileName}`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'authorization': localStorage.token
-    //         }
-    //     }).then((response) => {
-    //         response.json().then(res => {
-    //             setIsFollowing(res.isFollowing)
-    //         }).catch(e => {
-    //             console.log(e);
-    //         });
-    //         // Code for handling the response
-    //     }).catch(error => console.error(error));
-    // }, [profileName, username])
 
     useEffect(() => {
-        // console.log("in useeffect")
         setTrackID(pathname.split("/track/")[1])
         if (trackID.length === 0 || username.length === 0) return
-        console.log(trackID, username)
+
         //check if trackID exists in database, if not, navigate to error page
-        fetch(`http://localhost:8080/track/getTrack/${trackID}`, {
+        fetch(`http://localhost:8080/track/getTrack/${trackID}&${username}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -67,95 +65,120 @@ function Track({ username }) {
                 return
             }
             response.json().then(res => {
-                //   res = res[0]
-                // console.log(res.album[0].albumID,res.album[0].name)
                 var hours = Math.floor(res.track[0].duration / 60000)
                 var minutes = Math.floor(res.track[0].duration % 60000 / 1000)
                 res.track[0].duration = `${hours}:${minutes < 10 ? '0' + minutes : minutes}`
                 setTrack(res.track[0])
                 setAlbum(res.album[0])
                 setArtists(res.artist)
-                //   setArtistID(res.artistID)
-                //   setArtistName(res.artistName)
-                //   setImageURL(res.image_URL)
-                //   setAlbumName(res.name)
-                //   setReleaseDate(res.release_date.split("T")[0])
+                if (res.review.length === 1) {
+                    setReviewText(res.review[0].review)
+                    setReviewed(true)
+                }
+                if (res.listened.length === 1) {
+                    setRadioValue(res.listened[0].rating.toString())
+                    if (res.listened[0].rating.toString() !== '0') {
+                        setRated(true)
+                        console.log('this has been rated before')
+                    } else {
+                        setRated(false)
+                        console.log('this HAS NOT been rated before')
+                    }
+                    setListened(true)
+                }
+                if (res.watchlist.length === 1) {
+                    setWatchlist(true)
+                }
+                if (res.reviews.length !== 0) {
+                    setReviews(res.reviews)
+                    setReviewsExist(true)
+                }
+
                 setLoading(false)
             }).catch(e => {
                 console.log(e);
             });
-            // if (profileName === username) {
-            //     setViewingOwnProfile(true)
-            //     setLoading(false)
-            //     return
-            // }
-            // setLoading(false)
-            // checkStatus()
+
             // Code for handling the response
         }).catch(error => console.error(error));
     }, [pathname, navigate, username, trackID]);
-    // const handleFollowUser = (e) => {
-    //     e.preventDefault()
-    //     //create a request to login with the following object
-    //     var usernames = {
-    //         followerUsername: username,
-    //         followeeUsername: profileName
-    //     }
-    //     if (isFollowing) {
-    //         fetch('http://localhost:8080/user/unfollowUser', {
-    //             method: 'POST',
-    //             body: JSON.stringify(usernames),
-    //             headers: { 'Content-Type': 'application/json' }
-    //         }).then(response => {
-    //             if (response.status === 200) {
-    //                 checkFollowStatus()
-    //             } else {
 
-    //             }
-    //         }).catch(error => console.error(error));
-    //     } else {
-    //         fetch('http://localhost:8080/user/followUser', {
-    //             method: 'POST',
-    //             body: JSON.stringify(usernames),
-    //             headers: { 'Content-Type': 'application/json' }
-    //         }).then(response => {
-    //             if (response.status === 200) {
-    //                 checkFollowStatus()
-    //             } else {
+    const handleSaveReview = (e) => {
+        e.preventDefault()
+        setShow(false);
 
-    //             }
-    //         }).catch(error => console.error(error));
-    //     }
+        var reviewToSend = {
+            username: username,
+            spotifyTrackID: trackID,
+            reviewText: reviewText,
+        }
 
-    // }
-    /*
-    return (
-        <div>
-            <NavbarComponent />
-            {loading ? (
-                null
-            ) : (
-                <Container>
-                <div>
-                    <h1>Now viewing {track.trackName} by {artists.map((result, index) => (<div key={index} style={{ display: "inline" }}><Link to={`/artist/${result.artistID}`}>{result.name}</Link>{index === artists.length - 1 ? null : " and "}</div>))}</h1>
-                    <img src={album.image_URL} alt="Album Cover" onClick={() => navigate(`/album/${album.albumID}`)} style={{
-                        "width": "400px",
-                        "height": "auto"
-                    }} />
-                    <h5>Album: <Link to={`/album/${album.albumID}`}>{album.name}</Link></h5>
-                    <div>
-                        <h5>Track Duration: {track.duration}</h5>
-                        {track.explicit?<h5>Explicit</h5>:null}
-                        <h5>Track Number: {track.track_number}</h5>
-                        <h5>Disc Number: {track.disc_number}</h5>
-                    </div>
-                </div>
-                </Container>
-            )}
+        fetch('http://localhost:8080/track/setReview', {
+            method: 'POST',
+            body: JSON.stringify(reviewToSend),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => {
+            if (response.status === 200) {
+                if (reviewed === false) {
+                    setReviewed(true)
+                }
 
-        </div>
-    );
-    */
+                setTrackID(pathname.split("/track/")[1])
+                if (trackID.length === 0 || username.length === 0) return
+                //console.log(trackID, username)
+                //check if trackID exists in database, if not, navigate to error page
+                fetch(`http://localhost:8080/track/getTrack/${trackID}&${username}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'authorization': localStorage.token
+                    }
+                }).then((response) => {
+                    if (response.status === 404) {
+                        navigate("/404");
+                        return
+                    }
+                    response.json().then(res => {
+                        setReviews(res.reviews)
+                        setReviewsExist(true)
+                    }).catch(e => {
+                        console.log(e);
+                    });
+                }).catch(error => console.error(error));
+            } else {
+                console.log("something happened")
+            }
+        })
+    }
+
+    const handleRate = (e) => {
+        var newRating = {
+            username: username,
+            spotifyTrackID: trackID,
+            rating: e.target.value
+        }
+
+        if (e.target.value.toString() !== '0') {
+            setRated(true)
+        } else {
+            setRated(false)
+        }
+
+        fetch('http://localhost:8080/track/setRating', {
+            method: 'POST',
+            body: JSON.stringify(newRating),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => {
+            if (response.status === 200) {
+                if (listened === false) {
+                    setListened(true)
+                }
+            } else {
+                console.log("something happened")
+            }
+        })
+
+    }
 
     return (
         <div>
@@ -196,15 +219,23 @@ function Track({ username }) {
                                         <ListGroup>
                                             <ListGroup.Item>
                                                 <div className="horizontalSpaceBetween">
-                                                    <h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button>
-                                                    <h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button>
+                                                    {listened ? <><h4 className="subHeader2">Listened:</h4><Button title="Listened"><IoEarOutline size={30} /></Button></>
+                                                        : <><h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button></>
+                                                    }
+                                                    {watchlist ? <><h4 className="subHeader2">Saved:</h4><Button title="Watchlisted"><IoAddCircleOutline size={30} /></Button></>
+                                                        : <><h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button></>
+                                                    }
+                                                    {/* <h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button>
+                                                    <h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button> */}
                                                 </div>
                                             </ListGroup.Item>
 
                                             <ListGroup.Item>
                                                 <div className="centeredHorizontal">
-                                                    <h4 className="subHeader">Rate:</h4>
-                                                    <ButtonGroup>
+                                                    {rated ? <h4 className="subHeader">Rated:</h4>
+                                                        : <h4 className="subHeader">Rate:</h4>
+                                                    }
+                                                    <ButtonGroup onChange={handleRate}>
                                                         {radios.map((radio, idx) => (
                                                             <ToggleButton
                                                                 key={idx}
@@ -217,6 +248,7 @@ function Track({ username }) {
                                                                 onChange={(e) => setRadioValue(e.currentTarget.value)}
                                                             >
                                                                 {radio.name}
+
                                                             </ToggleButton>
                                                         ))}
                                                     </ButtonGroup>
@@ -225,7 +257,35 @@ function Track({ username }) {
 
                                             <ListGroup.Item>
                                                 <div className="centeredHorizontal">
-                                                    <Button variant="outline-primary" title="Review">Review</Button>
+                                                    {/* <Button onClick={handleReview} variant="outline-primary" title="Review">Review</Button> */}
+                                                    {reviewed ? <Button onClick={handleShow} title="Review">Edit Review</Button> :
+                                                        <Button onClick={handleShow} variant="outline-primary" title="Review">Review</Button>}
+
+                                                    <Modal show={show} onHide={handleClose}>
+                                                        <Modal.Header closeButton>
+                                                            <Modal.Title>Review</Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body>
+                                                            <Form>
+                                                                <Form.Group
+                                                                    className="mb-3"
+                                                                    controlId="exampleForm.ControlTextarea1"
+                                                                >
+                                                                    <Form.Label>Add a review:</Form.Label>
+                                                                    <Form.Control as="textarea" rows={10} maxLength={500} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
+                                                                    <Form.Text muted>Maximum length 500</Form.Text>
+                                                                </Form.Group>
+                                                            </Form>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <Button variant="secondary" onClick={handleClose}>
+                                                                Close
+                                                            </Button>
+                                                            <Button variant="primary" onClick={handleSaveReview}>
+                                                                Save Changes
+                                                            </Button>
+                                                        </Modal.Footer>
+                                                    </Modal>
                                                 </div>
                                             </ListGroup.Item>
                                         </ListGroup>
@@ -237,21 +297,30 @@ function Track({ username }) {
                                     <h3>Reviews:</h3>
                                 </div>
                                 <div>
-                                    TODO
+                                    {reviewsExist ?
+
+                                        <Row xs={1} md={1} className="g-4">
+
+                                            {reviews.map((result, idx) => (
+                                                <Col key={idx}>
+                                                    <Card>
+                                                        <Card.Header>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link> </Card.Header>
+                                                        <Card.Body>
+                                                            <Card.Text>
+                                                                {result.review}
+                                                            </Card.Text>
+                                                        </Card.Body>
+                                                        <Card.Footer>{result.datetime.split("T")[0]} {result.datetime.split("T")[1].split(".")[0]}</Card.Footer>
+                                                    </Card>
+                                                </Col>
+                                            ))}
+                                        </Row>
+
+                                        :
+                                        <div>No reviews exist yet</div>}
                                 </div>
                             </Row>
                         </Container>
-                    </div>
-
-                    <div className="header">
-                        TODO ICONS
-                        <IoAddCircle size={30} />
-                        <IoAddCircleOutline size={30} />
-                        <IoEarOutline size={30} />
-                        <IoEar size={30} />
-                        <IoStarHalf size={30} />
-                        <IoStarOutline size={30} />
-                        <IoStar size={30} />
                     </div>
                 </div>
             )}
