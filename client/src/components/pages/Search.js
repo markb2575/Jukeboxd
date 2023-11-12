@@ -97,17 +97,20 @@ function Search() {
         if (response.ok) {
           return response.json();
         } else {
-          console.log(searchQuery);
-          setNoResults(true);
 
           throw new Error('Failed to fetch search results');
         }
       })
       .then((data) => {
-        setNoResults(false);
-        setSearchResults(data);
-        if (pageNum > Math.ceil(data.length / pageSize)) {
-          setPageNum(Math.ceil(data.length / pageSize));
+        if (data.length > 0) {
+          setNoResults(false);
+          setSearchResults(data);
+          if (pageNum > Math.ceil(data.length / pageSize)) {
+            setPageNum(Math.ceil(data.length / pageSize));
+          }
+        } else {
+          setNoResults(true);
+
         }
       })
       .catch((error) => {

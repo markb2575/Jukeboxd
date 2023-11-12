@@ -25,15 +25,9 @@ router.get('/users/:query', async (req, res) => {
     );
 
 
-    // Check if there are results
-    if (users.length > 0) {
-      console.log(users);
-      return res.status(200).json(users);
-    } else {
-      // No users found
+    console.log(users);
+    return res.status(200).json(users);
 
-      //res.status(404).json({ error: 'No users found' });
-    }
   } catch (error) {
     console.error('Error:', query, error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -68,15 +62,9 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     );
 
 
-    // Check if there are results
-    if (songs.length > 0) {
-      console.log(songs);
-      return res.status(200).json(songs);
-    } else {
-      // No songs found
+    console.log(songs);
+    return res.status(200).json(songs);
 
-      //res.status(404).json({ error: 'No songs found' });
-    }
   } catch (error) {
     console.error('Error:', query, error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -95,15 +83,9 @@ router.get('/artists/:query', async (req, res) => {
     );
 
 
-    // Check if there are results
-    if (artists.length > 0) {
-      console.log(artists);
-      return res.status(200).json(artists);
-    } else {
-      // No artists found
+    console.log(artists);
+    return res.status(200).json(artists);
 
-      //res.status(404).json({ error: 'No artists found' });
-    }
   } catch (error) {
     console.error('Error:', query, error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -134,15 +116,9 @@ GROUP BY AL.album_ID;
     );
 
 
-    // Check if there are results
-    if (albums.length > 0) {
-      console.log(albums);
-      return res.status(200).json(albums);
-    } else {
-      // No albums found
+    console.log(albums);
+    return res.status(200).json(albums);
 
-      //res.status(404).json({ error: 'No albums found' });
-    }
   } catch (error) {
     console.error('Error:', query, error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -208,15 +184,9 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     const all = users.concat(songs, artists, albums);
 
 
-    // Check if there are results
-    if (all.length > 0) {
-      console.log(all);
-      return res.status(200).json(all);
-    } else {
-      // No results found
+    console.log(all);
+    return res.status(200).json(all);
 
-      //res.status(404).json({ error: 'No results found' });
-    }
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
