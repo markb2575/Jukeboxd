@@ -32,7 +32,7 @@ router.get('/users/:query', async (req, res) => {
     } else {
       // No users found
 
-      res.status(404).json({ error: 'No users found' });
+      //res.status(404).json({ error: 'No users found' });
     }
   } catch (error) {
     console.error('Error:', query, error);
@@ -75,7 +75,7 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     } else {
       // No songs found
 
-      res.status(404).json({ error: 'No songs found' });
+      //res.status(404).json({ error: 'No songs found' });
     }
   } catch (error) {
     console.error('Error:', query, error);
@@ -102,7 +102,7 @@ router.get('/artists/:query', async (req, res) => {
     } else {
       // No artists found
 
-      res.status(404).json({ error: 'No artists found' });
+      //res.status(404).json({ error: 'No artists found' });
     }
   } catch (error) {
     console.error('Error:', query, error);
@@ -141,7 +141,7 @@ GROUP BY AL.album_ID;
     } else {
       // No albums found
 
-      res.status(404).json({ error: 'No albums found' });
+      //res.status(404).json({ error: 'No albums found' });
     }
   } catch (error) {
     console.error('Error:', query, error);
@@ -215,7 +215,7 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     } else {
       // No results found
 
-      res.status(404).json({ error: 'No results found' });
+      //res.status(404).json({ error: 'No results found' });
     }
   } catch (error) {
     console.error('Error:', error);
