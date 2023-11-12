@@ -128,4 +128,89 @@ router.post('/setRating', async (req, res) => {
 
 });
 
+router.post('/add-listened-track/:username/:s_track_id', auth, async (req, res) => {
+  try {
+    const { username, s_track_id } = req.params;
+
+
+    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
+
+    // Add the track to the listened tracks
+    await db.pool.query(
+      'INSERT INTO ListenedTrack (user_ID, track_ID, rating) VALUES (?, ?, 0)',
+      [user_ID[0].user_ID, track_ID[0].track_ID]
+    );
+
+    res.status(200).json({ message: 'Track added to listened tracks' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post('/add-watch-track/:username/:s_track_id', auth, async (req, res) => {
+  try {
+    const { username, s_track_id } = req.params;
+
+
+    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
+
+    // Add the track to the watchlist
+    await db.pool.query(
+      'INSERT INTO WatchTrack (user_ID, track_ID) VALUES (?, ?)',
+      [user_ID[0].user_ID, track_ID[0].track_ID]
+    );
+
+    res.status(200).json({ message: 'Track added to watchlist' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/delete-listened-track/:username/:s_track_id', auth, async (req, res) => {
+  try {
+    const { username, s_track_id } = req.params;
+
+
+    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
+
+    // Delete the track from the listened tracks
+    await db.pool.query(
+      'DELETE FROM ListenedTrack WHERE user_ID = ? AND track_ID = ?',
+      [user_ID[0].user_ID, track_ID[0].track_ID]
+    );
+
+    res.status(200).json({ message: 'Track deleted from listened tracks' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/delete-watch-track/:username/:s_track_id', auth, async (req, res) => {
+  try {
+    const { username, s_track_id } = req.params;
+
+
+    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
+
+    // Remove the track from the watch list
+    await db.pool.query(
+      'DELETE FROM WatchTrack WHERE user_ID = ? AND track_ID = ?',
+      [user_ID[0].user_ID, track_ID[0].track_ID]
+    );
+
+
+    res.status(200).json({ message: 'Track deleted from watchlist' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;

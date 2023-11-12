@@ -198,6 +198,84 @@ function Track({ username }) {
         return datetimeObject.toLocaleString(undefined, options);
     }
 
+    const handleListen = () => {
+        if (listened) {
+            //Remove from list
+            fetch(`http://localhost:8080/track/delete-listened-track/${username}/${trackID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': localStorage.token
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    if (listened === true) {
+                        setListened(false)
+                        setRated(false)
+                    }
+                } else {
+                    console.log("something happened")
+                }
+            })
+        } else {
+            //Add to list
+            fetch(`http://localhost:8080/track/add-listened-track/${username}/${trackID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': localStorage.token
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    if (listened === false) {
+                        setListened(true)
+                        setRated(false)
+                    }
+                } else {
+                    console.log("something happened")
+                }
+            })
+        }
+    }
+
+    const handleWatch = () => {
+        if (watchlist) {
+            //Remove from list
+            fetch(`http://localhost:8080/track/delete-watch-track/${username}/${trackID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': localStorage.token
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    if (watchlist === true) {
+                        setWatchlist(false)
+                    }
+                } else {
+                    console.log("something happened")
+                }
+            })
+        } else {
+            //Add to list
+            fetch(`http://localhost:8080/track/add-watch-track/${username}/${trackID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': localStorage.token
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    if (watchlist === false) {
+                        setWatchlist(true)
+                    }
+                } else {
+                    console.log("something happened")
+                }
+            })
+        }
+    }
+
     return (
         <div>
             <NavbarComponent />
@@ -237,11 +315,11 @@ function Track({ username }) {
                                         <ListGroup>
                                             <ListGroup.Item>
                                                 <div className="horizontalSpaceBetween">
-                                                    {listened ? <><h4 className="subHeader2">Listened:</h4><Button title="Listened"><IoEarOutline size={30} /></Button></>
-                                                        : <><h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button></>
+                                                    {listened ? <><h4 className="subHeader2">Listened:</h4><Button title="Listened" onClick={handleListen}><IoEarOutline size={30} /></Button></>
+                                                        : <><h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen" onClick={handleListen}><IoEarOutline size={30} /></Button></>
                                                     }
-                                                    {watchlist ? <><h4 className="subHeader2">Saved:</h4><Button title="Watchlisted"><IoAddCircleOutline size={30} /></Button></>
-                                                        : <><h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button></>
+                                                    {watchlist ? <><h4 className="subHeader2">Saved:</h4><Button title="Watchlisted" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button></>
+                                                        : <><h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button></>
                                                     }
                                                     {/* <h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button>
                                                     <h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button> */}
