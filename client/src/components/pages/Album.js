@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import { IoAddCircleOutline, IoAddCircle, IoEarOutline, IoEar, IoStarHalf, IoStarOutline, IoStar } from "react-icons/io5";
+import { IoAddCircleOutline, IoAddCircle, IoEarOutline, IoEar, IoStarHalf, IoStarOutline, IoStar, IoAddCircleSharp } from "react-icons/io5";
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import Card from 'react-bootstrap/Card'
@@ -326,10 +326,10 @@ const handleListen = () => {
                     <ListGroup>
                       <ListGroup.Item>
                         <div className="horizontalSpaceBetween">
-                          {listened ? <><h4 className="subHeader2">Listened:</h4><Button title="Listened" onClick={handleListen}><IoEarOutline size={30} /></Button></>
+                          {listened ? <><h4 className="subHeader2">Listen:</h4><Button title="Listened" onClick={handleListen}><IoEar size={30} /></Button></>
                             : <><h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen" onClick={handleListen}><IoEarOutline size={30} /></Button></>
                           }
-                          {watchlist ? <><h4 className="subHeader2">Saved:</h4><Button title="Watchlisted" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button></>
+                          {watchlist ? <><h4 className="subHeader2">Save:</h4><Button title="Watchlisted" onClick={handleWatch}><IoAddCircle size={30} /></Button></>
                             : <><h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button></>
                           }
                         </div>
@@ -337,7 +337,7 @@ const handleListen = () => {
 
                       <ListGroup.Item>
                         <div className="centeredHorizontal">
-                          {rated ? <h4 className="subHeader">Rated:</h4>
+                          {rated ? <h4 className="subHeader">Rate:</h4>
                             : <h4 className="subHeader">Rate:</h4>
                           }
                           <ButtonGroup onChange={handleRate}>
