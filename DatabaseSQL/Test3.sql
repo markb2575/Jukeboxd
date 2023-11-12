@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS Test;
 CREATE DATABASE IF NOT EXISTS Test;
 USE Test;
 
+-- # set time_zone="america/new_york";
+
 -- # CREATE USER 'test'@'localhost' IDENTIFIED BY 'password';
 -- # GRANT ALL PRIVILEGES ON Test.* TO 'test'@'localhost';
 
@@ -72,7 +74,7 @@ CREATE TABLE ListenedAlbum (
   user_ID INT NOT NULL,
   album_ID INT NOT NULL,
   rating INT,
-  datetime DATETIME,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, album_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
@@ -82,7 +84,7 @@ CREATE TABLE ListenedTrack (
   user_ID INT NOT NULL,
   track_ID INT NOT NULL,
   rating INT,
-  datetime DATETIME,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, track_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
@@ -92,7 +94,7 @@ CREATE TABLE ReviewedAlbum (
   user_ID INT NOT NULL,
   album_ID INT NOT NULL,
   review VARCHAR(500),
-  datetime DATETIME,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, album_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
@@ -102,7 +104,7 @@ CREATE TABLE ReviewedTrack (
   user_ID INT NOT NULL,
   track_ID INT NOT NULL,
   review VARCHAR(500),
-  datetime DATETIME,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, track_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
@@ -111,7 +113,7 @@ CREATE TABLE ReviewedTrack (
 CREATE TABLE WatchAlbum (
   user_ID INT NOT NULL,
   album_ID INT NOT NULL,
-  datetime DATETIME,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, album_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
@@ -120,7 +122,7 @@ CREATE TABLE WatchAlbum (
 CREATE TABLE WatchTrack (
   user_ID INT NOT NULL,
   track_ID INT NOT NULL,
-  datetime DATETIME,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, track_ID),
   FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)

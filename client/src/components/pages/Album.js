@@ -188,6 +188,24 @@ function Album({ username }) {
     })
   }
 
+  function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
+    // Create a Date object from the MariaDB datetime string
+    const datetimeObject = new Date(mariaDBDatetime);
+
+    // Format the datetime in your local timezone
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short',
+    };
+
+    return datetimeObject.toLocaleString(undefined, options);
+  }
+
 
   return (
     <div>
@@ -319,7 +337,7 @@ function Album({ username }) {
                                 {result.review}
                               </Card.Text>
                             </Card.Body>
-                            <Card.Footer>{result.datetime.split("T")[0]} {result.datetime.split("T")[1].split(".")[0]}</Card.Footer>
+                            <Card.Footer>{convertMariaDBDatetimeToLocalTime(result.datetime)}</Card.Footer>
                           </Card>
                         </Col>
                       ))}

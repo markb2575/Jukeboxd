@@ -50,25 +50,8 @@ router.post('/setReview', async (req, res) => {
 
         // console.log('Review text updated: ', params.reviewText)
 
-
         const album_ID = await db.pool.query(`SELECT albums.album_ID FROM albums WHERE albums.spotify_album_ID = '${params.spotifyAlbumID}';`) // Not returned to keep album_ID private
         const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
-
-
-        const date = new Date();
-
-        const year = date.getFullYear()
-        const month = date.getMonth()
-        const day = date.getDate()
-        const hour = date.getHours()
-        const minute = date.getMinutes()
-        const second = date.getSeconds()
-        const milisecond = date.getMilliseconds()
-
-        const datetime = `${year}-${month}-${day} ${hour}:${minute}:${second}.${milisecond}`
-
-
-        // console.log(datetime)
 
         const currReview = await db.pool.query(`SELECT review, datetime FROM ReviewedAlbum WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
 
@@ -78,15 +61,14 @@ router.post('/setReview', async (req, res) => {
                     console.log("review is the same")
                     return res.status(200).send()
                 } else {
-                    await db.pool.query(`UPDATE ReviewedAlbum SET review = '${params.reviewText}', datetime = '${datetime}' WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
+                    await db.pool.query(`UPDATE ReviewedAlbum SET review = '${params.reviewText}' WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
                     console.log("review updated")
                     return res.status(200).send()
                 }
             }
 
-            await db.pool.query(`INSERT INTO ReviewedAlbum VALUES ('${user_ID[0].user_ID}', '${album_ID[0].album_ID}', '${params.reviewText}', '${datetime}');`)
+            await db.pool.query(`INSERT INTO ReviewedAlbum (user_ID, album_ID, review) VALUES ('${user_ID[0].user_ID}', '${album_ID[0].album_ID}', '${params.reviewText}');`)
 
-            //console.log(datetime)
             return res.status(200).send()
 
         } catch (err) {
@@ -109,21 +91,6 @@ router.post('/setRating', async (req, res) => {
         const album_ID = await db.pool.query(`SELECT albums.album_ID FROM albums WHERE albums.spotify_album_ID = '${params.spotifyAlbumID}';`) // Not returned to keep album_ID private
         const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
-        const date = new Date();
-
-        const year = date.getFullYear()
-        const month = date.getMonth()
-        const day = date.getDate()
-        const hour = date.getHours()
-        const minute = date.getMinutes()
-        const second = date.getSeconds()
-        const milisecond = date.getMilliseconds()
-
-        const datetime = `${year}-${month}-${day} ${hour}:${minute}:${second}.${milisecond}`
-
-
-        // console.log(datetime)
-
         const currRating = await db.pool.query(`SELECT rating, datetime FROM ListenedAlbum WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
 
         try {
@@ -132,15 +99,14 @@ router.post('/setRating', async (req, res) => {
                     console.log("rating is the same")
                     return res.status(200).send()
                 } else {
-                    await db.pool.query(`UPDATE ListenedAlbum SET rating = '${params.rating}', datetime = '${datetime}' WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
+                    await db.pool.query(`UPDATE ListenedAlbum SET rating = '${params.rating}' WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
                     console.log("rating updated")
                     return res.status(200).send()
                 }
             }
 
-            await db.pool.query(`INSERT INTO ListenedAlbum VALUES ('${user_ID[0].user_ID}', '${album_ID[0].album_ID}', '${params.rating}', '${datetime}');`)
+            await db.pool.query(`INSERT INTO ListenedAlbum (user_ID, album_ID, rating) VALUES ('${user_ID[0].user_ID}', '${album_ID[0].album_ID}', '${params.rating}');`)
 
-            //console.log(datetime)
             return res.status(200).send()
 
         } catch (err) {

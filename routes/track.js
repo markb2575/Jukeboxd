@@ -26,7 +26,6 @@ router.get('/getTrack/:trackID&:username', async (req, res) => {
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
     const reviews = await db.pool.query(`SELECT review, datetime, (SELECT username FROM Users WHERE user_ID = ReviewedTrack.user_ID) AS username FROM ReviewedTrack WHERE track_ID = '${track_ID[0].track_ID}';`)
-    //const reviews = await db.pool.query(`SELECT review, datetime, user_ID AS users.username WHERE track_ID = '${track_ID[0].track_ID}';`)
     const review = await db.pool.query(`SELECT review, datetime FROM ReviewedTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
     const listened = await db.pool.query(`SELECT rating, datetime FROM ListenedTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
     const watchlist = await db.pool.query(`SELECT datetime FROM WatchTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
@@ -59,25 +58,9 @@ router.post('/setReview', async (req, res) => {
     const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.spotifyTrackID}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
-    //console.log(track_ID, user_ID)
-    //console.log(track_ID[0].track_ID, user_ID[0].user_ID)
-
-    const date = new Date();
-
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    const day = date.getDate()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    const second = date.getSeconds()
-    const milisecond = date.getMilliseconds()
-
-    const datetime = `${year}-${month}-${day} ${hour}:${minute}:${second}.${milisecond}`
-
-
-    // console.log(datetime)
-
     const currReview = await db.pool.query(`SELECT review, datetime FROM ReviewedTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
+
+    console.log(currReview)
 
     try {
       if (currReview.length === 1) {
@@ -85,15 +68,14 @@ router.post('/setReview', async (req, res) => {
           console.log("review is the same")
           return res.status(200).send()
         } else {
-          await db.pool.query(`UPDATE ReviewedTrack SET review = '${params.reviewText}', datetime = '${datetime}' WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
+          await db.pool.query(`UPDATE ReviewedTrack SET review = '${params.reviewText}' WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
           console.log("review updated")
           return res.status(200).send()
         }
       }
 
-      await db.pool.query(`INSERT INTO ReviewedTrack VALUES ('${user_ID[0].user_ID}', '${track_ID[0].track_ID}', '${params.reviewText}', '${datetime}');`)
+      await db.pool.query(`INSERT INTO ReviewedTrack (user_ID, track_ID, review) VALUES ('${user_ID[0].user_ID}', '${track_ID[0].track_ID}', '${params.reviewText}');`)
 
-      //console.log(datetime)
       return res.status(200).send()
 
     } catch (err) {
@@ -116,24 +98,6 @@ router.post('/setRating', async (req, res) => {
     const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.spotifyTrackID}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
-    //console.log(track_ID, user_ID)
-    //console.log(track_ID[0].track_ID, user_ID[0].user_ID)
-
-    const date = new Date();
-
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    const day = date.getDate()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    const second = date.getSeconds()
-    const milisecond = date.getMilliseconds()
-
-    const datetime = `${year}-${month}-${day} ${hour}:${minute}:${second}.${milisecond}`
-
-
-    // console.log(datetime)
-
     const currRating = await db.pool.query(`SELECT rating, datetime FROM ListenedTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
 
     try {
@@ -142,15 +106,14 @@ router.post('/setRating', async (req, res) => {
           console.log("rating is the same")
           return res.status(200).send()
         } else {
-          await db.pool.query(`UPDATE ListenedTrack SET rating = '${params.rating}', datetime = '${datetime}' WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
+          await db.pool.query(`UPDATE ListenedTrack SET rating = '${params.rating}' WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
           console.log("rating updated", params.rating)
           return res.status(200).send()
         }
       }
 
-      await db.pool.query(`INSERT INTO ListenedTrack VALUES ('${user_ID[0].user_ID}', '${track_ID[0].track_ID}', '${params.rating}', '${datetime}');`)
+      await db.pool.query(`INSERT INTO ListenedTrack (user_ID, track_ID, rating) VALUES ('${user_ID[0].user_ID}', '${track_ID[0].track_ID}', '${params.rating}');`)
 
-      //console.log(datetime)
       return res.status(200).send()
 
     } catch (err) {

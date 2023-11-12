@@ -19,6 +19,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ed Sheeran', '6eUKZXaKkcv
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Pussycat', '2rmQ5EEAIkloNGWdGlvCYM');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nathaniel', '2C0Cu6wbLYQyXl8MDwH2JE');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Buzz Clifford', '4Z1spMbjudmqwjyBPleP7s');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Various Artists', '0LyfQWJT6nXafLPZqxe9Of');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tina Charles', '7Jbs4wPCLaKXPxrTxZ2zaa');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Glee Cast', '0SCbttzoZTnLFebDYmAWCm');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gwyneth Paltrow', '4njFVSUWyxD84ur7w8Oy7h');
@@ -113,6 +114,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Carole King', '319yZVtYM9
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bruno Mars', '0du5cEVh5yTK9QJze8zA0C');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Meco', '4MptlUxSUHf2QAW9JMrv4W');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ted Mulry Gang', '1o711LqmNPfr4wUF9KEJIE');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cezary Skubiszewski', '1sd3HsherSiotPlHChHZaK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Capital Cities', '4gwpcMTbLWtBUlOijbVpuu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Pendulum', '7MqnCTCAX6SsIYYdJCQj9B');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Connells', '3zAhmxuw1F3HmulPuy1RAb');
@@ -250,6 +252,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kesha', '6LqNN22kT3074XbT
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Mamas & The Papas', '1bs7HoMkSyQwcobCpE9KpN');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Craig McLachlan;Check 1-2', '4Ctw4152leMyJKFOung1X8');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Edgar Winter Group', '7j9PMegEgVN1fNp8NZXNCI');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Edgar Winter', '3UNrI3SG1l2ezKikxQ2zuk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jasmine Thompson', '2TL8gYTNgD6nXkyuUdDrMg');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chaka Demus & Pliers', '6RQkaOWddQmiLLJqSgnTbm');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jack Radics', '0YeIluqMsCUwn5NC3TG2iQ');
@@ -273,6 +276,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Starship', '0kObWap02DEg9
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The 1975', '3mIj9lX2MWuHmhNCA7LSCW');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kylie Minogue', '4RVnAU35WRWra6OZ3CbbMA');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frankie Valli', '3CDKmzJu6uwEGnPLLZffpD');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frankie Valli & The Four Seasons', '6mcrZQmgzFGRWf7C0SObou');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sherbet', '45NevEaV0GyRopWoADDPr2');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Anita Bryant', '2M93P87MDGek6uzg7Jn7he');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The 5th Dimension', '1UUYAQ9LiRsZF0ZukQNWXM');
@@ -304,6 +308,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Luca Schreiner', '5fiYAV2
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Shadows', '03hfAxVdAWj7kxDnSG0fLD');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Alanis Morissette', '6ogn9necmbUdCppmNnGOdi');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Normie Rowe & The Playboys', '3BykRRSbAiUHBrVx626F5X');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Normie Rowe', '23U4BazsWheaHKYgKGnnkl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Faron Young', '6uvq6FeVsmhOWfJHxVNeBL');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joan Jett & the Blackhearts', '1Fmb52lZ6Jv7FMWXXTPO3K');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mental As Anything', '6PFydyUHMKD2jm5NXzRPiK');
@@ -337,6 +342,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Doja Cat', '5cj0lLjcoR7YO
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Stone Temple Pilots', '2UazAtjfzqBF0Nho2awK4z');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sheppard', '6VxCmtR7S3yz4vnzsJqhSV');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Flowers', '1Ic7597AdNZRVWP8Lwoa36');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ICEHOUSE', '3IUisqn0mluZR0LITs8Sqk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Winger', '2qQeKHrQJHLLbvDAOSO874');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Los Del Rio', '2JXn03fudjyRkQ1Ye9f5rk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Oliver', '3kn0edxse3lzsrrtrNTtyU');
@@ -474,6 +480,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('2Pac', '1ZwdS5xdxEREPySFr
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Notorious B.I.G.', '5me0Irg2ANcsgc93uaYrpb');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kasabian', '11wRdbnoYqRddKBrpHt4Ue');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('TV Rock feat. Seany B', '4bTEVYNWoaihmJavrdOG9D');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Djfrancofabi', '1fxqf95uqYhN827zwXvBKC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ali Gatie', '4rTv3Ejc7hKMtmoBOK1B4T');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Idina Menzel', '73Np75Wv2tju61Eo9Zw4IR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Daddy Cool', '5ht2HGrvbN9eDWJarHsou6');
@@ -504,6 +511,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('John Fogerty', '5ujCegv1B
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Atomic Kitten', '6JMHws5haIO6V35YNYDnDw');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Josh Pyke', '4UzQ37Y0rzonVpsXpcNyFH');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hockey', '0UaUeprRolTdlmZVU4yzPS');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Howard Shore', '0OcclcP5o8VKH2TRqSY2A7');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('CAKE', '6A43Djmhbe9100UwnI7epV');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Christina Perri', '7H55rcKCfwqkyDFH9wpKM6');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Richard Marx', '0grdhNhiRLFBaFVyybqsj6');
@@ -538,7 +546,9 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Autumn', '7nb3bQbrTAzmdR2
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('New Kids On The Block', '55qiaow2sDYtjqu1mwRua6');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hunters & Collectors', '7udwYystFcvYziV36ZIwuh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Police', '5NGO30tJxFlKixkPSgXcFE');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sting', '0Ty63ceoRnnJKVEYP0VQpk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Divinyls', '5t06MTkDD3yr5LVs3YFLQC');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Michael Chapman', '2c0pcpdtdPQR43bR4dLh1A');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dee Clark', '6PyZY3e7wgYgRdegqvqhSo');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Normani', '2cWZOOzeOm4WmBJRnD5R7I');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Blood\, Sweat & Tears', '24GaH9tRBgZjlvOhpFuKi2');
@@ -721,6 +731,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('B*Witched', '72eP0W3rIhkx
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kisschasy', '21wuAm9OFJEeN7h3EozO0r');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lil\' Kim', '5tth2a3v0sWwV1C7bApBdX');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ruby Velle & The Soulphonics', '5hA2fNOsOjec1PiwPcrQ3k');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ruby Velle', '1MNIGuWcmHqrvCtsfGbdqr');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Slade', '10n5lhNDoSMUHWLlnST1yw');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cosima De Vito', '0pcFlG7v2bPuExwKqTYSPu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jessie J', '2gsggkzM5R49q6jpPvazou');
@@ -776,7 +787,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mötley Crüe', '0cc6vw3V
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hot Chelle Rae', '6jTnHxhb6cDCaCu4rdvsQ0');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kings of Leon', '2qk9voo8llSGYcZ6xrBzKx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Electric Light Orchestra', '7jefIIksOi1EazgRTfW2Pk');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sting', '0Ty63ceoRnnJKVEYP0VQpk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Damien Leith', '5XVcYaeSTGZXwxd63aY9Tv');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lee Harding', '7eIoAymVZ9RQZidZgt4e7t');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('PEZ', '0nqejKHUiWWMRltB0Cx5xq');
@@ -840,6 +850,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lady A', '32WkQRZEVKSzVAA
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('S.O.A.P.', '4tc5xhcuEtiRizloAL4wZI');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The DeFranco Family', '4Phz26PNbjIHdIt3K8xQCh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tony DeFranco', '38sPq7kD35ixVbUUtchXSa');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The DeFranco Family featuring Tony DeFranco', '6Tfk6zhQU1KGfVeRoeqWDl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('SWV', '2NmK5FyrQ18HOPXq1UBzqa');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('City Spud', '3L2SIGZah4QZSvN4wC8rHl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tom Jones', '1T0wRBO0CK0vK8ouUMqEl5');
@@ -889,6 +900,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Céline Dion', '4S9EykWXh
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Groove Armada', '67tgMwUfnmqzYsNAtnP6YJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gram\'ma Funk', '3jE9LY400g6ZV1otfI3Zgq');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Brendon Urie', '6eYFryfcEu3QSq59D62wZQ');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Panic! At The Disco', '20JZFwl6HVl6yg8a4H3ZqK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Aerosmith', '7Ey4PD4MYsKc5I2dolUwbH');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Neon Trees', '0RpddSzUHfncUWNJXKOsjy');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chicago', '3iDD7bnsjL9J4fO298r0L0');
@@ -905,6 +917,8 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Del Shannon', '3c8WoNjBfy
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tonic', '6qXwLwTLdA44HYsA26vaNU');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Heart', '34jw2BbxjoYalTp8cJFCPv');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Average White Band', '3tx8fyu3c4OBP5nejYtUOb');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Arif Mardin', '3EOX6d6CuTUiS1PGJfHEzU');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gene Paul', '1q8e6StM7uuBBH7YWqjVto');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kajagoogoo', '0f3kLT4wvi2mFHlHJgV8Hl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('NEIKED', '5H6xmHXjsq98NLbEjuE29f');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mae Muller', '1BEUkE2CSUgHTLSBMZdnFB');
@@ -959,6 +973,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bino Rideaux', '3pcerTbRF
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Peter Cetera', '5xWPOujQqd4wXyB08slZ9Z');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Amy Grant', '72Nhcx7prNk2ZCxhx0Y5es');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Angry Anderson', '2lyDLsnU3pS26GoJzrppCS');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Angry', '5G8dT4FEBQqXpdJLCJ0kex');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Regard', '4ofCBoyEiGSePFAG500xev');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('James Brown & The Famous Flames', '32r72WOqqRO1DtSznId7Lr');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Wang Chung', '6Zh3xrWlA0SA9Fsfj9AVwm');
@@ -985,7 +1000,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Florence Welch', '0IROOdQ
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Potbelleez', '34sQ4BJAwfwQsn9OgJtIzj');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('A.B. Logic', '3uuPMhG3hFjDQwMat8Zj9b');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sammi Elston', '5k4H6TUXcqQiT4tB9wfGKt');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Various Artists', '0LyfQWJT6nXafLPZqxe9Of');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bluejuice', '7sCcPQQft3sSxcJaB30dlb');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('No Doubt', '0cQbJU1aAzvbEmTuljWLlF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('U.S.A. For Africa', '7sF6m3PpW6G6m6J2gzzmzM');
@@ -1074,6 +1088,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dzeko', '5vQfv3s2Z2SRdPZK
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Preme', '0bdJZl7TDeiymDYzMJnVh2');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Post Malone', '246dkjvS1zLTtiykXe5h60');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cliff Richard & The Shadows', '4IdvJZeciaa37wYr2qBpjm');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cliff Richard', '2nvKpWcP8etYTq4JrRiUiy');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Earth\, Wind & Fire', '4QQgXkCYTt3BlENzhyNETg');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Emotions', '64CuUOOirKmdAYLQSfaOyr');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bob The Builder', '52VfGq3cCGwYsc5UGObOb0');
@@ -1155,7 +1170,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Blu Cantrell', '6vytZ677l
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Scorpions', '27T030eWyCQRmDyuvr1kxY');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mis-Teeq', '6csA2rxNLkQJXeEa7lyGXn');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jody Miller', '656TGMl6uRQSQlFRVCKt7w');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Panic! At The Disco', '20JZFwl6HVl6yg8a4H3ZqK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rojdar', '2JmtD7WjLBb2Ev8OcOvC6d');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Shannon Noll', '2JQme5IJ3U7SRVQqHGN2fG');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tina Turner', '1zuJe6b1roixEKMOtyrEak');
@@ -1210,6 +1224,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Cuff Links', '1VKy7hI
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Parson James', '48sLioddyaXkuhyHXSkpsB');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Birds Of Tokyo', '25ou7Y6W7L1fcMoCZMbf86');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Len Barry', '7mXnN0kZ67wigGTn1OuNkD');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Dovells', '6LaraO4gcDKWw0fwIOTodm');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rotimi', '1xBARhKI09ZTmeePVDWMCf');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Snow Patrol', '3rIZMv9rysU7JkLzEaC5Jp');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Edwin Hawkins Singers', '0lEzfSVcNRLDUKdI7fBDD3');
@@ -1237,7 +1252,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jebediah', '6L9bfTvOEA9BO
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mike Posner', '2KsP6tYLJlTBvSUxnwlVWa');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('AC/DC', '711MCceyCBcFnzjGY4Q7Un');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Leah Haywood', '6kvkcogluXUBXdQzJy6Alw');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cliff Richard', '2nvKpWcP8etYTq4JrRiUiy');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Fiddler\'s Dram', '06BtvGNmAV9RjsbXPTTcXb');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Faker', '0RaO9p4AomXaVUXzV8SPVW');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Youssou N\'Dour', '77zlytAFjPFjUKda8TNIDY');
@@ -1301,6 +1315,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tammy Wynette', '1LFKKuzn
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hootie & The Blowfish', '08ct2eZF5lUPdJpHwNKWof');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Dudley Moore Trio', '3ha1Kg6tvNh4F4HBmXlMW7');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('David Cassidy', '0isDnZYMWbwDz7hzw0XRjt');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Partridge Family', '7u1mqP3ykglpCB2c1p1p5I');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dragon', '622HMYOaiqowUmcd5t3b7t');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Naughty By Nature', '4Otx4bRLSfpah5kX8hdgDC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('José Feliciano', '7K78lVZ8XzkjfRSI7570FF');
@@ -1321,7 +1336,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Megan Thee Stallion', '18
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lucas & Steve', '5wwneIFdawNgQ7GvKK29Z3');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Blackstreet', '2P3cjUru4H3fhSXXNxE9kA');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Beastie Boys', '03r4iKL2g2442PT9n2UKsx');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ICEHOUSE', '3IUisqn0mluZR0LITs8Sqk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nirvana', '6olE6TJLqED3rqDCT0FyPh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ol\' 55', '3UmfCgpdKzg2WTa6453o4E');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gordon Lightfoot', '23rleGXVOVVgTk3xgtmfE4');
@@ -1363,6 +1377,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sandrine', '7CNy7uF3Ujumg
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Scissor Sisters', '3Y10boYzeuFCJ4Qgp53w6o');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mario Millo', '7apyAypjcjkknExFpqhSuw');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Manhattan Transfer', '2dogRElUKV20C2khRHqjRc');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rupert Gregson-Williams', '2vuXYcTqreOLLnlKtMV5UG');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Verve Pipe', '242iqFnwNhlidVBMI9GYKp');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cardi B', '4kYSro6naA4h99UJvo89HB');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Blessid Union Of Souls', '4W4gYpQ2AQq7US2HZS13Qw');
@@ -1398,6 +1413,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Glenn Frey', '3vMWY1bUrmY
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chris de Burgh', '2RpHsROrX075xfIwHn6B2U');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Amy Lee', '0fGVuq5ed21pM7iWwTcMyk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Del Shannon with Orchestra', '6bsbqU6d3OFRlSy2fB8gX8');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Strictly Ballroom (Original Soundtrack)', '7DKeGG5kGOYH4fT8xD4jqi');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('MIKA', '5MmVJVhhYKQ86izuGHzJYA');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Stellar', '5yw4tA8D5uG7tT3NaDvq10');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Beautiful Girls', '0hDJSg859MdK4c9vqu1dS8');
@@ -1453,6 +1469,8 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sidney Samson', '3XonXgjE
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cut \'N\' Move', '2OQkm6IvTu9MeHkGQQ4cSK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dr. Alban', '6BkcAbUkfIBM4XudxieMq8');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Limahl', '7LTzUnZaptYfAFmvqW5M6D');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Klaus Doldinger', '2nwNBRZ0DZlRAQBBO0Pdym');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Giorgio Moroder', '6jU2Tt13MmXYk0ZBv1KmfO');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chiddy Bang', '40giwFcTQtv9ezxW8yqxJU');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Steve Earle', '2UBTfUoLI07iRqGeUrwhZh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Blue Öyster Cult', '00tVTdpEhQQw1bqdu8RCx2');
@@ -1480,6 +1498,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hilltop Hoods', '7dlqUnjo
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cobra Starship', '2aYJ5LAta2ScCdfLhKgZOY');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Leighton Meester', '481VlDdXZAIRxnHyywNbXn');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('John Lennon', '4x1nvY2FN8jxqAFA0DA02H');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Yoko Ono', '2s4tjL6W3qrblOe0raIzwJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ronnie Burns', '3tsvlpzINrKBjitq8YDz0D');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Reece Mastin', '6pjod8SsOOGf6GW9tfEnH1');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Angus & Julia Stone', '4tvKz56Tr39bkhcQUTO0Xr');
@@ -1541,7 +1560,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cristina Gatti', '5jlYvfz
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Steve Harley', '3dS8rLINyM7EYuMXryXJym');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Steve Harley & Cockney Rebel', '6EL5GD53kaaVgJCHgdtdLz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kids Of 88', '4XLDU2AQL3oFnd27IMcNqY');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Normie Rowe', '23U4BazsWheaHKYgKGnnkl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('REO Speedwagon', '55vs7NT1KxcFjbMC4y202E');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Fleur East', '37mtx80nMDETlbsq2eFCzc');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ROZES', '6jsjhAEteAlY0vCiLvMLBA');
@@ -1677,6 +1695,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Yellowstone And Voice', '
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ringo Starr', '6DbJi8AcN5ANdtvJcwBSw8');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dawn', '1vjeJ712UQutRhn6WJI4sF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tony Orlando', '6PNZ6ZfwWLiUA2BrranFl3');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tony Orlando & Dawn', '72NXpYBIaTfEeAAsxXLs0P');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dada Pop', '2dPhXL2lcxM2VrD390c8Aq');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Newton Faulkner', '0pf1lcBxh6HiiHQAIzhTI5');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Yardbirds', '2lxX1ivRYp26soIavdG9bX');
@@ -1685,7 +1704,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sammi Constantine', '0Yff
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Voyager', '2H58zKePZXsWCVPRdIXomB');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Spice Girls', '0uq5PttqEjj3IH1bzwcrXF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Diana Ross & The Supremes', '0rXI0q8Cahq6numvPlloaq');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frankie Valli & The Four Seasons', '6mcrZQmgzFGRWf7C0SObou');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Black Rob', '1QPZhx0asYTBxD5RDqfU49');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mark Curry', '20N6dS0vq9kMWXUqEkFrBA');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Meck', '6CisEcpNg7X1sXXhLoMIp4');
@@ -1712,6 +1730,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dead Reynolds', '7pAkErb3
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rik Rok', '67wCYxOq4A1ohAs7jWYaOJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('DJ Cassidy', '1xLOb1CC0N70wA28T7Q5uE');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Robin Thicke', '0ZrpamOxcZybMHGg1AYtHP');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Johnny Farnham', '3YW6OQ9tKlQ01mccFjXmtl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sweet', '3JaAGmSTpJK35DqWrDUzBz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Feargal Sharkey', '3zk5lgbVEre0rKRBqiKt0T');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ty Dolla $ign', '7c0XG5cIJTrrAgEC3ULPiq');
@@ -1728,7 +1747,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('GoonRock', '53sIBaVjXQhfH
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Man 2 Man', '5mhyYbgxQFdNMPdDFRm9G4');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bananarama', '3sc7iUG1Wwpwx7bHeZolgx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Daya', '6Dd3NScHWwnW6obMFbl1BH');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Partridge Family', '7u1mqP3ykglpCB2c1p1p5I');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('La Bouche', '488v7rQzthLNK22r0UvMie');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Martha Davis', '2ioCVuqjcRCoQPhEYY0kmg');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ozzy Osbourne', '6ZLTlhejhndI4Rh53vYhrY');
@@ -1742,6 +1760,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kodaline', '4BxCuXFJrSWGi
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rosa Linn', '46xBNx0j6cwY6sD9LgMTm1');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Quindon Tarver', '0dfkF1i9s8ZyOAKbV572T7');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Josh Abrahams', '2C18qcP3k1dkMJpByV6rZX');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Baz Luhrmann', '7HhTERkBV4Ot14KphgBfSh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mike Oldfield', '562Od3CffWedyz2BbeYWVn');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('American Authors', '0MlOPi3zIDMVrfA9R04Fe3');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sam Bailey', '5o61gIxxfbohs0sm3B88d6');
@@ -1757,6 +1776,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Owl City', '07QEuhtrNmmZ0
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Haddaway', '0Suv0tRrNrUlRzAy8aXjma');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ace of Base', '5ksRONqssB7BR161NTtJAm');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Shep And The Limelites', '3xaiq6cHhYX5xclwRkT6Jf');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Andrew Lockington', '0sK0i9UQeU4aPaxgGTFTcC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joe Tex', '5TbXjzD8tYgMD5JU2g2F8q');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Skylar Grey', '4utLUGcTvOJFr6aqIJtYWV');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Toploader', '6xeFne1rkxMhKSW3ipvkdV');
@@ -1831,7 +1851,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Loud Luxury', '6t1gpxYbY8
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Big Shaq', '7mnAzEmgquhrVtGob81SmO');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lauren Spencer Smith', '79AyR6ATpj2LTPxfb6FX50');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Dawn', '5z348neb55aaKyQhVgqEvS');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tony Orlando & Dawn', '72NXpYBIaTfEeAAsxXLs0P');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Major Lance', '7onp6ew3LGoQImTt1I78gt');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Architecture In Helsinki', '60eT7q88iLWKnuSXed1AGr');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Manfred Mann\'s Earth Band', '2utNxkLhreF1oIfO8kQT3q');
@@ -1916,6 +1935,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gabrielle Aplin', '3w6zsw
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Blue Mink', '0hUyd9GtnzL8NysCiaxCcv');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Peabo Bryson', '49iKbKGqgn8OESkW5WduX0');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('AJ Mitchell', '6dn6x1XOng3LOAnfTjUn77');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hans Zimmer', '0YC192cP3KPCRWx8zr8MfZ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chuck Berry', '293zczrfYafIItmnmM3coR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Fat Joe', '3ScY9CQxNLQei8Umvpx5g6');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('John Butler Trio', '6fBF4MULW5yMzyGaon1kUt');
@@ -1927,6 +1947,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mondo Rock', '0f7ChwXkRvm
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jan Bradley', '4tPAbp9qF8nR9becfJGQCZ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Puddle Of Mudd', '3dXaa6jwM7B52GZpaJEIr5');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('RANI', '3SYnDj7btg9gFY7ps8m5d5');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joe Stone', '4kwEd1P9j15ZqUVP5zK7Pv');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Austen Tayshus', '5qTZ9vH8R6tz5H9QWXNf6T');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lonestar', '3qbnxnvUqR14MJ9g8QwZJK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ocean Alley', '18lpwfiys4GtdHWNUu9qQr');
@@ -1940,6 +1961,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Maren Morris', '6WY7D3jk8
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gorgon City', '4VNQWV2y1E97Eqo2D5UTjx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jennifer Hudson', '35GL8Cu2GKTcHzKGi75xl5');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Derek & The Dominos', '2rc78XDH9zuJP6bm78lU8Z');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cream', '74oJ4qxwOZvX6oSsu1DGnw');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('P.O.D.', '6KO6G41BBLTDNYOLefWTMU');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gary Puckett & The Union Gap', '4asCC4oxQcDzFXhCth2SgQ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Benedict', '1DYGOExwswVH3CxsnEnFFk');
@@ -1963,7 +1985,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sean Kingston', '6S0dmVVn
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Radiators', '5ZSYjpSDJAL5UxGSoVOPEa');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Communards', '17U2ImH5IyYMvjkCfPhMHT');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Operator Please', '3KshwzAIDBZRPr5Xc7S79C');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cream', '74oJ4qxwOZvX6oSsu1DGnw');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rizzle Kicks', '2ajhZ7EA6Dec0kaWiKCApF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Childish Gambino', '73sIBHcqh3Z3NyqHKZ7FOL');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Cascades', '6qF0CJP412Gd50Rn1sFg2o');
@@ -2106,6 +2127,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Wesley Dean', '4KvLfhBh83
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Coi Leray', '6AMd49uBDJfhf30Ak2QR5s');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Johnny Maestro', '1pXoY8oTJtPVGsrB4jmCRw');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chris Norman', '2Pawr6MMX9VBIQ9oUHg7jc');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Smokie', '5rIqOJspxDq89aBBCUda1X');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ALMA', '6c0mTNAxJxlp9HpKTUZwA8');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Roger Miller', '1RP2UpEaRzkF0Id3JigqD8');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lou Reed', '42TFhl7WlMRXiNqzSrnzPL');
@@ -2118,6 +2140,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sonique', '5xtqw2B8z8JGfD
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jon Bellion', '50JJSqHUf2RQ9xsHs0KMHg');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Los Del Mar', '3W9geOv9EsI71zPr8b78BW');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Wil Veloz', '5unKMTkFXL1KYbAvWNEyAW');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mark Knopfler', '0FI0kxP0BWurTz8cB8BBug');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Eva Simons', '2d6W4cnC5XsVOaxtgaj9hA');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chris Rea', '5KEG7G8LDYlHgFDqZyEEs2');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Norman Greenbaum', '7f8LNBVXN0h35veHrpxQFL');
@@ -2139,6 +2162,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Debelah Morgan', '0tRRrNL
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Saigon Kick', '1Qt3QdA0ZoOoeWfrJzA12d');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hurricane Smith', '2RJ0iPw6LNjlxmbUiB3cfc');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Band Aid', '35S20clEkkSNUo23ViaslZ');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Band Aid 20', '71UcB6UtI3juKDx2wsOaqn');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Marilyn Manson', '2VYQTNDsvvKN9wmU5W7xpj');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Nolans', '2H32fphWQj9hhVuCOKkchM');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kyla', '77DAFfvm3O9zT5dIoG0eIO');
@@ -2177,6 +2201,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('DJ Jazzy Jeff & The Fresh
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mungo Jerry', '2mbvqMGpwLsakeH45p1Jrb');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('K.W.S.', '188XxH8QLu4w8GW7cxSJe9');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Survivor', '26bcq2nyj5GB7uRr558iQg');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Original Soundtrack', '3huVQoEWdqUTvlYpFVUHcF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Brian McKnight', '6k0IBR0lU42s2GYpNX7kA9');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Taylor Dayne', '32lVGr0fSRGT6okLKHiP68');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ray J', '6gbGGM0E8Q1hE511psqxL0');
@@ -2213,6 +2238,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cash Backman', '5nmGcMFjm
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Hermitude', '3fmMaLC5jjf2N4EC2kTx0u');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mataya', '6JW55AQgf9M9SZgzZou2NQ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('TAPZ GALLANTINO', '7p54hwKypG19lucXWyQdGG');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Dolan Twins', '11lHDmKHzZW4fu1zsMpmDS');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Styx', '4salDzkGmfycRqNUbyBphh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Natalie La Rose', '2qdONMCoDngQk0eV4Avs1i');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jeremih', '3KV3p5EY4AvKxOlhGHORLg');
@@ -2322,6 +2348,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Two Man Band\, The', '24a
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Members', '4aUvbQAAA2SLQUH8ib96yn');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dru Hill', '1255GTUKNCLCTvH9ctD4cT');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jimmy Osmond', '0ix7E72xX5yWLJYEoowXFh');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Osmonds', '5fU6lODhpw3GEGGJuaDprR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Chet Faker', '6UcJxoeHWWWyT5HZP064om');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nathan Sykes', '2Rf4X6m0oayCJhaJ5K63GQ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gigamesh', '1Bo8Afb2Qbjs4x6kJHyjle');
@@ -2380,7 +2407,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Johnny Preston', '1B8n8vt
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bingoboys', '7DwxyX8DS22ZbIsT2Pk6S5');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jefferson Airplane', '2qFr8w5sWUITRlzZ9kZotF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Band Perry', '75FnCoo4FBxH5K1Rrx0k5A');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Johnny Farnham', '3YW6OQ9tKlQ01mccFjXmtl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Night Ranger', '1Ha0Fz4i0d4gu5fZbhBCtH');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Doop', '3IgrARF9uItsAbJ4G3uiIC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Howard Jones', '6loBF9iQdE11WSX29fNKqY');
@@ -2446,6 +2472,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Anne & Johnny Hawker', '5
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Big Brovaz', '0tTPYQGpkJ49RMbtCOQfDY');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Pure Prairie League', '1MXwwmS2JpmsHZhdMeOL2s');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Abs Breen', '6oBrKiwj82jUNB6DpeUq76');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ABS', '2T3J7n1kgrAa4ujlAiFzcQ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('JID', '6U3ybJ9UHNKEdsH7ktGBZ7');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Arcane', '57nPqD7z62gDdq37US9XJR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('League of Legends', '47mIJdHORyRerp4os813jD');
@@ -2512,6 +2539,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Giveon', '4fxd5Ee7UefO4CU
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Hooters', '7uhvDINTTiD0XBrP9fquN1');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Lemon Pipers', '2rUmEpDSHKMhamwClclHs5');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bob Kuban & The In-Men', '6mvCluPyR7DZS5PTHNjp5O');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bob Kuban', '1o2vRobBERBogRqx8q1PQX');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('John Hiatt', '4Sld5LOPbAm1QSq9U32fFV');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('StaySolidRocky', '1XLWox9w1Yvbodui0SRhUQ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cary Brothers', '21R50WhyQI5HxWOTr6MyY1');
@@ -2554,9 +2582,11 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Van Morrison', '44NX2ffIY
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Etta James', '0iOVhN3tnSvgDbcg25JoJb');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gerry Monroe', '1vbVzmoFnkpUgT1AufpnkE');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Malcolm McLaren', '4ihCM8I0fpWodgjo0mTlhZ');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The World\'s Famous Supreme Team', '2Fm3Re7cTNY00MWSFOPgoK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('James Darren', '1aRdnBeUqTNY9zdBzOrkvJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mura Masa', '5Q81rlcTFh3k6DQJXPdsot');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Friendly Fires', '3mZqziCJj4pq3P2VBpmK6p');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('YUNGBLUD', '6Ad91Jof8Niiw0lGLLi3NW');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lazyboy', '458SnbBEo5F5O1D2AEsx3h');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Don Williams', '4Ti0EKl2PVEms2NRMVGqNe');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joe South', '7s2L0cftC6UBVVxADuyfwS');
@@ -2597,14 +2627,12 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('3T', '5rAaG3OuMuWvPWYji9T
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Young MC', '5n30a5V4ftXNMHCHChmK2h');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mikky Ekko', '1buzCmyYZE4kcdLRudsb8V');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dinah Washington', '32LHRiof0sa4taYew9i3Fa');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Smokie', '5rIqOJspxDq89aBBCUda1X');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('We Five', '1XICntAIOLc3OPozkykv39');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Alex Gaudino', '7vb7VLDqpLTlAy1ctTMR5d');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Crystal Waters', '2sd9Q3r0Jhqpe3w9WVuG43');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Shakaya', '2oRTd2N9vKFAceSCA757KY');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kim Weston', '71pUA2TXf3JHUPUgsjLtuL');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('William Orbit', '2AHGrNDMKFi8rHqQ8kJqfl');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('YUNGBLUD', '6Ad91Jof8Niiw0lGLLi3NW');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jessie Reyez', '3KedxarmBCyFBevnqQHy3P');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Big Yavo', '3PGiywHOqNwJ1bv4S3fgZF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The 12th Man', '0IDBBKhe33nSK0gnDq0I1J');
@@ -2656,6 +2684,11 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jazmine Sullivan', '7gSjF
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joe Publick', '1E1j4bKRLT2qWAp50o5nDh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Livin\' Joy', '3PUzVXdNnsJGPDTIU7xvqu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Paul Morrell', '6j1mNIIhInjB8jf28UMVuq');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Andrea Monta', '2BGaTlVAaNtSSQS8T3Es1S');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Handell', '2bOfePuOZWJq83HphzhELq');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ma', '3HjlnNiL0hd5E3lsFfbhB8');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Michael Andre', '7u1QnXmPmBkNgz56Yxvgay');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Smb', '4TRXuls32T0GywkRdyChJP');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Morris Albert', '4sFsq7NFJ0zz0uN3Zb6QJ9');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ATB', '7jZM5w05mGhw6wTB1okhD9');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bachelor Girl', '4KQNF34GIZZWL10tS3XNTk');
@@ -2700,7 +2733,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The La De Da\'s', '6LUNCF
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Daddy Dewdrop', '5rFi4jPBgt63Z1JXcLE9QX');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Baccara', '4dn4KQgTE4P3jrwa3iIVzQ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jim Diamond', '4MC3knlcFjcW7nt2hdn4Dk');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Yoko Ono', '2s4tjL6W3qrblOe0raIzwJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Soulja Boy', '6GMYJwaziB4ekv1Y6wCDWS');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Hombres', '5Kd7EaN14eunBIyNux2c3z');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dion & The Belmonts', '2loYllWFfoWpoxC5YrJKc4');
@@ -2781,6 +2813,8 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gloriana', '5RjqSn7vYk8Qb
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('DJ Sammy', '4z4m1P0iX2nRSPDBEZ8LBT');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Yanou', '5SWX583ExJOL7cv8572Crs');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Do', '7sQECgfT3RtfL0RZWK63Wg');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Alex K', '7Lk3qnu0GGnvG33t23iz5k');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('KCB', '5RSTvtzYhTIr0ARC1PRaDD');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jud Strunk', '3Q68nynET81w3iLWZYEBVU');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Don Gibson', '4xcYVPssil6vbG6tq3W43S');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Surf Mesa', '1lmU3giNF3CSbkVSQmLpHQ');
@@ -2819,6 +2853,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Madison Beer', '2kRfqPViC
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Luke Combs', '718COspgdWOnwOFpJHRZHS');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('LSD', '6IZ4ctovY9dl7bgHClAvKJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kokomo', '00FrqfQ1NB4Dlr10yUP4Hr');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kris Kristofferson', '0vYQRW5LIDeYQOccTviQNX');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Byrds', '1PCZpxHJz7WAMF8EEq8bfc');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Vydamo', '6drRiHUHVW8Fr4sgiefhqG');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ike & Tina Turner', '1ZikppG9dPedbIgMfnfx8k');
@@ -2827,6 +2862,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ral Donner', '0j4ZVeMLH38
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kurupt', '6NyJIFHAePjHR1pFxwisqz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Anita McCloud', '61ODx6Din873HtUV6eDZZr');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Natina Reed', '0wBPOeoreeyAE0PPolYn14');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Michael Giacchino', '4kLvhMAuCloLxoP1aVM7Lr');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Keri Hilson', '63wjoROpeh5f11Qm93UiJ1');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('D.O.E.', '4TLCPR1sMYoNU1jA7O4uww');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tame Impala', '5INjqkS1o8h1imAzPqGZBb');
@@ -2908,7 +2944,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Björk', '7w29UYBi0qsHi5R
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('SHAED', '3KwmxIhSe9UTSEF37kwngR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('A-Type Player', '4iMzkXwBQHTYmyoR0teiDh');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sonny & Cher', '71lGEtP9qYXDsSXjfexTqO');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Dovells', '6LaraO4gcDKWw0fwIOTodm');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jonathan Groff', '7KkqUt65v6LMtR369OQ6FB');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Brian May & The ABC Showband', '7Dv2aAaLXV8Qu3m1qiVJGz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Strawbs', '7dtYyLTWjuZGOcweC3eD2f');
@@ -2987,6 +3022,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Becky G', '4obzFoKoKRHIph
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Linda Scott', '7KjuI3MbOTaBH29yju4Lr4');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Milli Vanilli', '3vRclCt9VnNhYIxFMQCxuM');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Technohead', '3iPZvuMeJKouwPtkY2oRAZ');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sebastian Gamboa', '4UZyNKxKO9oN4CN8E8UZXi');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Warren Zevon', '3mY9Ii0cL5SQxpOTAm8SHx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cal Smith', '3yFnqoyp1e54tZEY4ykvNB');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ginuwine', '7r8RF1tN2A4CiGEplkp1oP');
@@ -3070,7 +3106,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ya Kid K', '6yav7YvxQmmD4
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kita Alexander', '3CGuwWgoCYSO5Z72H5G2Ec');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Rooftop Singers', '6Gb08eT3LlkGynDscl9vbz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Red Jumpsuit Apparatus', '1SImpQO0GbjRgvlwCcCtFo');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Axwell /\ Ingrosso', '2XnBwblw31dfGnspMIwgWz');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Axwell /\\ Ingrosso', '2XnBwblw31dfGnspMIwgWz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Axwell', '1xNmvlEiICkRlRGqlNFZ43');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sebastian Ingrosso', '6hyMWrxGBsOx6sWcVj1DqP');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joey Scarbury', '5V9pNqcN25JXuH88g7lq2o');
@@ -3108,6 +3144,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Johnny Chester', '1eSVNZW
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jive Bunny and the Mastermixers', '4GzIiGnHYrOnq2LUiD6zdo');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Fools Garden', '0jRqFvRKCDryHOgrgFqsKG');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sir Douglas Quintet', '3A2UXqQgMDJ3YNvLPyX5NW');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Doug Sahm', '2PL6uHCPVIWjmr6lK2U9pG');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('99 Souls', '7aLdKgvXgDQz0wi5z2PKMV');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tegan and Sara', '5e1BZulIiYWPRm8yogwUYH');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bene', '28OHQv3VZ2gifjWzrqBv1v');
@@ -3158,6 +3195,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Spectrum', '5SKKlvQaTiiLu
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frank Mills', '1rlNSO7W5SWGspO6fgrHPS');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Yvonne Elliman', '2d6JU9LvNhZR7AAtu4x2rS');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Maxine Nightingale', '6jQ9UtYXqNfVnPkrH1Xxwi');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Trolls', '05S6yFOzexsgurWstJlBqK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Glen Hansard', '3Caot8EtHX6wLpNF2wRzS0');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Markéta Irglová', '4SklVMGMsWTq7cJd9MixUx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Mavis\'s', '6WshiDext64oLUmu6LSHAl');
@@ -3193,6 +3231,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gummibär', '6NJb7ZCMVLu2
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Plastic Ono Band', '4m2kfAHEnK7Z7qLGxeWtro');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The String-A-Longs', '7CG3fjmCcZHXOnxYrpgE6W');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Pauline Henry', '4sbH2tr8ljTXKH5uBWhUD7');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Chimes', '1zIiPjzcnAXkhlVUpL3A5A');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ronnie And The Hi-Lites', '64NBWzoBYRleutVJjDfpkT');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Deorro', '6VD4UEUPvtsemqD3mmTqCR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Marlisa', '16dHCueD31uV6lKt0w8cRX');
@@ -3227,7 +3266,9 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Mark Williams', '2ohOQrrh
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ron Holden', '0orxtneN4LcJWNxbLXtMZu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('ELAZ', '1NFdLYtu29c6NKzd49BdEd');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Lee Marvin', '7GbjN1ab1LJcJV2JOhTqBK');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sofa Sounds', '1UKhC6PpxfnaYOyga7TLZV');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nathaniel Rateliff & The Night Sweats', '02seUFsFQP7TH4hLrTj77o');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nathaniel Rateliff', '4qKpLkR911SUlnd4HAtF79');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Panics', '1kmmvExwG8zvYSADt6V09T');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ol\' Dirty Bastard', '50NoVNy9GU1lCrDV8iGpyu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nate Ruess', '1qUjOF5fzrpoNycD36b2jZ');
@@ -3254,6 +3295,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Cookies', '1xbffduk2S
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Audioslave', '2ziB7fzrXBoh1HUPS6sVFn');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Agnes', '6SsTlCsuCYleNza6xGwynu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Emilio Pericoli', '78SZetGidiOyErFwdWTmgQ');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Espérame en Roma', '55mjk9dEkxtmhJk6BiXlbx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Tommy Boyce', '6V92xGMFMr4619y6ZvEUFR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bobby Hart', '3PFXkVDrL495eCxfaMZd1F');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Steven Tyler', '32zks9ovi0IExzUd1C7W6o');
@@ -3287,11 +3329,13 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Rema', '46pWGuE3dSwY3bMMX
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jewel Akens', '1gVvCzqQy5epTJcFNwWJ37');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Claudine Clark', '4I0kvGngwrJFy1ngs6fzqZ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Scott English', '0o5Y1P7CE982DXxW28v3H8');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Richard Harris', '3EZENzxXIMmORo0HBQVDSE');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frank Ocean', '2h93pZq0e7k5yf4dywlkpM');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Paris Hilton', '1vkJFCwstOoJO7yQ4lTtLK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Taco', '6Dxf1ZaJBrpbumiqTTnlIH');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Dyo', '4H1PNuHElBLVok0lnYMrRb');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Trinidad Singers', '6pgLxFqJE6Wm9wWyM2iFEn');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jesus Christ Superstar - The Original Studio Cast', '2temQjFlKHox5OfGiwCVPy');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Bloc Party', '3MM8mtgFzaEJsqbjZBSsHJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Young Rascals', '5X3TuTi9OIsJXMGxPwTKM2');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Kids In The Kitchen', '2O7qtwbMUKIK1Va8EF48Pr');
@@ -3402,6 +3446,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Blockheads', '52jfQPo
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Sly Fox', '6wU099wsnfSuP0lxWc0jgt');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Airrion Love', '4iIUGgoxDjoMWk34GIcGs6');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Brendan Bowyer & The Royal Showband', '6ewuf1vTFhuNL31e9YRLiY');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Royal Showband', '0fDu8D4Z61JHNKq7T1BuCK');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Master KG', '523y9KSneKh6APd1hKxLuF');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Nomcebo Zikode', '4cfKtwkefMW3aiXtxfw8w6');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Stacey Q', '3q8tRS0hCMVCylgKAoA0ya');
@@ -3423,6 +3468,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('shy martin', '7eCmccnRwPm
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Denzal Park', '298I931uc5poF6kIU5XJtI');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Orianthi', '0yNy8fi1yBBq526E6mx4Zs');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Boogie Pimps', '3VX8sq17N1pJ6nStjyl0In');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Saltshaker', '6POdYmXp6CcA5IMlX2b0ja');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('YellaCatt', '2743eaMraDxEkqZTuhbtxc');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Joey Dee & The Starliters', '5a1eYf2G4v4UKubimlfGAJ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Violent Soho', '2N2EFVDEbp2JB8ulEUVIxp');
@@ -3482,7 +3528,6 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('High Contrast', '0bxHci3J
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Billy Vera & The Beaters', '1QQBo7mfkehMjDfz1tj5Pq');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Boyce Avenue', '7CQwac16i1W5ej8YpuL3dv');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Phil Oakey', '6ne5YmZH7oCXcZUBsY66sn');
-INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Giorgio Moroder', '6jU2Tt13MmXYk0ZBv1KmfO');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Shanks & Bigfoot', '2HdJwHponT4dLmV57ry159');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Cinderella', '7HL4id2U7FSDJtfKQHMgQx');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gin Wigmore', '4Gzfk9Lxm67nBs7E9BZjzG');
@@ -3512,6 +3557,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Matter Of Mind', '0OUKObt
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Five Man Electrical Band', '1GjVNyMzPjdBuip6Xanllu');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Asaf Avidan & the Mojos', '2TwepUY7feaTuipStcyzLZ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('CamelPhat', '240wlM8vDrf6S4zCyzGj2W');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('John Barry', '7ctAOUlIAs7yuMODWE2Fyz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Rasmus', '76ptJV8617638xrpeoUtzl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Marcus Santoro', '0cIOMm0D5wSyXMTcvnElUz');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('DJ Fresh', '6r20qOqY7qDWI0PPTxVMlC');
@@ -3604,6 +3650,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Elaine Paige', '7KckozT8X
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Barbara Dickson', '5pi8sj5ExnwL73KjHR2lFR');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Andy Black', '09NYzWfQlunWS3XBZFaDEC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Juliet Simms', '1hlXIybvN1I8r3ooBEkYRh');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Punk Goes', '05DSiNi8z8w8iXz34JfHse');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('FIFTY FIFTY', '4GJ6xDCF5jaUqD6avOuQT6');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Peggy March', '5EVZqrbIyEYGGite2sMhDk');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Harry Chapin', '42q4Ivs7tAiCZ5C7eG5q4c');
@@ -3634,6 +3681,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Plumb', '2tbxcCCM7A71cmkz
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('We The Kings', '3ao3jf5d70Tf4fPh2bnXVl');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Ylvis', '2lEOFtf3cCyzomQcMHJGfZ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Case', '5aEWnrN8h3MhuFUPRfaVuy');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('KAROL G', '790FomKkXshlbRYZFtlgla');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Eurika', '35aCXGIIUSR18D9C7BlUnp');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Gregory Abbott', '6zdcmro5vDQSUjeioajL2r');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Harpo', '6HsEXxUSqMXmIwbYVW6zdt');
@@ -3726,6 +3774,7 @@ INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Crystal Fighters', '75EZu
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Glass Tiger', '53RaPTbZOx2mBoZD6LLWIv');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Paris Sisters', '0SDMI2Gkjubw3ol5p5fKtX');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('John Lloyd Young', '4QTd2YuZS6ShgqWfeREdB3');
+INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Jersey Boys', '28W9apMi2vgk9O9LnkijIC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Breathe Carolina', '53M4Iv2RkzzxFFvW2B1jhC');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The Waterboys', '5TnuP42pw475UrjjeabtwZ');
 INSERT INTO Artists (name, spotify_artist_ID) VALUES ('The First Class', '5pIuhQWZ3S55Y46wQMPrjh');
