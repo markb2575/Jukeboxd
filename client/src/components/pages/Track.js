@@ -113,42 +113,46 @@ function Track({ username }) {
             reviewText: reviewText,
         }
 
-        fetch('http://localhost:8080/track/setReview', {
-            method: 'POST',
-            body: JSON.stringify(reviewToSend),
-            headers: { 'Content-Type': 'application/json' }
-        }).then(response => {
-            if (response.status === 200) {
-                if (reviewed === false) {
-                    setReviewed(true)
-                }
+        if (reviewText !== "") {
+            fetch('http://localhost:8080/track/setReview', {
+                method: 'POST',
+                body: JSON.stringify(reviewToSend),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => {
+                if (response.status === 200) {
+                    if (reviewed === false) {
+                        setReviewed(true)
+                    }
 
-                setTrackID(pathname.split("/track/")[1])
-                if (trackID.length === 0 || username.length === 0) return
-                //console.log(trackID, username)
-                //check if trackID exists in database, if not, navigate to error page
-                fetch(`http://localhost:8080/track/getTrack/${trackID}&${username}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'authorization': localStorage.token
-                    }
-                }).then((response) => {
-                    if (response.status === 404) {
-                        navigate("/404");
-                        return
-                    }
-                    response.json().then(res => {
-                        setReviews(res.reviews)
-                        setReviewsExist(true)
-                    }).catch(e => {
-                        console.log(e);
-                    });
-                }).catch(error => console.error(error));
-            } else {
-                console.log("something happened")
-            }
-        })
+                    setTrackID(pathname.split("/track/")[1])
+                    if (trackID.length === 0 || username.length === 0) return
+                    //console.log(trackID, username)
+                    //check if trackID exists in database, if not, navigate to error page
+                    fetch(`http://localhost:8080/track/getTrack/${trackID}&${username}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'authorization': localStorage.token
+                        }
+                    }).then((response) => {
+                        if (response.status === 404) {
+                            navigate("/404");
+                            return
+                        }
+                        response.json().then(res => {
+                            setReviews(res.reviews)
+                            setReviewsExist(true)
+                        }).catch(e => {
+                            console.log(e);
+                        });
+                    }).catch(error => console.error(error));
+                } else {
+                    console.log("something happened")
+                }
+            })
+
+
+        }
     }
 
     const handleRate = (e) => {

@@ -123,41 +123,45 @@ function Album({ username }) {
       reviewText: reviewText,
     }
 
-    fetch('http://localhost:8080/album/setReview', {
-      method: 'POST',
-      body: JSON.stringify(reviewToSend),
-      headers: { 'Content-Type': 'application/json' }
-    }).then(response => {
-      if (response.status === 200) {
-        if (reviewed === false) {
-          setReviewed(true)
-        }
+    if (reviewText !== "") {
+      fetch('http://localhost:8080/album/setReview', {
+        method: 'POST',
+        body: JSON.stringify(reviewToSend),
+        headers: { 'Content-Type': 'application/json' }
+      }).then(response => {
+        if (response.status === 200) {
+          if (reviewed === false) {
+            setReviewed(true)
+          }
 
-        setAlbumID(pathname.split("/album/")[1])
-        if (albumID.length === 0 || username.length === 0) return
-        //check if albumID exists in database, if not, navigate to error page
-        fetch(`http://localhost:8080/album/getAlbum/${albumID}&${username}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': localStorage.token
-          }
-        }).then((response) => {
-          if (response.status === 404) {
-            navigate("/404");
-            return
-          }
-          response.json().then(res => {
-            setReviews(res.reviews)
-            setReviewsExist(true)
-          }).catch(e => {
-            console.log(e);
-          });
-        }).catch(error => console.error(error));
-      } else {
-        console.log("something happened")
-      }
-    })
+          setAlbumID(pathname.split("/album/")[1])
+          if (albumID.length === 0 || username.length === 0) return
+          //check if albumID exists in database, if not, navigate to error page
+          fetch(`http://localhost:8080/album/getAlbum/${albumID}&${username}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': localStorage.token
+            }
+          }).then((response) => {
+            if (response.status === 404) {
+              navigate("/404");
+              return
+            }
+            response.json().then(res => {
+              setReviews(res.reviews)
+              setReviewsExist(true)
+            }).catch(e => {
+              console.log(e);
+            });
+          }).catch(error => console.error(error));
+        } else {
+          console.log("something happened")
+        }
+      })
+
+    }
+
   }
 
   const handleRate = (e) => {
@@ -206,84 +210,84 @@ function Album({ username }) {
     return datetimeObject.toLocaleString(undefined, options);
   }
 
-const handleListen = () => {
-        if (listened) {
-            //Remove from list
-            fetch(`http://localhost:8080/album/delete-listened-album/${username}/${albumID}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': localStorage.token
-                }
-            }).then(response => {
-                if (response.status === 200) {
-                    if (listened === true) {
-                        setListened(false)
-                        setRated(false)
-                        setRadioValue('0')
-                    }
-                } else {
-                    console.log("something happened")
-                }
-            })
-        } else {
-            //Add to list
-            fetch(`http://localhost:8080/album/add-listened-album/${username}/${albumID}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': localStorage.token
-                }
-            }).then(response => {
-                if (response.status === 200) {
-                    if (listened === false) {
-                        setListened(true)
-                        setRated(false)
-                    }
-                } else {
-                    console.log("something happened")
-                }
-            })
+  const handleListen = () => {
+    if (listened) {
+      //Remove from list
+      fetch(`http://localhost:8080/album/delete-listened-album/${username}/${albumID}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': localStorage.token
         }
+      }).then(response => {
+        if (response.status === 200) {
+          if (listened === true) {
+            setListened(false)
+            setRated(false)
+            setRadioValue('0')
+          }
+        } else {
+          console.log("something happened")
+        }
+      })
+    } else {
+      //Add to list
+      fetch(`http://localhost:8080/album/add-listened-album/${username}/${albumID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': localStorage.token
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          if (listened === false) {
+            setListened(true)
+            setRated(false)
+          }
+        } else {
+          console.log("something happened")
+        }
+      })
     }
+  }
 
-    const handleWatch = () => {
-        if (watchlist) {
-            //Remove from list
-            fetch(`http://localhost:8080/album/delete-watch-album/${username}/${albumID}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': localStorage.token
-                }
-            }).then(response => {
-                if (response.status === 200) {
-                    if (watchlist === true) {
-                        setWatchlist(false)
-                    }
-                } else {
-                    console.log("something happened")
-                }
-            })
-        } else {
-            //Add to list
-            fetch(`http://localhost:8080/album/add-watch-album/${username}/${albumID}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': localStorage.token
-                }
-            }).then(response => {
-                if (response.status === 200) {
-                    if (watchlist === false) {
-                        setWatchlist(true)
-                    }
-                } else {
-                    console.log("something happened")
-                }
-            })
+  const handleWatch = () => {
+    if (watchlist) {
+      //Remove from list
+      fetch(`http://localhost:8080/album/delete-watch-album/${username}/${albumID}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': localStorage.token
         }
+      }).then(response => {
+        if (response.status === 200) {
+          if (watchlist === true) {
+            setWatchlist(false)
+          }
+        } else {
+          console.log("something happened")
+        }
+      })
+    } else {
+      //Add to list
+      fetch(`http://localhost:8080/album/add-watch-album/${username}/${albumID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': localStorage.token
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          if (watchlist === false) {
+            setWatchlist(true)
+          }
+        } else {
+          console.log("something happened")
+        }
+      })
     }
+  }
 
   return (
     <div>
