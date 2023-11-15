@@ -15,6 +15,33 @@ import Modal from 'react-bootstrap/Modal'
 import Card from 'react-bootstrap/Card'
 import './Track.css'
 
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
+const ttListened = (props) => (
+  <Tooltip id="button-tooltip" {...props}>
+    Mark as listened
+  </Tooltip>
+);
+
+const ttNotListened = (props) => (
+  <Tooltip id="button-tooltip" {...props}>
+    Mark as not listened
+  </Tooltip>
+);
+
+const ttWatch = (props) => (
+  <Tooltip id="button-tooltip" {...props}>
+    Add to your watch list
+  </Tooltip>
+);
+
+const ttUnwatch = (props) => (
+  <Tooltip id="button-tooltip" {...props}>
+    Remove from your watch list
+  </Tooltip>
+);
+
 
 function Album({ username }) {
   const { pathname } = useLocation();
@@ -330,11 +357,43 @@ function Album({ username }) {
                     <ListGroup>
                       <ListGroup.Item>
                         <div className="horizontalSpaceBetween">
-                          {listened ? <><h4 className="subHeader2">Listen:</h4><Button title="Listened" onClick={handleListen}><IoEar size={30} /></Button></>
-                            : <><h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen" onClick={handleListen}><IoEarOutline size={30} /></Button></>
+                          {listened ? <><h4 className="subHeader2">Listen:</h4>
+                            <OverlayTrigger
+                              placement="top"
+                              delay={{ show: 250, hide: 400 }}
+                              overlay={ttNotListened}
+                            >
+                              <Button title="Listened" onClick={handleListen}><IoEar size={30} /></Button>
+                            </OverlayTrigger>
+                          </>
+                            : <><h4 className="subHeader2">Listen:</h4>
+                              <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={ttListened}
+                              >
+                                <Button variant="outline-primary" title="Listen" onClick={handleListen}><IoEarOutline size={30} /></Button>
+                              </OverlayTrigger>
+                            </>
                           }
-                          {watchlist ? <><h4 className="subHeader2">Save:</h4><Button title="Watchlisted" onClick={handleWatch}><IoAddCircle size={30} /></Button></>
-                            : <><h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button></>
+                          {watchlist ? <><h4 className="subHeader2">Save:</h4>
+                            <OverlayTrigger
+                              placement="top"
+                              delay={{ show: 250, hide: 400 }}
+                              overlay={ttUnwatch}
+                            >
+                              <Button title="Watchlisted" onClick={handleWatch}><IoAddCircle size={30} /></Button>
+                            </OverlayTrigger>
+                          </>
+                            : <><h4 className="subHeader2">Save:</h4>
+                              <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={ttWatch}
+                              >
+                                <Button variant="outline-primary" title="Watchlist" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button>
+                              </OverlayTrigger>
+                            </>
                           }
                         </div>
                       </ListGroup.Item>
