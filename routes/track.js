@@ -19,7 +19,7 @@ router.get('/getTrack/:trackID&:username', async (req, res) => {
     //console.log("params", params)
 
     const track = await db.pool.query(`SELECT tracks.name AS trackName, tracks.disc_number, tracks.duration, tracks.explicit, tracks.track_number FROM tracks WHERE tracks.spotify_track_ID = '${params.trackID}';`);
-    const artist = await db.pool.query(`SELECT artists.name, artists.spotify_artist_ID AS artistID FROM artists,album_artists,tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.album_ID = album_artists.album_ID AND album_artists.artist_ID = artists.artist_ID;`);
+    const artist = await db.pool.query(`SELECT artists.name, artists.spotify_artist_ID AS artistID FROM artists, Track_Artists,tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.track_ID = track_artists.track_ID AND track_artists.artist_ID = artists.artist_ID;`);
     const album = await db.pool.query(`SELECT albums.name, albums.spotify_album_ID AS albumID, albums.image_URL FROM albums, tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.album_ID = albums.album_ID;;`);
 
     const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.trackID}';`) // Not returned to keep track_ID private
