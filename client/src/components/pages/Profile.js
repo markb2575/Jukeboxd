@@ -1,15 +1,54 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
 import NavbarComponent from "../routing/NavbarComponent";
 import Button from "react-bootstrap/esm/Button";
+import FollowersModal from './Popups/FollowersModal';
+import FollowingModal from './Popups/FollowingModal';
+
+
+
+import "./Profile.css"
 
 function Profile({ username }) {
     const { pathname } = useLocation();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [profileName, setProfileName] = useState(pathname.split("/user/")[1]);
     const [viewingOwnProfile, setViewingOwnProfile] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isFollowing, setIsFollowing] = useState(false)
+    const [profileInfo, setProfileInfo] = useState({
+        followers: [],
+        following: []
+    });
+    const [followersModalShow, setFollowersModalShow] = useState(false);
+    const [followingModalShow, setFollowingModalShow] = useState(false);
+
+
+
+
+    const getProfileInfo = () => {
+        fetch(`http://localhost:8080/user/profile/${profileName}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': localStorage.token
+            }
+        }).then((response) => {
+            if (response.status === 404) {
+                navigate("/404");
+            }
+
+            setLoading(false)
+            return response.json();
+
+
+        }).then(data => {
+            setProfileInfo(data)// update the profileInfo
+            setLoading(false);
+        }).catch(error => console.error(error));
+    }
+
     const checkFollowStatus = useCallback(() => {
         fetch(`http://localhost:8080/user/follower=${username}&followee=${profileName}`, {
             method: 'GET',
@@ -48,11 +87,29 @@ function Profile({ username }) {
                 setLoading(false)
                 return
             }
+            setViewingOwnProfile(false)
             setLoading(false)
             checkFollowStatus()
             // Code for handling the response
         }).catch(error => console.error(error));
+
+
+
     }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus]);
+
+    useEffect(() => {
+        
+        getProfileInfo()
+
+    }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus]);
+
+    const handleUsernameClick = (clickedUsername) => {
+        setFollowersModalShow(false)
+        setFollowingModalShow(false)
+        setProfileName(clickedUsername)
+        navigate(`/user/${clickedUsername}`)
+    };
+
     const handleFollowUser = (e) => {
         e.preventDefault()
         //create a request to login with the following object
@@ -68,6 +125,7 @@ function Profile({ username }) {
             }).then(response => {
                 if (response.status === 200) {
                     checkFollowStatus()
+                    getProfileInfo()
                 } else {
 
                 }
@@ -80,6 +138,7 @@ function Profile({ username }) {
             }).then(response => {
                 if (response.status === 200) {
                     checkFollowStatus()
+                    getProfileInfo()
                 } else {
 
                 }
@@ -94,16 +153,46 @@ function Profile({ username }) {
                 null
             ) : (
                 viewingOwnProfile ? (
-                    <h1>Welcome to your profile, {username}!</h1>
+                    <h1 > {username} (You)</h1>
                 ) : (
                     <div>
-                        <h1>Welcome to {profileName}'s Profile!</h1>
-                        <Button onClick={handleFollowUser}>{isFollowing ? "Unfollow User" : "Follow User"}</Button>
+                        <h1>{profileName}   <Button style={{ marginLeft: '10px' }} onClick={handleFollowUser}>{isFollowing ? "Unfollow User" : "Follow User"}</Button>
+                        </h1>
                     </div>
                 )
+
+            )}
+            {/* Insert rest of profile here */}
+            {!loading && (
+                <div className="center">
+                    <div className="rounded-container">
+                        <div className="rounded-content">
+                            <p className="followers-link" onClick={() => setFollowersModalShow(true)}>
+                                Followers: {profileInfo.followers.length}
+                            </p>                            <div className="divider"></div>
+                            <p className="following-link" onClick={() => setFollowingModalShow(true)}>
+                                Following: {profileInfo.following.length}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             )}
 
-        </div>
+            <FollowersModal
+                show={followersModalShow}
+                onHide={() => setFollowersModalShow(false)}
+                followers={profileInfo.followers}
+                onUsernameClick={handleUsernameClick}
+            />
+
+            <FollowingModal
+                show={followingModalShow}
+                onHide={() => setFollowingModalShow(false)}
+                following={profileInfo.following}
+                onUsernameClick={handleUsernameClick}
+            />
+
+        </div >
     );
 }
 

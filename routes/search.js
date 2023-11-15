@@ -16,7 +16,7 @@ router.get('/', auth, async (req, res) => {
 router.get('/users/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    console.log(query);
+    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const users = await db.pool.query(
@@ -25,7 +25,7 @@ router.get('/users/:query', async (req, res) => {
     );
 
 
-    console.log(users);
+    //console.log(users);
     return res.status(200).json(users);
 
   } catch (error) {
@@ -37,7 +37,7 @@ router.get('/users/:query', async (req, res) => {
 router.get('/tracks/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    console.log(query);
+    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const songs = await db.pool.query(
@@ -62,7 +62,7 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     );
 
 
-    console.log(songs);
+    //console.log(songs);
     return res.status(200).json(songs);
 
   } catch (error) {
@@ -74,7 +74,7 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
 router.get('/artists/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    console.log(query);
+    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const artists = await db.pool.query(
@@ -83,7 +83,7 @@ router.get('/artists/:query', async (req, res) => {
     );
 
 
-    console.log(artists);
+    //console.log(artists);
     return res.status(200).json(artists);
 
   } catch (error) {
@@ -95,7 +95,7 @@ router.get('/artists/:query', async (req, res) => {
 router.get('/albums/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    console.log(query);
+    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const albums = await db.pool.query(
@@ -116,7 +116,7 @@ GROUP BY AL.album_ID;
     );
 
 
-    console.log(albums);
+    //console.log(albums);
     return res.status(200).json(albums);
 
   } catch (error) {
@@ -128,7 +128,7 @@ GROUP BY AL.album_ID;
 router.get('/all/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    console.log(query);
+    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const albums = await db.pool.query(
@@ -184,7 +184,7 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     const all = users.concat(songs, artists, albums);
 
 
-    console.log(all);
+    //console.log(all);
     return res.status(200).json(all);
 
   } catch (error) {

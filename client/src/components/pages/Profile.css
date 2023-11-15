@@ -1,0 +1,53 @@
+.center {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+}
+
+.rounded-container {
+   
+    min-width: 400px;
+    max-width: 600px;
+    text-align: center;
+  border: 1px solid #000000;
+  border-radius: 15px; 
+  padding: 15px; 
+}
+
+.rounded-content {
+    display: flex;
+  justify-content: space-between;
+}
+
+
+.divider {
+  border-left: 1px solid #ccc; /* Add a vertical line between sections */
+  height: 40px; /* Adjust the height to match the content */
+  margin: 0 10px; /* Add some margin for spacing */
+}
+
+h1 {
+  text-align: center;
+}
+
+.followers-link,
+.following-link {
+    cursor: pointer;
+}
+
+.followers-link:hover,
+.following-link:hover {
+    text-decoration: underline; /* You can use 'none' to remove underline */
+
+}
+
+.username {
+    cursor: pointer;
+}
+
+.username:hover {
+    text-decoration: underline;
+}

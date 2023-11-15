@@ -91,12 +91,12 @@ router.post('/unfollowUser', async (req, res) => {
     }
 });
 router.get('/follower=:followerUsername&followee=:followeeUsername', async (req, res) => {
-    console.log("inside check status")
-    console.log("params",req.params)
+    //console.log("inside check status")
+    //console.log("params",req.params)
     const followerUsername = req.params.followerUsername;
     const followeeUsername = req.params.followeeUsername;
     try {
-        console.log(followerUsername,followeeUsername)
+        //console.log(followerUsername,followeeUsername)
         const followerID = await db.pool.query(`select user_ID from users where username = '${followerUsername}'`)
         const followeeID = await db.pool.query(`select user_ID from users where username = '${followeeUsername}'`)
         if (followeeID.length === 0 || followerID.length === 0) return res.status(400).send()
@@ -117,6 +117,42 @@ router.get('/follower=:followerUsername&followee=:followeeUsername', async (req,
     }
 });
 
+router.get('/profile/:username', async (req, res) => {
+    
+    const username = req.params.username;
+    try {
+        const tmp = await db.pool.query(`select user_ID from Users where username = '${username}'`)
+        var userID = null;
+        if(tmp.length > 0) {
+            userID = tmp[0].user_ID
+        } else {
+            return res.status(400).send()
+        }
+         //get followers
+         const followersList = await db.pool.query(`select U.username from Users U join Followers F on U.user_ID = F.follower where F.followee = '${userID}'`)
+         //get following
+        const followingList = await db.pool.query(`select U.username from Users U join Followers F on U.user_ID = F.followee where F.follower = '${userID}'`)
+        //console.log(followersList)
+        //console.log(followingList)
+
+         //get listened to tracks
+         //get listened to albums
+         //get watchlist tracks
+         //get watchlist albums
+
+         //combine into JSON object
+
+        return res.status(200).json({
+            followers:followersList,
+            following:followingList
+         })
+
+
+
+    } catch (err) {
+        throw err;
+    }
+});
 
 
 
