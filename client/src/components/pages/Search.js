@@ -123,7 +123,7 @@ function Search() {
     <div>
       <NavbarComponent />
       <div>
-        <h4>Filter by:&#20;
+        <h4>Filter by:&nbsp;&nbsp;
           <button
             onClick={() => handleFilterChange('all')}
             className={filter === 'all' ? 'active' : ''}
@@ -159,7 +159,7 @@ function Search() {
           <h5>No results found.</h5>
         ) : (
           <h5>
-            Page {pageNum} of {Math.ceil(searchResults.length / pageSize)} &#20;
+            Page {pageNum} of {Math.ceil(searchResults.length / pageSize)} &nbsp;
             <button
               onClick={handlePrev}
             >
