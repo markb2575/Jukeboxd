@@ -19,7 +19,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/login', async (req, res) => {
     let credentials = req.body;
     try {
-        const hash = await db.pool.query(`select password from Users where username = '${credentials.username}'`);
+        const hash = await db.pool.query(`select password from Users where binary username = '${credentials.username}'`);
         // userID could not be found
         if (hash.length == 0) return res.status(401).send()
         if (await bcrypt.compare(credentials.password, hash[0].password)) {

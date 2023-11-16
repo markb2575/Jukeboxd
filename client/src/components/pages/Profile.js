@@ -5,10 +5,14 @@ import NavbarComponent from "../routing/NavbarComponent";
 import Button from "react-bootstrap/esm/Button";
 import FollowersModal from './Popups/FollowersModal';
 import FollowingModal from './Popups/FollowingModal';
+import Nav from 'react-bootstrap/Nav';
+import Card from 'react-bootstrap/Card';
+
 
 
 
 import "./Profile.css"
+import CardText from "react-bootstrap/esm/CardText";
 
 function Profile({ username }) {
     const { pathname } = useLocation();
@@ -98,7 +102,7 @@ function Profile({ username }) {
     }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus]);
 
     useEffect(() => {
-        
+
         getProfileInfo()
 
     }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus]);
@@ -162,7 +166,7 @@ function Profile({ username }) {
                 )
 
             )}
-            {/* Insert rest of profile here */}
+
             {!loading && (
                 <div className="center">
                     <div className="rounded-container">
@@ -175,6 +179,38 @@ function Profile({ username }) {
                             </p>
                         </div>
                     </div>
+
+                </div>
+
+
+            )}
+
+            {!loading && (
+                <div className="center">
+                    <Card>
+                        <Card.Header>
+                            <Nav variant="tabs" defaultActiveKey="#listened">
+                                <Nav.Item>
+                                    <Nav.Link href="#listened">Listened To</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link href="#watchlist">Save For Later</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Header>
+                        <Card.Body>
+                            <h4 style={{textAlign:"left"}}>Tracks</h4>
+                            <div className="card-container">
+
+                            </div>
+                            <div style={{padding:"5px"}}>
+                            </div>
+                            <h4 style={{textAlign:"left"}}>Albums</h4>
+                            <div className="card-container">
+
+                            </div>
+                        </Card.Body>
+                    </Card>
                 </div>
             )}
 
