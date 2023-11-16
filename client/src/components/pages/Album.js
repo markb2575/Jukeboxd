@@ -67,8 +67,34 @@ function Album({ username }) {
   const [watchlist, setWatchlist] = useState(false);
   const [rated, setRated] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    if (reviewed === false) {
+      setReviewText("")
+    }
+  }
+
   const handleShow = () => {
+    if (reviewed) {
+      fetch(`http://localhost:8080/album/getReview/username=${username}&spotifyAlbumID=${albumID}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }).then(response => {
+        if (response.status === 200) {
+          response.json().then(res => {
+            console.log('review: ', res.review[0].review)
+            setReviewText(res.review[0].review)
+          }).catch(e => {
+            console.log(e);
+          });
+        } else {
+          console.log("something happened")
+        }
+      }).catch(error => console.error(error));
+    }
+    if (reviewed === false) {
+      setReviewText("")
+    }
     setShow(true)
   };
 
@@ -160,35 +186,22 @@ function Album({ username }) {
           if (reviewed === false) {
             setReviewed(true)
           }
-
-          setAlbumID(pathname.split("/album/")[1])
-          if (albumID.length === 0 || username.length === 0) return
-          //check if albumID exists in database, if not, navigate to error page
-          fetch(`http://localhost:8080/album/getAlbum/${albumID}&${username}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'authorization': localStorage.token
-            }
-          }).then((response) => {
-            if (response.status === 404) {
-              navigate("/404");
-              return
-            }
-            response.json().then(res => {
+          response.json().then(res => {
+            if (res.reviews.length !== 0) {
               setReviews(res.reviews)
               setReviewsExist(true)
-            }).catch(e => {
-              console.log(e);
-            });
-          }).catch(error => console.error(error));
+            }
+          }).catch(e => {
+            console.log(e);
+          });
         } else {
           console.log("something happened")
         }
-      })
-
+      }).catch(error => console.error(error));
     }
-
+    if (reviewed === false) {
+      setReviewText("")
+    }
   }
 
   const handleRate = (e) => {
@@ -217,6 +230,42 @@ function Album({ username }) {
         console.log("something happened")
       }
     })
+  }
+
+
+  const handleDeleteReview = (e) => {
+    e.preventDefault()
+    setShow(false);
+
+    var reviewToDelete = {
+      username: username,
+      spotifyAlbumID: albumID,
+    }
+
+    fetch('http://localhost:8080/album/deleteReview', {
+      method: 'DELETE',
+      body: JSON.stringify(reviewToDelete),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(response => {
+      if (response.status === 200) {
+        setReviewed(false)
+        setReviewText(null)
+
+        response.json().then(res => {
+          if (res.reviews.length !== 0) {
+            setReviews(res.reviews)
+            setReviewsExist(true)
+          } else {
+            setReviews(null)
+            setReviewsExist(false)
+          }
+        }).catch(e => {
+          console.log(e);
+        });
+      } else {
+        console.log("something happened")
+      }
+    }).catch(error => console.error(error));
   }
 
   function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
@@ -429,7 +478,7 @@ function Album({ username }) {
                           {reviewed ? <Button onClick={handleShow} title="Review">Edit Review</Button> :
                             <Button onClick={handleShow} variant="outline-primary" title="Review">Review</Button>}
 
-                          <Modal show={show} onHide={handleClose}>
+                          {reviewed ? <Modal show={show} onHide={handleClose}>
                             <Modal.Header closeButton>
                               <Modal.Title>Review</Modal.Title>
                             </Modal.Header>
@@ -439,13 +488,18 @@ function Album({ username }) {
                                   className="mb-3"
                                   controlId="exampleForm.ControlTextarea1"
                                 >
-                                  <Form.Label>Add a review:</Form.Label>
+                                  <Form.Label>Edit your review:</Form.Label>
                                   <Form.Control as="textarea" rows={10} maxLength={500} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
                                   <Form.Text muted>Maximum length 500</Form.Text>
                                 </Form.Group>
                               </Form>
                             </Modal.Body>
                             <Modal.Footer>
+                              <Col className="buttonLeft">
+                                <Button className="buttonLeft" variant="primary" onClick={handleDeleteReview}>
+                                  Delete
+                                </Button>
+                              </Col>
                               <Button variant="secondary" onClick={handleClose}>
                                 Close
                               </Button>
@@ -454,6 +508,32 @@ function Album({ username }) {
                               </Button>
                             </Modal.Footer>
                           </Modal>
+                            :
+                            <Modal show={show} onHide={handleClose}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Review</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body>
+                                <Form>
+                                  <Form.Group
+                                    className="mb-3"
+                                    controlId="exampleForm.ControlTextarea1"
+                                  >
+                                    <Form.Label>Add a review:</Form.Label>
+                                    <Form.Control as="textarea" rows={10} maxLength={500} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
+                                    <Form.Text muted>Maximum length 500</Form.Text>
+                                  </Form.Group>
+                                </Form>
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                  Close
+                                </Button>
+                                <Button variant="primary" onClick={handleSaveReview}>
+                                  Save Changes
+                                </Button>
+                              </Modal.Footer>
+                            </Modal>}
                         </div>
                       </ListGroup.Item>
                     </ListGroup>
