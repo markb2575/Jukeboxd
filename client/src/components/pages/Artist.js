@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, Link } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import { Tab, ListGroup, Row, Col, Nav } from "react-bootstrap";
+import { Tab, ListGroup, Row, Col, Nav, Image } from "react-bootstrap";
 
 
 function Artist({ username }) {
@@ -115,11 +115,11 @@ function Artist({ username }) {
       ) : (
         <div className="container mt-3">
           <Row className="justify-content-between">
-            <Col md={4} className="border rounded p-3">
+            <Col md={3} className="border rounded p-3">
               <h1>{artistName}</h1>
               <p className="border rounded p-3">Description</p>
             </Col>
-            <Col md={4} className="float-right border rounded p-3">
+            <Col md={8} className="float-right border rounded p-3">
               <Nav
                 variant="underline"
                 defaultActiveKey="#albums"
@@ -134,45 +134,62 @@ function Artist({ username }) {
                 </Nav.Item>
               </Nav>
               {activeTab === '#albums' && (
-                <ListGroup className="w-100 mx-auto">
-                  {albums === null || albums.length === 0 ? "This artist has no albums" :
-                    (albums.map((result, index) => (
-                      <ListGroup.Item key={index} onClick={() => navigate(`/album/${result.albumID}`)}>
-                        <img
-                          src={result.image_URL}
-                          alt="Album Cover"
-                          style={{
-                            width: '100px',
-                            height: 'auto',
-                          }}
-                        />
-                        <p>{result.albumName}</p>
-                      </ListGroup.Item>
-                    )))}
-                </ListGroup>
+                <Row className="w-100 mx-auto">
+                  {albums === null || albums.length === 0 ? (
+                    <p>This artist has no albums</p>
+                  ) : (
+                    albums.map((result, index) => (
+                      <Col key={index} md={4} onClick={() => navigate(`/album/${result.albumID}`)}>
+                        <ListGroup.Item className="border rounded p-3" style={{margin:"5%"}}>
+                          <Image
+                            src={result.image_URL}
+                            alt="Album Cover"
+                            rounded
+                            style={{
+                              width: '200px',
+                              height: 'auto',
+                            }}
+                          />
+                          <p style={{
+                              width: '200px',
+                              height: 'auto',
+                          }}>{result.albumName}</p>
+                        </ListGroup.Item>
+                      </Col>
+                    ))
+                  )}
+                </Row>
               )}
               {activeTab === '#tracks' && (
-                <ListGroup className="w-100 mx-auto">
-                  {tracks === null || tracks.length === 0 ? "This artist has no tracks" :
-                    (tracks.map((result, index) => (
-                      <ListGroup.Item key={index} onClick={() => navigate(`/track/${result.trackID}`)}>
-                        <img
-                          src={result.image_URL}
-                          alt="Album Cover"
-                          style={{
-                            width: '100px',
-                            height: 'auto',
-                          }}
-                        />
-                        <p>{result.trackName}</p>
-                      </ListGroup.Item>
-                    )))}
-                </ListGroup>
+                <Row className="w-100 mx-auto">
+                  {tracks === null || tracks.length === 0 ? (
+                    <p>This artist has no tracks</p>
+                  ) : (
+                    tracks.map((result, index) => (
+                      <Col key={index} md={4} onClick={() => navigate(`/track/${result.trackID}`)}>
+                        <ListGroup.Item className="border rounded p-3" style={{margin:"5%"}}>
+                          <Image
+                            src={result.image_URL}
+                            alt="Album Cover"
+                            rounded
+                            style={{
+                              width: '200px',
+                              height: 'auto',
+                            }}
+                          />
+                          <p style={{
+                              width: '200px',
+                              height: 'auto',
+                          }}>{result.trackName}</p>
+                        </ListGroup.Item>
+                      </Col>
+                    ))
+                  )}
+                </Row>
               )}
             </Col>
           </Row>
         </div>
-
       )}
 
     </div>
