@@ -16,16 +16,16 @@ router.get('/', auth, async (req, res) => {
 router.get('/getArtist/:artistID&:username', async (req, res) => {
   let params = req.params;
   try {
-    const artist = await db.pool.query(`SELECT artists.name AS artistName FROM artists WHERE artists.spotify_artist_ID = '${params.artistID}';`);
-    const albums = await db.pool.query(`SELECT albums.name AS albumName, albums.spotify_album_ID AS albumID, albums.image_URL FROM albums, album_artists, artists WHERE albums.album_ID = album_artists.album_ID AND album_artists.artist_ID = artists.artist_ID AND artists.spotify_artist_ID = '${params.artistID}';`);
-    const tracks = await db.pool.query(`SELECT tracks.name AS trackName, tracks.spotify_track_ID AS trackID, albums.image_URL FROM tracks LEFT JOIN albums ON tracks.album_ID = albums.album_ID LEFT JOIN track_artists ON track_artists.track_ID = tracks.track_ID LEFT JOIN artists ON artists.artist_ID = track_artists.artist_ID WHERE artists.spotify_artist_ID = '${params.artistID}';`);
+    const artist = await db.pool.query(`SELECT Artists.name AS artistName FROM Artists WHERE Artists.spotify_artist_ID = '${params.artistID}';`);
+    const albums = await db.pool.query(`SELECT Albums.name AS albumName, Albums.spotify_album_ID AS albumID, Albums.image_URL FROM Albums, Album_Artists, Artists WHERE Albums.album_ID = Album_Artists.album_ID AND Album_Artists.artist_ID = Artists.artist_ID AND Artists.spotify_artist_ID = '${params.artistID}';`);
+    const tracks = await db.pool.query(`SELECT Tracks.name AS trackName, Tracks.spotify_track_ID AS trackID, Albums.image_URL FROM Tracks LEFT JOIN Albums ON Tracks.album_ID = Albums.album_ID LEFT JOIN Track_Artists ON Track_Artists.track_ID = Tracks.track_ID LEFT JOIN Artists ON Artists.artist_ID = Track_Artists.artist_ID WHERE Artists.spotify_artist_ID = '${params.artistID}';`);
     console.log(artist, albums, tracks)
     
-    // const track = await db.pool.query(`SELECT tracks.name AS trackName, tracks.disc_number, tracks.duration, tracks.explicit, tracks.track_number FROM tracks WHERE tracks.spotify_track_ID = '${params.trackID}';`);
-    // const artist = await db.pool.query(`SELECT artists.name, artists.spotify_artist_ID AS artistID FROM artists,album_artists,tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.album_ID = album_artists.album_ID AND album_artists.artist_ID = artists.artist_ID;`);
-    // const album = await db.pool.query(`SELECT albums.name, albums.spotify_album_ID AS albumID, albums.image_URL FROM albums, tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.album_ID = albums.album_ID;;`);
+    // const track = await db.pool.query(`SELECT Tracks.name AS trackName, Tracks.disc_number, Tracks.duration, Tracks.explicit, Tracks.track_number FROM Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}';`);
+    // const artist = await db.pool.query(`SELECT Artists.name, Artists.spotify_artist_ID AS artistID FROM Artists, Album_Artists, Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}' AND Tracks.album_ID = Album_Artists.album_ID AND Album_Artists.artist_ID = Artists.artist_ID;`);
+    // const album = await db.pool.query(`SELECT Albums.name, Albums.spotify_album_ID AS albumID, Albums.image_URL FROM Albums, Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}' AND Tracks.album_ID = Albums.album_ID;;`);
 
-    // const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.trackID}';`) // Not returned to keep track_ID private
+    // const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}';`) // Not returned to keep track_ID private
     // const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
     // const reviews = await db.pool.query(`SELECT review, datetime, (SELECT username FROM Users WHERE user_ID = ReviewedTrack.user_ID) AS username FROM ReviewedTrack WHERE track_ID = '${track_ID[0].track_ID}';`)

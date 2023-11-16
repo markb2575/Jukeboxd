@@ -18,11 +18,11 @@ router.get('/getTrack/:trackID&:username', async (req, res) => {
   try {
     //console.log("params", params)
 
-    const track = await db.pool.query(`SELECT tracks.name AS trackName, tracks.disc_number, tracks.duration, tracks.explicit, tracks.track_number FROM tracks WHERE tracks.spotify_track_ID = '${params.trackID}';`);
-    const artist = await db.pool.query(`SELECT artists.name, artists.spotify_artist_ID AS artistID FROM artists, Track_Artists,tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.track_ID = track_artists.track_ID AND track_artists.artist_ID = artists.artist_ID;`);
-    const album = await db.pool.query(`SELECT albums.name, albums.spotify_album_ID AS albumID, albums.image_URL FROM albums, tracks WHERE tracks.spotify_track_ID = '${params.trackID}' AND tracks.album_ID = albums.album_ID;;`);
+    const track = await db.pool.query(`SELECT Tracks.name AS trackName, Tracks.disc_number, Tracks.duration, Tracks.explicit, Tracks.track_number FROM Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}';`);
+    const artist = await db.pool.query(`SELECT Artists.name, Artists.spotify_artist_ID AS artistID FROM Artists, Track_Artists, Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}' AND Tracks.track_ID = Track_Artists.track_ID AND Track_Artists.artist_ID = Artists.artist_ID;`);
+    const album = await db.pool.query(`SELECT Albums.name, Albums.spotify_album_ID AS albumID, Albums.image_URL FROM Albums, Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}' AND Tracks.album_ID = Albums.album_ID;;`);
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.trackID}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${params.trackID}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
     const reviews = await db.pool.query(`SELECT review, datetime, (SELECT username FROM Users WHERE user_ID = ReviewedTrack.user_ID) AS username FROM ReviewedTrack WHERE track_ID = '${track_ID[0].track_ID}';`)
@@ -55,7 +55,7 @@ router.post('/setReview', async (req, res) => {
     // console.log('Review text updated: ', params.reviewText)
 
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.spotifyTrackID}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${params.spotifyTrackID}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
     const currReview = await db.pool.query(`SELECT review, datetime FROM ReviewedTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
@@ -95,7 +95,7 @@ router.post('/setRating', async (req, res) => {
 
   try {
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${params.spotifyTrackID}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${params.spotifyTrackID}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
     const currRating = await db.pool.query(`SELECT rating, datetime FROM ListenedTrack WHERE user_ID = '${user_ID[0].user_ID}' AND track_ID = '${track_ID[0].track_ID}';`)
@@ -133,16 +133,16 @@ router.post('/add-listened-track/:username/:s_track_id', auth, async (req, res) 
     const { username, s_track_id } = req.params;
 
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
 
-    // Add the track to the listened tracks
+    // Add the track to the listened Tracks
     await db.pool.query(
       'INSERT INTO ListenedTrack (user_ID, track_ID, rating) VALUES (?, ?, 0)',
       [user_ID[0].user_ID, track_ID[0].track_ID]
     );
 
-    res.status(200).json({ message: 'Track added to listened tracks' });
+    res.status(200).json({ message: 'Track added to listened Tracks' });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -154,7 +154,7 @@ router.post('/add-watch-track/:username/:s_track_id', auth, async (req, res) => 
     const { username, s_track_id } = req.params;
 
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
 
     // Add the track to the watchlist
@@ -175,16 +175,16 @@ router.delete('/delete-listened-track/:username/:s_track_id', auth, async (req, 
     const { username, s_track_id } = req.params;
 
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
 
-    // Delete the track from the listened tracks
+    // Delete the track from the listened Tracks
     await db.pool.query(
       'DELETE FROM ListenedTrack WHERE user_ID = ? AND track_ID = ?',
       [user_ID[0].user_ID, track_ID[0].track_ID]
     );
 
-    res.status(200).json({ message: 'Track deleted from listened tracks' });
+    res.status(200).json({ message: 'Track deleted from listened Tracks' });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -196,7 +196,7 @@ router.delete('/delete-watch-track/:username/:s_track_id', auth, async (req, res
     const { username, s_track_id } = req.params;
 
 
-    const track_ID = await db.pool.query(`SELECT tracks.track_ID FROM tracks WHERE tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
+    const track_ID = await db.pool.query(`SELECT Tracks.track_ID FROM Tracks WHERE Tracks.spotify_track_ID = '${s_track_id}';`) // Not returned to keep track_ID private
     const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
 
     // Remove the track from the watch list
