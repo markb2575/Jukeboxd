@@ -7,29 +7,32 @@ USE Test;
 -- # CREATE USER 'test'@'localhost' IDENTIFIED BY 'password';
 -- # GRANT ALL PRIVILEGES ON Test.* TO 'test'@'localhost';
 
+CREATE TABLE Artists (
+  artist_ID INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  spotify_artist_ID varchar(100) NOT NULL,
+  -- # user_ID INT DEFAULT NULL,
+  description VARCHAR(500)
+  -- # FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE SET NULL ON UPDATE CASCADE
+);
 
 CREATE TABLE Users (
   user_ID INT AUTO_INCREMENT PRIMARY KEY,
   username varchar(25) NOT NULL UNIQUE,
   password varchar(255) NOT NULL,
-  role INT
+  role INT DEFAULT 1,
+  artist_ID INT,
+  FOREIGN KEY (artist_ID) REFERENCES Artists(artist_ID)
 );
+
+INSERT INTO Users (username, password, role) VALUES ('Admin', '$2a$10$U91e2vdIdQhTQF8nm5HaMucFuvgIe4dgSegH4DLmq/0O.0H.V.ldK', 0);
 
 CREATE TABLE Followers (
   follower INT NOT NULL,
   followee INT NOT NULL,
   PRIMARY KEY (follower, followee),
-  FOREIGN KEY (followee) REFERENCES Users(user_ID),
-  FOREIGN KEY (follower) REFERENCES Users(user_ID)
-);
-
-CREATE TABLE Artists (
-  artist_ID INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
-  spotify_artist_ID varchar(100) NOT NULL,
-  user_ID INT,
-  description VARCHAR(500),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID)
+  FOREIGN KEY (followee) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (follower) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Albums (
@@ -57,8 +60,8 @@ CREATE TABLE Tracks (
   disc_number INT NOT NULL,
   explicit BOOLEAN NOT NULL,
   duration INT NOT NULL,
-  # year INT NOT NULL,
-  # release_date DATE NOT NULL,
+  -- # year INT NOT NULL,
+  -- # release_date DATE NOT NULL,
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
@@ -76,7 +79,7 @@ CREATE TABLE ListenedAlbum (
   rating INT,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, album_ID),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
@@ -86,7 +89,7 @@ CREATE TABLE ListenedTrack (
   rating INT,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, track_ID),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
 );
 
@@ -96,7 +99,7 @@ CREATE TABLE ReviewedAlbum (
   review VARCHAR(500),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, album_ID),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
@@ -106,7 +109,7 @@ CREATE TABLE ReviewedTrack (
   review VARCHAR(500),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, track_ID),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
 );
 
@@ -115,7 +118,7 @@ CREATE TABLE WatchAlbum (
   album_ID INT NOT NULL,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, album_ID),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 
@@ -124,13 +127,13 @@ CREATE TABLE WatchTrack (
   track_ID INT NOT NULL,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (user_ID, track_ID),
-  FOREIGN KEY (user_ID) REFERENCES Users(user_ID),
+  FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (track_ID) REFERENCES Tracks(track_ID)
 );
 
--- INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frank Sinatra', '1Mxqyy3pSjf8kZZL4QVxS0');
--- INSERT INTO Albums (name, spotify_album_ID, release_date, artist_ID, image_URL) VALUES ('Strangers In The Night (Expanded Edition)', '1Mxqyy3pSjf8kZZL4QVxS0', '1966-05-01', 1, 'https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9');
--- INSERT INTO Tracks (name, spotify_track_ID, album_ID, track_number, disc_number, duration, explicit) VALUES ('Strangers In The Night', '74VR3AkGPhbYXnxcOYa16x', 1, 1, 1, 157866, FALSE);
+-- # INSERT INTO Artists (name, spotify_artist_ID) VALUES ('Frank Sinatra', '1Mxqyy3pSjf8kZZL4QVxS0');
+-- # INSERT INTO Albums (name, spotify_album_ID, release_date, artist_ID, image_URL) VALUES ('Strangers In The Night (Expanded Edition)', '1Mxqyy3pSjf8kZZL4QVxS0', '1966-05-01', 1, 'https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9');
+-- # INSERT INTO Tracks (name, spotify_track_ID, album_ID, track_number, disc_number, duration, explicit) VALUES ('Strangers In The Night', '74VR3AkGPhbYXnxcOYa16x', 1, 1, 1, 157866, FALSE);
 
--- INSERT INTO Albums (name, spotify_album_ID, release_date, artist_ID, image_URL) VALUES ('My Kind Of Broadway', '4pA0MHfxB10F9Q8HhoItIh', '1965-11-01', 1, 'https://i.scdn.co/image/ab67616d0000b27320280fde86d8cf0fea539b8e');
--- INSERT INTO Tracks (name, spotify_track_ID, album_ID, track_number, disc_number, duration, explicit) VALUES ('Luck Be A Lady', '3AgY5gLURlcdYBVGv1RVm7', 2, 3, 1, 314133, FALSE);
+-- # INSERT INTO Albums (name, spotify_album_ID, release_date, artist_ID, image_URL) VALUES ('My Kind Of Broadway', '4pA0MHfxB10F9Q8HhoItIh', '1965-11-01', 1, 'https://i.scdn.co/image/ab67616d0000b27320280fde86d8cf0fea539b8e');
+-- # INSERT INTO Tracks (name, spotify_track_ID, album_ID, track_number, disc_number, duration, explicit) VALUES ('Luck Be A Lady', '3AgY5gLURlcdYBVGv1RVm7', 2, 3, 1, 314133, FALSE);

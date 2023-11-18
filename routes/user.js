@@ -40,7 +40,7 @@ router.post('/signup', async (req, res) => {
         console.log(exists)
         if (exists.length === 1) return res.status(400).send()
         const hashed = await bcrypt.hash(credentials.password, await bcrypt.genSalt())
-        await db.pool.query("insert into Users(username, password, role) values (?,?,?)", [credentials.username, hashed, 1]);
+        await db.pool.query("insert into Users(username, password) values (?,?)", [credentials.username, hashed]);
         return res.status(200).send()
     } catch (err) {
         throw err;
