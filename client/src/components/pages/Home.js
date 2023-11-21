@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
 import Card from 'react-bootstrap/Card';
@@ -17,6 +17,30 @@ function Home() {
     const [reviewsExist, setReviewsExist] = useState(false)
     const [ratingsExist, setRatingsExist] = useState(false)
 
+    const getHome = useCallback(() => {
+
+        fetch(`http://localhost:8080/user/getHome/${getUsername}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => {
+            if (response.status === 200) {
+                response.json().then(res => {
+                    if (res.reviews.length !== 0) {
+                        setReviews(res.reviews)
+                        setReviewsExist(true)
+                    }
+                    if (res.ratings.length !== 0) {
+                        setRatings(res.ratings)
+                        setRatingsExist(true)
+                    }
+                }).catch(e => {
+                    console.log(e);
+                });
+            } else {
+                console.log("something happened")
+            }
+        }).catch(error => console.error(error));
+    }, [getUsername])
 
     useEffect(() => {
         if (localStorage.token) {
@@ -30,14 +54,32 @@ function Home() {
                 if (response.status !== 500) {
                     response.json().then(res => {
                         setUsername(res.username);
-                        if (res.reviews.length !== 0) {
-                            setReviews(res.reviews)
-                            setReviewsExist(true)
-                        }
-                        if (res.ratings.length !== 0) {
-                            setRatings(res.ratings)
-                            setRatingsExist(true)
-                        }
+                        getHome()
+
+                        /*
+
+                        fetch(`http://localhost:8080/user/getHome/${getUsername}`, {
+                            method: 'GET',
+                            headers: { 'Content-Type': 'application/json' }
+                        }).then(response => {
+                            if (response.status === 200) {
+                                response.json().then(res => {
+                                    if (res.reviews.length !== 0) {
+                                        setReviews(res.reviews)
+                                        setReviewsExist(true)
+                                    }
+                                    if (res.ratings.length !== 0) {
+                                        setRatings(res.ratings)
+                                        setRatingsExist(true)
+                                    }
+                                }).catch(e => {
+                                    console.log(e);
+                                });
+                            } else {
+                                console.log("something happened")
+                            }
+                        }).catch(error => console.error(error));
+                        */
                     }).catch(e => {
                         console.log(e);
                     });
@@ -49,8 +91,7 @@ function Home() {
         } else {
             navigate("/login");
         }
-    }, [navigate]);
-
+    }, [navigate, getHome]);
 
     function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
         // Create a Date object from the MariaDB datetime string
