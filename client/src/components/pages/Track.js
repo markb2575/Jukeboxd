@@ -189,6 +189,9 @@ function Track({ username }) {
                     console.log("something happened")
                 }
             }).catch(error => console.error(error));
+            if (listened === false) {
+                handleListen()
+            }
         }
         if (reviewed === false) {
             setReviewText("")

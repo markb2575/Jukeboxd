@@ -35,7 +35,7 @@ const ttUnwatch = (props) => (
     Remove from your watch list
   </Tooltip>
 );
-function AlbumActions({username, rated, radios, radioValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRadioValue, watchlist, setWatchlist}) {
+function AlbumActions({ username, rated, radios, radioValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRadioValue, watchlist, setWatchlist }) {
   const [show, setShow] = useState(false); // Show review box
   const handleClose = () => {
     setShow(false);
@@ -75,6 +75,9 @@ function AlbumActions({username, rated, radios, radioValue, reviewed, setReviewT
           console.log("something happened")
         }
       }).catch(error => console.error(error));
+      if (listened === false) {
+        handleListen()
+      }
     }
     if (reviewed === false) {
       setReviewText("")

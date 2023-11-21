@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Container from "react-bootstrap/esm/Container";
 import './Home.css'
-// import Col from 'react-bootstrap/Col';
-// import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { IoStar } from "react-icons/io5";
 
 function Home() {
     let navigate = useNavigate();
     const [getUsername, setUsername] = useState("");
+    const [reviews, setReviews] = useState(null)
+    const [ratings, setRatings] = useState(null)
+    const [reviewsExist, setReviewsExist] = useState(false)
+    const [ratingsExist, setRatingsExist] = useState(false)
+
 
     useEffect(() => {
         if (localStorage.token) {
@@ -24,6 +30,14 @@ function Home() {
                 if (response.status !== 500) {
                     response.json().then(res => {
                         setUsername(res.username);
+                        if (res.reviews.length !== 0) {
+                            setReviews(res.reviews)
+                            setReviewsExist(true)
+                        }
+                        if (res.ratings.length !== 0) {
+                            setRatings(res.ratings)
+                            setRatingsExist(true)
+                        }
                     }).catch(e => {
                         console.log(e);
                     });
@@ -38,9 +52,23 @@ function Home() {
     }, [navigate]);
 
 
-    useEffect(() => {
+    function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
+        // Create a Date object from the MariaDB datetime string
+        const datetimeObject = new Date(mariaDBDatetime);
 
-    })
+        // Format the datetime in your local timezone
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short',
+        };
+
+        return datetimeObject.toLocaleString(undefined, options);
+    }
 
     return (
         <div>
@@ -110,109 +138,116 @@ function Home() {
 
                     </Card>
                 </CardGroup>
-            </Container>
 
-            {/*
-            <Container>
-                <h5>Popular Reviews</h5>
-                <CardGroup className="me-2">
-                    <Card>
-                        <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
-                        <Card.Body>
-                            test test test test test test test test test test test test test test test test test test test test test test test test
-                        </Card.Body>
-                        <Card.Footer>
-                            <div>
-                                <small>Username</small>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                            <div>
-                                <small>Rating</small>
-                            </div>
-                            <div>
-                                <small>Date</small>
-                            </div>
-                            </div>
-                        </Card.Footer>
-                    </Card>
 
-                    <Card>
-                        <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
-                        <Card.Body>
-                            test test test test test test test test test test test test test test test test test test test test test test test test
-                        </Card.Body>
-                        <Card.Footer>
-                            <div className="d-flex justify-content-between">
-                            <div>
-                                <small>Username</small>
-                            </div>
-                            <div>
-                                <small>Rating</small>
-                            </div>
-                            <div>
-                                <small>Date</small>
-                            </div>
-                            </div>
-                        </Card.Footer>
-                    </Card>
+                <Row>
+                    <div className="header">
+                        <h3>Reviews:</h3>
+                    </div>
+                    <div>
+                        {reviewsExist ?
 
-                    <Card>
-                        <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27320280fde86d8cf0fea539b8e" />
-                        <Card.Body>
-                            test test test test test test test test test test test test test test test test test test test test test test test test
-                        </Card.Body>
-                        <Card.Footer>
-                            <div>
-                                <small>Username</small>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                            <div>
-                                <small>Rating</small>
-                            </div>
-                            <div>
-                                <small>Date</small>
-                            </div>
-                            </div>
-                        </Card.Footer>
-                    </Card>
-                    
-                    <Card>
-                        
-                    </Card>
+                            <Row xs={1} md={1} className="g-4">
 
-                    <Card>
-                        
-                    </Card>
-                </CardGroup>
-            </Container>
-            */}
+                                {reviews.map((result, idx) => (
+                                    <Col key={idx}>
+                                        <Card>
+                                            <Card.Header>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link> </Card.Header>
+                                            <Card.Body>
+                                                <Card.Text>
+                                                    {result.review}
+                                                </Card.Text>
+                                            </Card.Body>
+                                            <Card.Footer>{convertMariaDBDatetimeToLocalTime(result.datetime)}</Card.Footer>
+                                        </Card>
+                                    </Col>
+                                ))}
+                            </Row>
 
-            {/*
-            <Container>
-                <Row xs={1} md={2} className="g-4">
-                    {Array.from({ length: 4 }).map((_, idx) => (
-                        <Col key={idx}>
-                            <Card>
-                                <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27320280fde86d8cf0fea539b8e" />
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
-                                    <Card.Text>
-                                        This is a longer card with supporting text below as a natural
-                                        lead-in to additional content. This content is a little bit
-                                        longer.
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
+                            :
+                            <div>No reviews exist yet</div>}
+                    </div>
                 </Row>
             </Container>
-            */}
-
-
         </div>
 
     );
 }
+
+/*
+return (
+    <div>
+        <NavbarComponent />
+        <div className="header">
+            <h2>Welcome back, {getUsername}</h2>
+        </div>
+        <Container>
+            <h5>Recent activity from friends</h5>
+            <CardGroup className="me-2">
+                <Card>
+                    <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
+                    <Card.Footer>
+                        <div>
+                            <small>Username</small>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <small>Rating</small>
+                            </div>
+                            <div>
+                                <small>Date</small>
+                            </div>
+                        </div>
+                    </Card.Footer>
+                </Card>
+
+                <Card>
+                    <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
+                    <Card.Footer>
+                        <div>
+                            <small>Username</small>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <small>Rating</small>
+                            </div>
+                            <div>
+                                <small>Date</small>
+                            </div>
+                        </div>
+                    </Card.Footer>
+                </Card>
+
+                <Card>
+                    <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27320280fde86d8cf0fea539b8e" />
+                    <Card.Footer>
+                        <div>
+                            <small>Username</small>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <small>Rating</small>
+                            </div>
+                            <div>
+                                <small>Date</small>
+                            </div>
+                        </div>
+                    </Card.Footer>
+                </Card>
+
+                <Card>
+
+                </Card>
+
+                <Card>
+
+                </Card>
+            </CardGroup>
+        </Container>
+    </div>
+
+);
+}
+*/
 
 export default Home;
