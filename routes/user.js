@@ -158,8 +158,8 @@ router.get('/getHome/:username', async (req, res) => {
     try {
         const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
 
-        const ratings = await db.pool.query(`(
-            SELECT U.username, A.name, A.spotify_album_ID, A.image_URL, LA.rating, LA.datetime, 'album' AS item_type
+        const ratingsFromFriends = await db.pool.query(`(
+            SELECT U.username, A.name, A.spotify_album_ID AS spotify_item_ID, A.image_URL, LA.rating, LA.datetime, 'album' AS item_type
             FROM ListenedAlbum LA
             JOIN Users U ON LA.user_ID = U.user_ID
             JOIN Albums A ON LA.album_ID = A.album_ID
@@ -171,7 +171,7 @@ router.get('/getHome/:username', async (req, res) => {
         )
         UNION
         (
-            SELECT U.username, T.name, T.track_ID, A.image_URL, LT.rating, LT.datetime, 'track' AS item_type
+            SELECT U.username, T.name, T.spotify_track_ID AS spotify_item_ID, A.image_URL, LT.rating, LT.datetime, 'track' AS item_type
             FROM ListenedTrack LT
             JOIN Users U ON LT.user_ID = U.user_ID
             JOIN Tracks T ON LT.track_ID = T.track_ID
@@ -186,8 +186,8 @@ router.get('/getHome/:username', async (req, res) => {
         LIMIT 5;
         `)
 
-        const reviews = await db.pool.query(`(
-            SELECT U.username, A.name, A.spotify_album_ID, A.image_URL, RA.review, RA.datetime, 'album' AS item_type
+        const reviewsFromFriends = await db.pool.query(`(
+            SELECT U.username, A.name, A.spotify_album_ID AS spotify_item_ID, A.image_URL, RA.review, RA.datetime, 'album' AS item_type
             FROM ReviewedAlbum RA
             JOIN Users U ON RA.user_ID = U.user_ID
             JOIN Albums A ON RA.album_ID = A.album_ID
@@ -199,7 +199,7 @@ router.get('/getHome/:username', async (req, res) => {
         )
         UNION
         (
-            SELECT U.username, T.name, T.track_ID, A.image_URL, RT.review, RT.datetime, 'track' AS item_type
+            SELECT U.username, T.name, T.spotify_track_ID AS spotify_item_ID, A.image_URL, RT.review, RT.datetime, 'track' AS item_type
             FROM ReviewedTrack RT
             JOIN Users U ON RT.user_ID = U.user_ID
             JOIN Tracks T ON RT.track_ID = T.track_ID
@@ -211,11 +211,56 @@ router.get('/getHome/:username', async (req, res) => {
             )
         )
         ORDER BY datetime DESC
+        LIMIT 5;
+        `)
+
+        // Get 10 most recent reviews regardless of follow status
+        const reviews = await db.pool.query(`(
+            SELECT U.username, A.name, A.spotify_album_ID AS spotify_item_ID, A.image_URL, RA.review, RA.datetime, 'album' AS item_type
+            FROM ReviewedAlbum RA
+            JOIN Users U ON RA.user_ID = U.user_ID
+            JOIN Albums A ON RA.album_ID = A.album_ID
+        )
+        UNION
+        (
+            SELECT U.username, T.name, T.spotify_track_ID AS spotify_item_ID, A.image_URL, RT.review, RT.datetime, 'track' AS item_type
+            FROM ReviewedTrack RT
+            JOIN Users U ON RT.user_ID = U.user_ID
+            JOIN Tracks T ON RT.track_ID = T.track_ID
+            JOIN Albums A ON T.album_ID = A.album_ID
+        )
+        ORDER BY datetime DESC
         LIMIT 10;
         `)
 
-        //console.log('ratings', ratings, 'reviews', reviews)
-        return res.status(200).json({ "ratings": ratings, "reviews": reviews })
+        const popular = await db.pool.query(`SELECT 'album' AS item_type, A.name, A.spotify_album_ID AS spotify_item_ID, A.image_URL,
+                COUNT(DISTINCT LA.user_ID) + COUNT(DISTINCT RA.user_ID) AS total_popularity
+        FROM Albums A
+        LEFT JOIN ListenedAlbum LA ON A.album_ID = LA.album_ID
+        LEFT JOIN ReviewedAlbum RA ON A.album_ID = RA.album_ID
+        WHERE COALESCE(LA.datetime, RA.datetime) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+        GROUP BY A.album_ID, A.name
+        UNION
+        SELECT 'track' AS item_type, T.name, T.spotify_track_ID AS spotify_item_ID, A.image_URL,
+                COUNT(DISTINCT LT.user_ID) + COUNT(DISTINCT RT.user_ID) AS total_popularity
+        FROM Tracks T
+        LEFT JOIN Albums A ON T.album_ID = A.album_ID
+        LEFT JOIN ListenedTrack LT ON T.track_ID = LT.track_ID
+        LEFT JOIN ReviewedTrack RT ON T.track_ID = RT.track_ID
+        WHERE COALESCE(LT.datetime, RT.datetime) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+        GROUP BY T.track_ID, T.name
+        ORDER BY total_popularity DESC
+        LIMIT 10;`)
+
+        if (popular.length !== 0) {
+            for (let index = 0; index < popular.length; index++) {
+                popular[index].total_popularity = popular[index].total_popularity.toString();
+            }
+        }
+
+        //console.log("ratingsFromFriends", ratingsFromFriends, "reviewsFromFriends", reviewsFromFriends, "reviews", reviews)
+        console.log("popular", popular)
+        return res.status(200).json({ "ratingsFromFriends": ratingsFromFriends, "reviewsFromFriends": reviewsFromFriends, "reviews": reviews, "popular": popular })
     }
     catch (err) {
         console.log(err)

@@ -28,7 +28,7 @@ function Reviews({reviewsExist, reviews}) {
       </div>
       <div>
         {reviewsExist ?
-          <Row xs={1} md={1} className="g-4">
+          <Row xs={1} md={2} className="g-4">
             {reviews.map((result, idx) => (
               <Col key={idx}>
                 <Card>
