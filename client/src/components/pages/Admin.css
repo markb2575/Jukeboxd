@@ -1,5 +1,38 @@
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container {
+  width: 100%;
+  /* Set the width to 100% to make it responsive */
+  overflow-x: auto;
+  /* Add horizontal scrollbar if content overflows */
+  /* You can also specify a maximum width if needed */
+  /* max-width: 800px; */
+}
+
+.table-container2 {
+  height: 100%;
+  /* Set the width to 100% to make it responsive */
+  overflow-y: auto;
+  /* Add horizontal scrollbar if content overflows */
+  /* You can also specify a maximum width if needed */
+  /* max-width: 800px; */
+}
+
+
+.long-review {
+  white-space: pre-line;
+  max-height: 100px; /* Adjust the max-height as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.long-review2 {
+  white-space: pre-line;
+  max-width: 400px; /* Adjust the max-height as needed */
+  overflow: auto;
+  text-overflow: clip;
+}
