@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
@@ -10,24 +10,23 @@ import Row from 'react-bootstrap/Row';
 import { IoStar, IoStarOutline } from "react-icons/io5";
 
 function Home({ username }) {
-    let navigate = useNavigate();
-    const [getUsername, setUsername] = useState("");
     const [ratingsFromFriends, setRatingsFromFriends] = useState(null)
-    //const [ratingsFromFriendsExist, setRatingsFromFriendsExist] = useState(false)
     const [reviewsFromFriends, setReviewsFromFriends] = useState(null)
     const [reviewsFromFriendsExist, setReviewsFromFriendsExist] = useState(false)
     const [reviews, setReviews] = useState(null)
     const [reviewsExist, setReviewsExist] = useState(false)
     const [popular, setPopular] = useState(null)
-    //const [popularExists, setPopularExists] = useState(false)
 
     const [displayFriendActivity, setDisplayFriendActivity] = useState(false)
     const [displayPopular, setDisplayPopular] = useState(false)
     const [loading, setLoading] = useState(true);
 
-    const getHome = useCallback((user) => {
-
-        fetch(`http://localhost:8080/user/getHome/${user}`, {
+    useEffect(() => {
+        //console.log("username: ", username)
+        if (username.length === 0) {
+            return
+        }
+        fetch(`http://localhost:8080/user/getHome/${username}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then(response => {
@@ -35,7 +34,6 @@ function Home({ username }) {
                 response.json().then(res => {
                     if (res.ratingsFromFriends.length !== 0) {
                         setRatingsFromFriends(res.ratingsFromFriends)
-                        //setRatingsFromFriendsExist(true)
                         if (res.ratingsFromFriends.length > 2) {
                             setDisplayFriendActivity(true)
                         } else {
@@ -43,7 +41,6 @@ function Home({ username }) {
                         }
                     } else {
                         setRatingsFromFriends(null)
-                        //setRatingsFromFriendsExist(false)
                         setDisplayFriendActivity(false)
                     }
                     if (res.reviewsFromFriends.length !== 0) {
@@ -62,7 +59,6 @@ function Home({ username }) {
                     }
                     if (res.popular.length !== 0) {
                         setPopular(res.popular)
-                        //setPopularExists(true)
                         if (res.popular.length > 2) {
                             setDisplayPopular(true)
                         } else {
@@ -71,7 +67,6 @@ function Home({ username }) {
                     } else {
                         setPopular(null)
                         setDisplayPopular(false)
-                        //setPopularExists(false)
                     }
                     setLoading(false)
                 }).catch(e => {
@@ -81,34 +76,7 @@ function Home({ username }) {
                 console.log("something happened")
             }
         }).catch(error => console.error(error));
-    }, [username])
-
-    useEffect(() => {
-        if (localStorage.token) {
-            fetch('http://localhost:8080/user/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': localStorage.token
-                }
-            }).then(response => {
-                if (response.status !== 500) {
-                    response.json().then(res => {
-                        setUsername(res.username);
-                        getHome(res.username)
-                        //setLoading(false)
-                    }).catch(e => {
-                        console.log(e);
-                    });
-                } else {
-                    console.log("invalid token");
-                    navigate("/login");
-                }
-            });
-        } else {
-            navigate("/login");
-        }
-    }, [navigate, getHome]);
+    }, [username]);
 
     function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
         // Create a Date object from the MariaDB datetime string
@@ -171,7 +139,7 @@ function Home({ username }) {
                 :
                 <>
                     <div className="header">
-                        <h2>Welcome back, {getUsername}</h2>
+                        <h2>Welcome back, {username}</h2>
                     </div>
                     <Container>
                         {displayFriendActivity ? <>
@@ -301,81 +269,5 @@ function Home({ username }) {
 
     );
 }
-
-/*
-return (
-    <div>
-        <NavbarComponent />
-        <div className="header">
-            <h2>Welcome back, {getUsername}</h2>
-        </div>
-        <Container>
-            <h5>Recent activity from friends</h5>
-            <CardGroup className="me-2">
-                <Card>
-                    <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
-                    <Card.Footer>
-                        <div>
-                            <small>Username</small>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <small>Rating</small>
-                            </div>
-                            <div>
-                                <small>Date</small>
-                            </div>
-                        </div>
-                    </Card.Footer>
-                </Card>
-
-                <Card>
-                    <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27350bb7ca1fe7e98df87ce41d9" />
-                    <Card.Footer>
-                        <div>
-                            <small>Username</small>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <small>Rating</small>
-                            </div>
-                            <div>
-                                <small>Date</small>
-                            </div>
-                        </div>
-                    </Card.Footer>
-                </Card>
-
-                <Card>
-                    <Card.Img varient="top" src="https://i.scdn.co/image/ab67616d0000b27320280fde86d8cf0fea539b8e" />
-                    <Card.Footer>
-                        <div>
-                            <small>Username</small>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <small>Rating</small>
-                            </div>
-                            <div>
-                                <small>Date</small>
-                            </div>
-                        </div>
-                    </Card.Footer>
-                </Card>
-
-                <Card>
-
-                </Card>
-
-                <Card>
-
-                </Card>
-            </CardGroup>
-        </Container>
-    </div>
-
-);
-}
-*/
 
 export default Home;

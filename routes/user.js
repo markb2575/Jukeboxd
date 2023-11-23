@@ -159,7 +159,8 @@ router.get('/getHome/:getUsername', async (req, res) => {
     const username = req.params.getUsername;
     //let params = req.params;
     try {
-        const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
+        const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = ?`, [username]) // Not returned to keep user_ID private
+        //const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
 
         const ratingsFromFriends = await db.pool.query(`(
             SELECT U.username, A.name, A.spotify_album_ID AS spotify_item_ID, A.image_URL, LA.rating, LA.datetime, 'album' AS item_type
@@ -253,7 +254,7 @@ router.get('/getHome/:getUsername', async (req, res) => {
         WHERE COALESCE(LT.datetime, RT.datetime) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
         GROUP BY T.track_ID, T.name
         ORDER BY total_popularity DESC
-        LIMIT 10;`)
+        LIMIT 6;`)
 
         if (popular.length !== 0) {
             for (let index = 0; index < popular.length; index++) {
