@@ -23,6 +23,7 @@ function Home({ username }) {
 
     const [displayFriendActivity, setDisplayFriendActivity] = useState(false)
     const [displayPopular, setDisplayPopular] = useState(false)
+    const [loading, setLoading] = useState(true);
 
     const getHome = useCallback((user) => {
 
@@ -72,6 +73,7 @@ function Home({ username }) {
                         setDisplayPopular(false)
                         //setPopularExists(false)
                     }
+                    setLoading(false)
                 }).catch(e => {
                     console.log(e);
                 });
@@ -94,6 +96,7 @@ function Home({ username }) {
                     response.json().then(res => {
                         setUsername(res.username);
                         getHome(res.username)
+                        //setLoading(false)
                     }).catch(e => {
                         console.log(e);
                     });
@@ -164,130 +167,135 @@ function Home({ username }) {
     return (
         <div>
             <NavbarComponent />
-            <div className="header">
-                <h2>Welcome back, {getUsername}</h2>
-            </div>
-            <Container>
-                {displayFriendActivity ? <>
-                    <br></br>
-                    <br></br>
-                    <h5>Recent activity from friends</h5>
-                    <CardGroup className="me-2">
-                        {ratingsFromFriends.map((result, idx) => (
-                            <Card key={idx}>
-                                <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>
-                                <Card.Footer>
-                                    <div>
-                                        <small><Link to={`/user/${result.username}`}>{result.username}</Link></small>
-                                    </div>
-                                    <div className="d-flex justify-content-between">
-                                        <div>
-                                            <small>{convertToStars(result.rating)}</small>
-                                        </div>
-                                        <div>
-                                            <small>{convertMariaDBDatetimeToLocalTimeSmall(result.datetime)}</small>
-                                        </div>
-                                    </div>
-                                </Card.Footer>
-                            </Card>
-                        ))}
-                    </CardGroup>
-                    <br></br>
-                    <br></br>
+            {loading ? null
+                :
+                <>
+                    <div className="header">
+                        <h2>Welcome back, {getUsername}</h2>
+                    </div>
+                    <Container>
+                        {displayFriendActivity ? <>
+                            <br></br>
+                            <br></br>
+                            <h5>Recent activity from friends</h5>
+                            <CardGroup className="me-2">
+                                {ratingsFromFriends.map((result, idx) => (
+                                    <Card key={idx}>
+                                        <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>
+                                        <Card.Footer>
+                                            <div>
+                                                <small><Link to={`/user/${result.username}`}>{result.username}</Link></small>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <div>
+                                                    <small>{convertToStars(result.rating)}</small>
+                                                </div>
+                                                <div>
+                                                    <small>{convertMariaDBDatetimeToLocalTimeSmall(result.datetime)}</small>
+                                                </div>
+                                            </div>
+                                        </Card.Footer>
+                                    </Card>
+                                ))}
+                            </CardGroup>
+                            <br></br>
+                            <br></br>
+                        </>
+                            : <></>}
+
+                        <Row>
+                            {reviewsFromFriendsExist ? <>
+                                <h5>Recent reviews from friends:</h5>
+                                <Row xs={1} md={2} className="g-4">
+                                    {reviewsFromFriends.map((result, idx) => (
+                                        <Col key={idx}>
+                                            <Card>
+                                                {/*<Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>*/}
+                                                <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
+                                                <Card.Body>
+                                                    <Card.Text>
+                                                        {result.review}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                                <Card.Footer>
+                                                    <div className="d-flex justify-content-between">
+                                                        <div>
+                                                            <small>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link></small>
+                                                        </div>
+                                                        <div>
+                                                            <small>{convertMariaDBDatetimeToLocalTime(result.datetime)}</small>
+                                                        </div>
+                                                    </div>
+                                                </Card.Footer>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </>
+                                :
+                                <></>}
+
+                        </Row>
+                        <br></br>
+                        <br></br>
+
+                        <Row>
+                            {displayPopular ? <>
+                                <h5>Most popular albums and tracks this week:</h5>
+                                <CardGroup className="me-2">
+                                    {popular.map((result, idx) => (
+                                        <Card key={idx}>
+                                            {/*<Card.Header>{result.item_type}</Card.Header>*/}
+                                            <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>
+                                            <Card.Body>
+                                                <small><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link></small>
+                                            </Card.Body>
+                                        </Card>
+                                    ))}
+                                </CardGroup>
+                            </>
+                                : <div>Not enough ratings or reviews this week</div>}
+
+                        </Row>
+
+                        <br></br>
+                        <br></br>
+
+                        <Row>
+                            {reviewsExist ? <>
+                                <h5>Recent reviews:</h5>
+                                <Row xs={1} md={2} className="g-4">
+                                    {reviews.map((result, idx) => (
+                                        <Col key={idx}>
+                                            <Card>
+                                                {/*<Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>*/}
+                                                <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
+                                                <Card.Body>
+                                                    <Card.Text>
+                                                        {result.review}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                                <Card.Footer>
+                                                    <div className="d-flex justify-content-between">
+                                                        <div>
+                                                            <small>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link></small>
+                                                        </div>
+                                                        <div>
+                                                            <small>{convertMariaDBDatetimeToLocalTime(result.datetime)}</small>
+                                                        </div>
+                                                    </div>
+                                                </Card.Footer>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </>
+                                :
+                                <div>No reviews exist yet</div>}
+                        </Row>
+                    </Container>
                 </>
-                    : <></>}
-
-                <Row>
-                    {reviewsFromFriendsExist ? <>
-                        <h5>Recent reviews from friends:</h5>
-                        <Row xs={1} md={2} className="g-4">
-                            {reviewsFromFriends.map((result, idx) => (
-                                <Col key={idx}>
-                                    <Card>
-                                        {/*<Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>*/}
-                                        <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
-                                        <Card.Body>
-                                            <Card.Text>
-                                                {result.review}
-                                            </Card.Text>
-                                        </Card.Body>
-                                        <Card.Footer>
-                                            <div className="d-flex justify-content-between">
-                                                <div>
-                                                    <small>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link></small>
-                                                </div>
-                                                <div>
-                                                    <small>{convertMariaDBDatetimeToLocalTime(result.datetime)}</small>
-                                                </div>
-                                            </div>
-                                        </Card.Footer>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    </>
-                        :
-                        <></>}
-
-                </Row>
-                <br></br>
-                <br></br>
-
-                <Row>
-                    {displayPopular ? <>
-                        <h5>Most popular albums and tracks this week:</h5>
-                        <CardGroup className="me-2">
-                            {popular.map((result, idx) => (
-                                <Card key={idx}>
-                                    {/*<Card.Header>{result.item_type}</Card.Header>*/}
-                                    <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>
-                                    <Card.Body>
-                                        <small><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link></small>
-                                    </Card.Body>
-                                </Card>
-                            ))}
-                        </CardGroup>
-                    </>
-                        : <div>Not enough ratings or reviews this week</div>}
-
-                </Row>
-
-                <br></br>
-                <br></br>
-
-                <Row>
-                    {reviewsExist ? <>
-                        <h5>Recent reviews:</h5>
-                        <Row xs={1} md={2} className="g-4">
-                            {reviews.map((result, idx) => (
-                                <Col key={idx}>
-                                    <Card>
-                                        {/*<Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>*/}
-                                        <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
-                                        <Card.Body>
-                                            <Card.Text>
-                                                {result.review}
-                                            </Card.Text>
-                                        </Card.Body>
-                                        <Card.Footer>
-                                            <div className="d-flex justify-content-between">
-                                                <div>
-                                                    <small>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link></small>
-                                                </div>
-                                                <div>
-                                                    <small>{convertMariaDBDatetimeToLocalTime(result.datetime)}</small>
-                                                </div>
-                                            </div>
-                                        </Card.Footer>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    </>
-                        :
-                        <div>No reviews exist yet</div>}
-                </Row>
-            </Container>
+            }
         </div>
 
 
