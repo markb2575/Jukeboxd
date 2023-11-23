@@ -11,7 +11,8 @@ const search = require('./routes/search');
 const album = require('./routes/album');
 const track = require('./routes/track')
 const artist = require('./routes/artist')
- 
+const admin = require('./routes/admin')
+
 app.use(cors()); // TODO Might need to be changed
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,5 +23,6 @@ app.use('/album', album);
 app.use('/track', track);
 app.use('/artist', artist);
 app.use('/search', search);
+app.use('/admin', admin);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -9,7 +9,9 @@ const router = express.Router();
 router.get('/', auth, async (req, res) => {
     try {
         const user = await req.user;
-        return res.json({ "username": user });
+        const role = await db.pool.query(`select role from Users where binary username = '${user}'`)
+        //console.log("username: ", user, "role: ", role)
+        return res.json({ "username": user, "role": role });
     } catch (err) {
         console.error(err.message);
         res.status(500);
@@ -153,10 +155,11 @@ router.get('/profile/:username', async (req, res) => {
     }
 });
 
-router.get('/getHome/:username', async (req, res) => {
-    let params = req.params;
+router.get('/getHome/:getUsername', async (req, res) => {
+    const username = req.params.getUsername;
+    //let params = req.params;
     try {
-        const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
+        const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
 
         const ratingsFromFriends = await db.pool.query(`(
             SELECT U.username, A.name, A.spotify_album_ID AS spotify_item_ID, A.image_URL, LA.rating, LA.datetime, 'album' AS item_type
@@ -259,7 +262,8 @@ router.get('/getHome/:username', async (req, res) => {
         }
 
         //console.log("ratingsFromFriends", ratingsFromFriends, "reviewsFromFriends", reviewsFromFriends, "reviews", reviews)
-        console.log("popular", popular)
+        //console.log("popular", popular)
+        //console.log("updated home")
         return res.status(200).json({ "ratingsFromFriends": ratingsFromFriends, "reviewsFromFriends": reviewsFromFriends, "reviews": reviews, "popular": popular })
     }
     catch (err) {

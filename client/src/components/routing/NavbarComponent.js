@@ -12,6 +12,7 @@ function NavbarComponent() {
     let navigate = useNavigate();
     const [searchString, setSearchString] = useState("");
     const [username, setUsername] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         if (localStorage.token) {
@@ -25,6 +26,14 @@ function NavbarComponent() {
                 if (response.status !== 500) {
                     response.json().then(res => {
                         setUsername(res.username);
+                        //console.log("role: ", res.role[0].role)
+                        if (res.role[0].role === 0) {
+                            setIsAdmin(true)
+                            //console.log("setting admin status true")
+                        } else {
+                            setIsAdmin(false)
+                            //console.log("setting admin status false")
+                        }
                     }).catch(e => {
                         console.log(e);
                     });
@@ -81,12 +90,22 @@ function NavbarComponent() {
                             <Button type="submit" >Submit</Button>
 
                         </Form>
-                        <NavDropdown title={username} id="basic-nav-dropdown">
-                            <NavDropdown.Item onClick={() => navigate(`/user/${username}`, { replace: true })}>Profile</NavDropdown.Item>
-                            <NavDropdown.Item onClick={handleLogout}>
-                                Log Out
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                        {isAdmin ?
+                            <NavDropdown title={username} id="basic-nav-dropdown">
+                                <NavDropdown.Item onClick={() => navigate(`/user/${username}`, { replace: true })}>Profile</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => navigate(`/admin`, { replace: true })}>Admin</NavDropdown.Item>
+                                <NavDropdown.Item onClick={handleLogout}>
+                                    Log Out
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            :
+                            <NavDropdown title={username} id="basic-nav-dropdown">
+                                <NavDropdown.Item onClick={() => navigate(`/user/${username}`, { replace: true })}>Profile</NavDropdown.Item>
+                                <NavDropdown.Item onClick={handleLogout}>
+                                    Log Out
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>

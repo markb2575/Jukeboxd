@@ -7,6 +7,7 @@ import Error from "./pages/Error"
 import Album from "./pages/Album/Album"
 import Artist from "./pages/Artist"
 import Track from "./pages/Track"
+import Admin from "./pages/Admin"
 
 export {
   Home,
@@ -17,5 +18,6 @@ export {
   Error,
   Album,
   Artist,
-  Track
+  Track,
+  Admin
 }

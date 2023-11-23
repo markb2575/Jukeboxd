@@ -1,11 +1,12 @@
 import { Routes, Route, useNavigate, useLocation} from "react-router"
-import { Home, Login, SignUp, Profile, Search, Error, Album, Artist, Track } from "../pages"
+import { Home, Login, SignUp, Profile, Search, Error, Album, Artist, Track, Admin } from "../pages"
 import { useEffect, useState } from "react";
 
 export default function Navigation() {
     let navigate = useNavigate();
     let location = useLocation()
     const [username, setUsername] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
         if (localStorage.token) {
             fetch('http://localhost:8080/user/', {
@@ -18,6 +19,11 @@ export default function Navigation() {
                 if (response.status !== 500) {
                     response.json().then(res => {
                         setUsername(res.username);
+                        if (res.role[0].role === 0){
+                            setIsAdmin(true)
+                        } else {
+                            setIsAdmin(false)
+                        }
                     }).catch(e => {
                         console.log(e);
                     });
@@ -45,6 +51,7 @@ export default function Navigation() {
             <Route path="/artist/:artistID" element={<Artist username={username}/>} />
             <Route path="/track/:trackID" element={<Track username={username}/>} />
             <Route path="/search" element={<Search />} />
+            <Route path="/admin" element={<Admin username={username} isAdmin={isAdmin}/>} />
             <Route path="/404" element={<Error username={username}/>} />
         </Routes>
     )

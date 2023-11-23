@@ -9,24 +9,24 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { IoStar, IoStarOutline } from "react-icons/io5";
 
-function Home() {
+function Home({ username }) {
     let navigate = useNavigate();
     const [getUsername, setUsername] = useState("");
     const [ratingsFromFriends, setRatingsFromFriends] = useState(null)
-    const [ratingsFromFriendsExist, setRatingsFromFriendsExist] = useState(false)
+    //const [ratingsFromFriendsExist, setRatingsFromFriendsExist] = useState(false)
     const [reviewsFromFriends, setReviewsFromFriends] = useState(null)
     const [reviewsFromFriendsExist, setReviewsFromFriendsExist] = useState(false)
     const [reviews, setReviews] = useState(null)
     const [reviewsExist, setReviewsExist] = useState(false)
     const [popular, setPopular] = useState(null)
-    const [popularExists, setPopularExists] = useState(false)
+    //const [popularExists, setPopularExists] = useState(false)
 
     const [displayFriendActivity, setDisplayFriendActivity] = useState(false)
     const [displayPopular, setDisplayPopular] = useState(false)
 
-    const getHome = useCallback(() => {
+    const getHome = useCallback((user) => {
 
-        fetch(`http://localhost:8080/user/getHome/${getUsername}`, {
+        fetch(`http://localhost:8080/user/getHome/${user}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then(response => {
@@ -34,7 +34,7 @@ function Home() {
                 response.json().then(res => {
                     if (res.ratingsFromFriends.length !== 0) {
                         setRatingsFromFriends(res.ratingsFromFriends)
-                        setRatingsFromFriendsExist(true)
+                        //setRatingsFromFriendsExist(true)
                         if (res.ratingsFromFriends.length > 2) {
                             setDisplayFriendActivity(true)
                         } else {
@@ -42,7 +42,7 @@ function Home() {
                         }
                     } else {
                         setRatingsFromFriends(null)
-                        setRatingsFromFriendsExist(false)
+                        //setRatingsFromFriendsExist(false)
                         setDisplayFriendActivity(false)
                     }
                     if (res.reviewsFromFriends.length !== 0) {
@@ -61,7 +61,7 @@ function Home() {
                     }
                     if (res.popular.length !== 0) {
                         setPopular(res.popular)
-                        setPopularExists(true)
+                        //setPopularExists(true)
                         if (res.popular.length > 2) {
                             setDisplayPopular(true)
                         } else {
@@ -69,7 +69,8 @@ function Home() {
                         }
                     } else {
                         setPopular(null)
-                        setPopularExists(false)
+                        setDisplayPopular(false)
+                        //setPopularExists(false)
                     }
                 }).catch(e => {
                     console.log(e);
@@ -78,7 +79,7 @@ function Home() {
                 console.log("something happened")
             }
         }).catch(error => console.error(error));
-    }, [getUsername])
+    }, [username])
 
     useEffect(() => {
         if (localStorage.token) {
@@ -92,32 +93,7 @@ function Home() {
                 if (response.status !== 500) {
                     response.json().then(res => {
                         setUsername(res.username);
-                        getHome()
-
-                        /*
-
-                        fetch(`http://localhost:8080/user/getHome/${getUsername}`, {
-                            method: 'GET',
-                            headers: { 'Content-Type': 'application/json' }
-                        }).then(response => {
-                            if (response.status === 200) {
-                                response.json().then(res => {
-                                    if (res.reviews.length !== 0) {
-                                        setReviews(res.reviews)
-                                        setReviewsExist(true)
-                                    }
-                                    if (res.ratings.length !== 0) {
-                                        setRatings(res.ratings)
-                                        setRatingsExist(true)
-                                    }
-                                }).catch(e => {
-                                    console.log(e);
-                                });
-                            } else {
-                                console.log("something happened")
-                            }
-                        }).catch(error => console.error(error));
-                        */
+                        getHome(res.username)
                     }).catch(e => {
                         console.log(e);
                     });
@@ -193,6 +169,8 @@ function Home() {
             </div>
             <Container>
                 {displayFriendActivity ? <>
+                    <br></br>
+                    <br></br>
                     <h5>Recent activity from friends</h5>
                     <CardGroup className="me-2">
                         {ratingsFromFriends.map((result, idx) => (
@@ -214,11 +192,10 @@ function Home() {
                             </Card>
                         ))}
                     </CardGroup>
+                    <br></br>
+                    <br></br>
                 </>
                     : <></>}
-
-                <br></br>
-                <br></br>
 
                 <Row>
                     {reviewsFromFriendsExist ? <>
@@ -250,7 +227,7 @@ function Home() {
                         </Row>
                     </>
                         :
-                        <div>No reviews exist yet</div>}
+                        <></>}
 
                 </Row>
                 <br></br>
