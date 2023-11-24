@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback, Link } from "react";
+//import { useState, useEffect, useCallback, Link } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import { Tab, ListGroup, Row, Col, Nav, Image, CardFooter } from "react-bootstrap";
+//import { Tab, ListGroup, Row, Col, Nav, Image, CardFooter } from "react-bootstrap";
+import { Row, Col, Nav } from "react-bootstrap";
 
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
@@ -108,7 +110,7 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
       // checkStatus()
       // Code for handling the response
     }).catch(error => console.error(error));
-  }, [pathname, navigate, username, artistID, spotify_artist_ID]);
+  }, [pathname, navigate, username, artistID, spotify_artist_ID, isAdmin]);
 
   const handleSaveDescription = (e) => {
     e.preventDefault()
