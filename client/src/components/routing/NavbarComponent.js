@@ -16,7 +16,7 @@ function NavbarComponent() {
 
     useEffect(() => {
         if (localStorage.token) {
-            fetch('http://localhost:8080/user/', {
+            fetch('http://localhost:8080/user/getNavBar', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ function NavbarComponent() {
                     response.json().then(res => {
                         setUsername(res.username);
                         //console.log("role: ", res.role[0].role)
-                        if (res.role[0].role === 0) {
+                        if (res.role === 0) {
                             setIsAdmin(true)
                             //console.log("setting admin status true")
                         } else {
@@ -38,7 +38,7 @@ function NavbarComponent() {
                         console.log(e);
                     });
                 } else {
-                    console.log("invalid token");
+                    console.log("invalid token or user");
                     navigate("/login");
                 }
             });

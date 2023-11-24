@@ -7,14 +7,50 @@ const router = express.Router();
 
 
 router.get('/', auth, async (req, res) => {
+    console.log("/ called")
     try {
-        const user = await req.user;
-        const role = await db.pool.query(`select role from Users where binary username = '${user}';`)
+        const username = await req.user;
+        const user = await db.pool.query(`SELECT username, role, artist_ID FROM Users WHERE binary username = '${username}';`)
+        if (user.length === 1) {
+            var spotify_artist_ID = ""
+            if (user[0].artist_ID !== null) {
+                const spotifyID = await db.pool.query(`SELECT spotify_artist_ID FROM Artists WHERE artist_ID = '${user[0].artist_ID}';`)
+                spotify_artist_ID = spotifyID[0].spotify_artist_ID
+            }
+            //console.log("spotify_artist_ID: ", spotify_artist_ID)
+            return res.status(200).json({ "username": user[0].username, "role": user[0].role, "spotify_artist_ID": spotify_artist_ID });
+        } else {
+            res.status(500);
+        }
         //console.log("username: ", user, "role: ", role)
-        return res.json({ "username": user, "role": role });
     } catch (err) {
         console.error(err.message);
         res.status(500);
+        //return res.status(500);
+    }
+});
+
+router.get('/getNavBar', auth, async (req, res) => {
+    console.log("getNavBar called")
+    try {
+        const username = await req.user;
+        const user = await db.pool.query(`SELECT username, role, artist_ID FROM Users WHERE binary username = '${username}';`)
+        if (user.length === 1) {
+            var spotify_artist_ID = ""
+            if (user[0].artist_ID !== null) {
+                const spotifyID = await db.pool.query(`SELECT spotify_artist_ID FROM Artists WHERE artist_ID = '${user[0].artist_ID}';`)
+                spotify_artist_ID = spotifyID[0].spotify_artist_ID
+            }
+            //console.log("spotify_artist_ID: ", spotify_artist_ID)
+            return res.status(200).json({ "username": user[0].username, "role": user[0].role, "spotify_artist_ID": spotify_artist_ID });
+        } else {
+            res.status(500);
+        }
+        //console.log("username: ", user, "role: ", role)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500);
+        //return res.status(500);
     }
 });
 
