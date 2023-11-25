@@ -132,11 +132,11 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
             setShowDescription(true)
           } response.json().then(res => {
             if (res.description !== null) {
-                setShowDescription(true)
-                setDescription(res.description)
-              } else {
-                setShowDescription(false)
-                setDescription("")
+              setShowDescription(true)
+              setDescription(res.description)
+            } else {
+              setShowDescription(false)
+              setDescription("")
             }
           }).catch(e => {
             console.log(e);
@@ -188,7 +188,7 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                 <Card.Body>
                   <Card.Text>
                     {showDescription ?
-                      <>{ description }</>
+                      <>{description}</>
                       :
                       <>Artist has no description.</>
                     }
@@ -323,7 +323,7 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
           </Row>
         </div>
       )}
-
+      <br></br>
     </div>
   );
 }
