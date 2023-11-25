@@ -411,8 +411,10 @@ function Admin({ username, isAdmin }) {
                                                     <tr key={index}>
                                                         <td>{user.user_ID}</td>
                                                         <td><Link to={`/user/${user.username}`}>{user.username}</Link></td>
-                                                        <td>{user.artist_ID}</td>
-                                                        <td>
+                                                        {/*<td>{user.artist_ID}</td>*/}
+                                                        {user.artist_ID !== null && (<td>{user.artist_ID}: <Link to={`/artist/${artists[user.artist_ID - 1].spotify_artist_ID}`}>{artists[user.artist_ID - 1].name}</Link> </td>)}
+                                                        {user.artist_ID == null && (<td>{user.artist_ID}</td>)}
+                                                        < td >
                                                             <button onClick={() => handleDeleteUser(user.user_ID)}>Delete</button>
                                                         </td>
                                                     </tr>
@@ -498,8 +500,9 @@ function Admin({ username, isAdmin }) {
 
                         </Tabs>
                     </Container>
-                </>)}
-        </div>
+                </>)
+            }
+        </div >
 
     );
     /*

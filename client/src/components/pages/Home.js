@@ -138,6 +138,7 @@ function Home({ username }) {
             {loading ? null
                 :
                 <>
+                    <br></br>
                     <div className="header">
                         <h2>Welcome back, {username}</h2>
                     </div>
@@ -261,6 +262,7 @@ function Home({ username }) {
                                 :
                                 <div>No reviews exist yet</div>}
                         </Row>
+                        <br></br>
                     </Container>
                 </>
             }
