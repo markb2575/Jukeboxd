@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import NavbarComponent from "../routing/NavbarComponent";
 import Button from "react-bootstrap/esm/Button";
@@ -7,6 +7,7 @@ import FollowersModal from './Popups/FollowersModal';
 import FollowingModal from './Popups/FollowingModal';
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
+
 
 
 
@@ -23,10 +24,16 @@ function Profile({ username }) {
     const [isFollowing, setIsFollowing] = useState(false)
     const [profileInfo, setProfileInfo] = useState({
         followers: [],
-        following: []
+        following: [],
+        lTracks: [],
+        lAlbums: [],
+        wTracks: [],
+        wAlbums: []
     });
     const [followersModalShow, setFollowersModalShow] = useState(false);
     const [followingModalShow, setFollowingModalShow] = useState(false);
+    const [activeTab, setActiveTab] = useState("#listened");
+
 
 
 
@@ -105,7 +112,12 @@ function Profile({ username }) {
 
         getProfileInfo()
 
-    }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus]);
+    }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus, activeTab]);
+    
+    useEffect(() => {
+        setActiveTab(JSON.parse(window.localStorage.getItem('tab')))
+    
+  });
 
     const handleUsernameClick = (clickedUsername) => {
         setFollowersModalShow(false)
@@ -113,6 +125,11 @@ function Profile({ username }) {
         setProfileName(clickedUsername)
         navigate(`/user/${clickedUsername}`)
     };
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab)
+        window.localStorage.setItem('tab', JSON.stringify(tab))
+    }
 
     const handleFollowUser = (e) => {
         e.preventDefault()
@@ -186,31 +203,54 @@ function Profile({ username }) {
             )}
 
             {!loading && (
-                <div className="center">
-                    <Card>
-                        <Card.Header>
-                            <Nav variant="tabs" defaultActiveKey="#listened">
-                                <Nav.Item>
-                                    <Nav.Link href="#listened">Listened To</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link href="#watchlist">Save For Later</Nav.Link>
-                                </Nav.Item>
-                            </Nav>
-                        </Card.Header>
-                        <Card.Body>
-                            <h4 style={{textAlign:"left"}}>Tracks</h4>
-                            <div className="card-container">
-
-                            </div>
-                            <div style={{padding:"5px"}}>
-                            </div>
-                            <h4 style={{textAlign:"left"}}>Albums</h4>
-                            <div className="card-container">
-
-                            </div>
-                        </Card.Body>
-                    </Card>
+                <div className="v-center">
+                    <Nav variant="tabs" defaultActiveKey={JSON.parse(window.localStorage.getItem('tab'))} onSelect={handleTabChange}>
+                        <Nav.Item>
+                            <Nav.Link href="#listened">Listened To</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="#watchlist">Save For Later</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                    <h4 style={{ textAlign: "left" }}>Tracks</h4>
+                    <div className="scrolling-container">
+                        <div className="card-container">
+                            {profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].length > 0 ? (
+                                profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].map((item, i) => (
+                                    <Card key={i} className="scrolling-card" onClick={() => navigate(`/track/${item.spotify_track_ID}`)}>
+                                        <Card.Img src={item.image_URL} alt={item.name} />
+                                        <Card.Title>{item.track_name}</Card.Title>
+                                        <p>{activeTab === "#listened" && item.rating > 0 ? ("Rating: " + item.rating) : (<></>)}
+                                        {activeTab === "#listened" && item.rating === 0 ? ("No Rating") : (<></>)}
+                                        </p>
+                                        
+                                    </Card>
+                                ))
+                            ) : (
+                                <p>No results found.</p>
+                            )}
+                        </div>
+                    </div>
+                    <div style={{ padding: "5px" }}>
+                    </div>
+                    <h4 style={{ textAlign: "left" }}>Albums</h4>
+                    <div className="scrolling-container" style={{marginBottom:'10px'}}>
+                        <div className="card-container">
+                             {profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].length > 0 ? (
+                                profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].map((item, i) => (
+                                    <Card key={i} className="scrolling-card" onClick={() => navigate(`/album/${item.spotify_album_ID}`)}>
+                                        <Card.Img src={item.image_URL} alt={item.name} />
+                                        <Card.Title>{item.album_name}</Card.Title>
+                                        <p>{activeTab === "#listened" && item.rating > 0 ? ("Rating: " + item.rating) : (<></>)}
+                                        {activeTab === "#listened" && item.rating === 0 ? ("No Rating") : (<></>)}
+                                        </p>
+                                    </Card>
+                                ))
+                            ) : (
+                                <p>No results found.</p>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
 

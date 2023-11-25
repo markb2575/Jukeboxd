@@ -1,42 +1,85 @@
 .center {
-    align-items: center;
-    align-content: center;
-    text-align: center;
-    align-self: center;
-    display: flex;
-    justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+.v-center {
+  align-items: center;
+  align-content: center;
+  text-align: left;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .rounded-container {
-   
-    min-width: 400px;
-    max-width: 600px;
-    text-align: center;
+
+  min-width: 400px;
+  max-width: 600px;
+  text-align: center;
   border: 1px solid #000000;
-  border-radius: 15px; 
-  padding: 15px; 
+  border-radius: 15px;
+  padding: 15px;
 }
 
 .rounded-content {
-    display: flex;
+  display: flex;
   justify-content: space-between;
 }
 
 .card-container {
-   
-    min-width: 600px;
-    max-width: 1000px;
-    text-align: center;
-  border: 1px solid #555555;
-  border-radius: 5px; 
-  padding: 15px; 
+
+  min-width: 600px;
+  max-width: 1000px;
+  text-align: center;
+  padding: 15px;
+  display: inline-flex;
+
+}
+
+.scrolling-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  border: 2px solid #555555;
+  border-radius: 5px;
+
+
+}
+
+.scrolling-card {
+  min-width: 175px;
+  max-width: 175px;
+  margin-right: 5px;
+  margin-left: 5px;
+  overflow: hidden;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.card-title {
+  font-size: 16px;
+}
+
+.scrolling-card:hover {
+  text-decoration: underline;
 }
 
 
+
+
+
 .divider {
-  border-left: 1px solid #ccc; /* Add a vertical line between sections */
-  height: 40px; /* Adjust the height to match the content */
-  margin: 0 10px; /* Add some margin for spacing */
+  border-left: 1px solid #ccc;
+  /* Add a vertical line between sections */
+  height: 40px;
+  /* Adjust the height to match the content */
+  margin: 0 10px;
+  /* Add some margin for spacing */
 }
 
 h1 {
@@ -45,19 +88,20 @@ h1 {
 
 .followers-link,
 .following-link {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .followers-link:hover,
 .following-link:hover {
-    text-decoration: underline; /* You can use 'none' to remove underline */
+  text-decoration: underline;
+  /* You can use 'none' to remove underline */
 
 }
 
 .username {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .username:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

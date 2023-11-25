@@ -156,9 +156,10 @@ router.get('/follower=:followerUsername&followee=:followeeUsername', async (req,
 });
 
 router.get('/profile/:username', async (req, res) => {
+
     const username = req.params.username;
     try {
-        const tmp = await db.pool.query(`select user_ID from Users where username = '${username}';`)
+        const tmp = await db.pool.query(`select user_ID from Users where username = '${username}'`)
         var userID = null;
         if (tmp.length > 0) {
             userID = tmp[0].user_ID
@@ -166,22 +167,122 @@ router.get('/profile/:username', async (req, res) => {
             return res.status(400).send()
         }
         //get Followers
-        const followersList = await db.pool.query(`select U.username from Users U join Followers F on U.user_ID = F.follower where F.followee = '${userID}';`)
+        const followersList = await db.pool.query(`select U.username from Users U join Followers F on U.user_ID = F.follower where F.followee = '${userID}'`)
         //get following
-        const followingList = await db.pool.query(`select U.username from Users U join Followers F on U.user_ID = F.followee where F.follower = '${userID}';`)
-        //console.log(FollowersList)
-        //console.log(followingList)
+        const followingList = await db.pool.query(`select U.username from Users U join Followers F on U.user_ID = F.followee where F.follower = '${userID}'`)
 
         //get listened to tracks
+        const lTracks = await db.pool.query(
+            `SELECT
+                LT.rating,
+                LT.datetime,
+                T.name AS track_name,
+                T.spotify_track_ID,
+                GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+                GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids,
+                AL.name AS album_name,
+                AL.spotify_album_ID,
+                AL.image_URL
+            FROM
+                ListenedTrack LT
+            JOIN
+                Tracks T ON LT.track_ID = T.track_ID
+            JOIN
+                Track_Artists TA ON T.track_ID = TA.track_ID
+            JOIN
+                Artists A ON TA.artist_ID = A.artist_ID
+            JOIN
+                Albums AL ON T.album_ID = AL.album_ID
+            WHERE
+                LT.user_ID = ${userID}
+            GROUP BY T.spotify_track_ID, AL.album_ID
+            ORDER BY LT.datetime DESC;
+`)
         //get listened to albums
+        const lAlbums = await db.pool.query(`
+            SELECT
+                LA.rating,
+                LA.datetime,
+                AL.name AS album_name,
+                AL.spotify_album_ID,
+                GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+                GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids,
+                AL.image_URL
+            FROM
+                ListenedAlbum LA
+            JOIN
+                Albums AL ON LA.album_ID = AL.album_ID
+            JOIN
+                Album_Artists AA ON AL.album_ID = AA.album_ID
+            JOIN
+                Artists A ON AA.artist_ID = A.artist_ID
+            WHERE
+                LA.user_ID = ${userID}
+            GROUP BY AL.spotify_album_ID
+            ORDER BY LA.datetime DESC;
+
+        `)
         //get watchlist tracks
+        const wTracks = await db.pool.query(
+            `SELECT
+                WT.datetime,
+                T.name AS track_name,
+                T.spotify_track_ID,
+                GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+                GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids,
+                AL.name AS album_name,
+                AL.spotify_album_ID,
+                AL.image_URL
+            FROM
+                WatchTrack WT
+            JOIN
+                Tracks T ON WT.track_ID = T.track_ID
+            JOIN
+                Track_Artists TA ON T.track_ID = TA.track_ID
+            JOIN
+                Artists A ON TA.artist_ID = A.artist_ID
+            JOIN
+                Albums AL ON T.album_ID = AL.album_ID
+            WHERE
+                WT.user_ID = ${userID}
+            GROUP BY T.spotify_track_ID, AL.album_ID
+            ORDER BY WT.datetime DESC;
+`)
         //get watchlist albums
+        const wAlbums = await db.pool.query(`
+            SELECT
+                WA.datetime,
+                AL.name AS album_name,
+                AL.spotify_album_ID,
+                GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+                GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids,
+                AL.image_URL
+            FROM
+                WatchAlbum WA
+            JOIN
+                Albums AL ON WA.album_ID = AL.album_ID
+            JOIN
+                Album_Artists AA ON AL.album_ID = AA.album_ID
+            JOIN
+                Artists A ON AA.artist_ID = A.artist_ID
+            WHERE
+                WA.user_ID = ${userID}
+            GROUP BY AL.spotify_album_ID
+            ORDER BY WA.datetime DESC;
+
+        `)
+
 
         //combine into JSON object
 
         return res.status(200).json({
             followers: followersList,
-            following: followingList
+            following: followingList,
+            lTracks: lTracks,
+            lAlbums: lAlbums,
+            wTracks: wTracks,
+            wAlbums: wAlbums
+
         })
 
 
