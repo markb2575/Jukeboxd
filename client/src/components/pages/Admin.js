@@ -207,8 +207,11 @@ function Admin({ username, isAdmin }) {
 
         fetch('http://localhost:8080/admin/deleteUser', {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': localStorage.token
+            },
             body: JSON.stringify(userToDelete),
-            headers: { 'Content-Type': 'application/json' }
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(res => {
@@ -259,7 +262,10 @@ function Admin({ username, isAdmin }) {
             fetch('http://localhost:8080/admin/changeArtistIDLink', {
                 method: 'PUT',
                 body: JSON.stringify(changeToMake),
-                headers: { 'Content-Type': 'application/json' }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': localStorage.token
+                }
             }).then(response => {
                 if (response.status === 200) {
                     response.json().then(res => {
@@ -296,7 +302,10 @@ function Admin({ username, isAdmin }) {
         fetch('http://localhost:8080/admin/deleteReview', {
             method: 'DELETE',
             body: JSON.stringify(reviewToDelete),
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': localStorage.token
+            }
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(res => {
