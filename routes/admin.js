@@ -54,6 +54,10 @@ router.get('/getData', auth, async (req, res) => {
 router.put('/changeArtistIDLink', auth, async (req, res) => {
     let params = req.body;
 
+    if (params.user_ID === 1) {
+        return res.sendStatus(401)
+    }
+
     var outputConsole = false
 
     if (outputConsole) { console.log("params: ", params) }
@@ -134,6 +138,10 @@ router.put('/changeArtistIDLink', auth, async (req, res) => {
 
 router.delete('/deleteUser', auth, async (req, res) => {
     let params = req.body;
+
+    if (params.user_ID === 1) {
+        return res.sendStatus(401)
+    }
 
     var outputConsole = false
 
