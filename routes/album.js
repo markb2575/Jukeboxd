@@ -23,7 +23,8 @@ router.get('/getAlbum/:albumID&:username', async (req, res) => {
 
         const album_ID = await db.pool.query(`SELECT Albums.album_ID FROM Albums WHERE Albums.spotify_album_ID = '${params.albumID}';`) // Not returned to keep album_ID private
         const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${params.username}';`) // Not returned to keep user_ID private
-
+        if (user_ID.length == 0) return res.status(404).send()
+        
         const reviews = await db.pool.query(`SELECT review, datetime, (SELECT username FROM Users WHERE user_ID = ReviewedAlbum.user_ID) AS username FROM ReviewedAlbum WHERE album_ID = '${album_ID[0].album_ID}' ORDER BY datetime DESC;`)
         const review = await db.pool.query(`SELECT review, datetime FROM ReviewedAlbum WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
         const listened = await db.pool.query(`SELECT rating, datetime FROM ListenedAlbum WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
