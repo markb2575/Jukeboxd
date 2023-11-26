@@ -15,8 +15,13 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
-router.get('/getData', async (req, res) => {
+router.get('/getData', auth, async (req, res) => {
     try {
+        const role = await req.role
+        if (role !== 0) {
+            return res.sendStatus(401)
+        }
+
         const users = await db.pool.query(`SELECT user_ID, username, artist_ID FROM Users;`)
         //console.log("users", users)
 
@@ -46,7 +51,7 @@ router.get('/getData', async (req, res) => {
     }
 });
 
-router.put('/changeArtistIDLink', async (req, res) => {
+router.put('/changeArtistIDLink', auth, async (req, res) => {
     let params = req.body;
 
     var outputConsole = false
@@ -56,6 +61,10 @@ router.put('/changeArtistIDLink', async (req, res) => {
     if (outputConsole) { console.log("user_ID.toString(): ", params.user_ID.toString(), "artist_ID.toString(): ", params.artist_ID.toString()) }
 
     try {
+        const role = await req.role
+        if (role !== 0) {
+            return res.sendStatus(401)
+        }
 
         const user = await db.pool.query(`SELECT * FROM Users WHERE user_ID = '${params.user_ID}';`)
 
@@ -123,12 +132,17 @@ router.put('/changeArtistIDLink', async (req, res) => {
     }
 });
 
-router.delete('/deleteUser', async (req, res) => {
+router.delete('/deleteUser', auth, async (req, res) => {
     let params = req.body;
 
     var outputConsole = false
 
     try {
+        const role = await req.role
+        if (role !== 0) {
+            return res.sendStatus(401)
+        }
+
         const user = await db.pool.query(`SELECT * FROM Users WHERE user_ID = '${params.user_ID}';`)
 
         if (user.length === 1) {
@@ -156,26 +170,31 @@ router.delete('/deleteUser', async (req, res) => {
         `)
 
         if (outputConsole) { console.log("users after user deleted: ", users, "reviews after user deleted: ", reviews) }
-        return res.status(200).json({ "users": users, "reviews": reviews});
+        return res.status(200).json({ "users": users, "reviews": reviews });
     } catch (err) {
         console.error(err.message);
         res.status(500);
     }
 });
 
-router.delete('/deleteReview', async (req, res) => {
+router.delete('/deleteReview', auth, async (req, res) => {
     let params = req.body;
 
     var outputConsole = false
 
     try {
+        const role = await req.role
+        if (role !== 0) {
+            return res.sendStatus(401)
+        }
+
         if (params.item_type === 'album') {
             const review = await db.pool.query(`SELECT * FROM ReviewedAlbum WHERE user_ID = '${params.user_ID}' AND album_ID = '${params.item_ID}';`)
             if (review.length === 1) {
                 await db.pool.query(
                     'DELETE FROM ReviewedAlbum WHERE user_ID = ? AND album_ID = ?',
                     [params.user_ID, params.item_ID]
-                  );
+                );
             } else {
                 // there is no review with that user_ID and album_ID, so do nothing
             }
@@ -185,7 +204,7 @@ router.delete('/deleteReview', async (req, res) => {
                 await db.pool.query(
                     'DELETE FROM ReviewedTrack WHERE user_ID = ? AND track_ID = ?',
                     [params.user_ID, params.item_ID]
-                  );
+                );
             } else {
                 // there is no review with that user_ID and track_ID, so do nothing
             }
@@ -208,7 +227,7 @@ router.delete('/deleteReview', async (req, res) => {
         `)
 
         if (outputConsole) { console.log("reviews after review deleted: ", reviews) }
-        return res.status(200).json({ "reviews": reviews});
+        return res.status(200).json({ "reviews": reviews });
     } catch (err) {
         console.error(err.message);
         res.status(500);
