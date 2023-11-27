@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.get('/', auth, async (req, res) => {
-    console.log("/ called")
+    //console.log("/ called")
     try {
         const username = await req.user;
         const user = await db.pool.query(`SELECT username, role, artist_ID FROM Users WHERE binary username = '${username}';`)
@@ -31,7 +31,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.get('/getNavBar', auth, async (req, res) => {
-    console.log("getNavBar called")
+    //console.log("getNavBar called")
     try {
         const username = await req.user;
         const user = await db.pool.query(`SELECT username, role, artist_ID FROM Users WHERE binary username = '${username}';`)
@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
         if (hash.length == 0) return res.status(401).send()
         if (await bcrypt.compare(credentials.password, hash[0].password)) {
             var token = jwt.sign({ username: credentials.username }, process.env.JWT_SECRET, { expiresIn: '7d' })
-            return res.json({ "token": token });
+            return res.json({ "token": token, "redirect": true });
         }
         // password does not match hash in database
         res.status(401).send()
@@ -76,10 +76,10 @@ router.post('/signup', async (req, res) => {
     try {
         const exists = await db.pool.query(`select * from Users where username = '${credentials.username}';`)
         console.log(exists)
-        if (exists.length === 1) return res.status(400).send()
+        if (exists.length === 1) return res.status(400).send( {"exists": true} )
         const hashed = await bcrypt.hash(credentials.password, await bcrypt.genSalt())
         await db.pool.query("insert into Users(username, password) values (?,?);", [credentials.username, hashed]);
-        return res.status(200).send()
+        return res.status(200).send( {"bcrypt": hashed} )
     } catch (err) {
         throw err;
     }

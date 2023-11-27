@@ -1,0 +1,1879 @@
+{
+	"info": {
+		"_postman_id": "88615bb3-367e-4013-9041-f606986eeb3d",
+		"name": "Jukeboxd testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31110590",
+		"_collection_link": "https://warped-moon-147481.postman.co/workspace/Jukeboxd~40181003-1528-4ee6-8dc3-c5e74835d9c2/collection/31110590-88615bb3-367e-4013-9041-f606986eeb3d?action=share&source=collection_link&creator=31110590"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "getData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.environment.name === \"Admin\") {\r",
+									"    pm.test(\"Response status code is 200\", function () {\r",
+									"        pm.response.to.have.status(200);\r",
+									"    });\r",
+									"\r",
+									"\r",
+									"    /*\r",
+									"    pm.test(\"Validate the presence and length of the 'users' array\", function () {\r",
+									"        const responseData = pm.response.json();\r",
+									"\r",
+									"        pm.expect(responseData.users).to.exist;\r",
+									"        pm.expect(responseData.users).to.be.an('array');\r",
+									"        pm.expect(responseData.users.length).to.be.above(0).and.to.be.below(100);\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"\r",
+									"    pm.test(\"Validate the presence and length of the 'artists' array\", function () {\r",
+									"        const responseData = pm.response.json();\r",
+									"        \r",
+									"        pm.expect(responseData).to.be.an('object');\r",
+									"        pm.expect(responseData.artists).to.exist.and.to.be.an('array');\r",
+									"        pm.expect(responseData.artists).to.have.lengthOf(3831);\r",
+									"    });\r",
+									"\r",
+									"\r",
+									"    pm.test(\"Validate that the 'reviews' array is present and contains the expected number of elements\", function () {\r",
+									"        const responseData = pm.response.json();\r",
+									"        \r",
+									"        pm.expect(responseData).to.be.an('object');\r",
+									"        pm.expect(responseData.reviews).to.exist.and.to.be.an('array');\r",
+									"        pm.expect(responseData.reviews.length).to.be.above(0).and.to.be.below(100);\r",
+									"    });\r",
+									"\r",
+									"\r",
+									"    pm.test(\"Each user object in the 'users' array has the required fields\", function () {\r",
+									"        const responseData = pm.response.json();\r",
+									"        const users = responseData.users;\r",
+									"\r",
+									"        pm.expect(users).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"        users.forEach(function(user) {\r",
+									"            pm.expect(user.user_ID).to.exist.and.to.be.a('number');\r",
+									"            pm.expect(user.username).to.exist.and.to.be.a('string');\r",
+									"        });\r",
+									"    });\r",
+									"    */\r",
+									"\r",
+									"} else {\r",
+									"    pm.test(\"Response status code is 401\", function () {\r",
+									"        pm.response.to.have.status(401);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/getData",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"getData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T24 - changeArtistIDLink",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the 'users' array is present and contains at least one element\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.users).to.exist.and.to.be.an('array').that.has.lengthOf.at.least(1, \"Array should contain at least one element\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each element in the 'users' array has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.users).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Array should not be empty\");\r",
+									"\r",
+									"    responseData.users.forEach(function (user) {\r",
+									"        pm.expect(user).to.have.property('user_ID');\r",
+									"        pm.expect(user).to.have.property('username');\r",
+									"        pm.expect(user).to.have.property('artist_ID');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that user_ID is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.users).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    responseData.users.forEach(function (user) {\r",
+									"        pm.expect(user.user_ID).to.be.a('number').that.is.at.least(0, \"user_ID should be a non-negative integer\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate that the username is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.users).to.be.an('array');\r",
+									"    responseData.users.forEach(function (user) {\r",
+									"        pm.expect(user.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the user's artist_ID matches the new artist_ID\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData.users[3].artist_ID).to.be.equal(1)\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_ID\": \"6\", \"artist_ID\": \"1\"}\r\n\r\n//{\"user_ID\": \"5\", \"artist_ID\": \"520\"}\r\n\r\n//{\"user_ID\": \"5\", \"artist_ID\": \"520\"}\r\n\r\n//{\"user_ID\": \"5\", \"artist_ID\": \"521\"}\r\n\r\n//{\"user_ID\": \"5\", \"artist_ID\": \"\"}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/changeArtistIDLink",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"changeArtistIDLink"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T25 - deleteReview",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the 'reviews' array is present and at least 0\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.reviews).to.exist.and.to.be.an('array').and.to.have.length.at.least(0)\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_ID\": \"4\", \"item_ID\": \"500\", \"item_type\": \"album\"}\r\n//{\"user_ID\": \"4\", \"item_ID\": \"511\", \"item_type\": \"track\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/deleteReview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"deleteReview"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Album",
+			"item": [
+				{
+					"name": "T22 - getAlbum",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Add a test to check the status code is 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Add a test to check the response time is less than 500ms\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"// Add a test to check that the response contains a reviews array\r",
+									"pm.test(\"Response contains a reviews array\", function () {\r",
+									"    pm.expect(pm.response.json().reviews).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"// Add a test to check that each element in the reviews array has a non-empty review, datetime, and username\r",
+									"pm.test(\"Each element in the reviews array has a non-empty review, datetime, and username\", function () {\r",
+									"    pm.response.json().reviews.forEach(function(review) {\r",
+									"        pm.expect(review.review).to.not.be.empty;\r",
+									"        pm.expect(review.datetime).to.not.be.empty;\r",
+									"        pm.expect(review.username).to.not.be.empty;\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/getAlbum/:albumID&:username",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								"getAlbum",
+								":albumID&:username"
+							],
+							"variable": [
+								{
+									"key": "albumID&:username",
+									"value": "5xLAcbvbSAlRtPXnKkggXA&test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T08/T09 - add-listened-album",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required field 'message'\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The 'message' field is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that s_album_id parameter is correctly passed in the request URL\", function () {\r",
+									"    const urlParams = pm.request.url.variables;\r",
+									"    const sAlbumId = pm.variables.get(\"s_album_id\");\r",
+									"    pm.expect(urlParams.s_album_id).to.equal(sAlbumId);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/add-listened-album/:username/:s_album_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								"add-listened-album",
+								":username",
+								":s_album_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "test"
+								},
+								{
+									"key": "s_album_id",
+									"value": "5xLAcbvbSAlRtPXnKkggXA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T07 - setRating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is in an acceptable range\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"spotifyAlbumID\": \"5xLAcbvbSAlRtPXnKkggXA\",\r\n    \"rating\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/album/setRating",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								"setRating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T05/T06 - add-watch-album",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required field 'message'\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The 'message' field is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that s_album_id parameter is correctly passed in the request URL\", function () {\r",
+									"    const urlParams = pm.request.url.variables;\r",
+									"    const sAlbumId = pm.variables.get(\"s_album_id\");\r",
+									"    \r",
+									"    pm.expect(urlParams.s_album_id).to.equal(sAlbumId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/album/add-watch-album/:username/:s_album_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"album",
+								"add-watch-album",
+								":username",
+								":s_album_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "test"
+								},
+								{
+									"key": "s_album_id",
+									"value": "5xLAcbvbSAlRtPXnKkggXA"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Artist",
+			"item": [
+				{
+					"name": "T17 - getArtist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Artist name is not empty\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.artistName).to.exist.and.to.not.be.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Albums array is present and is an array\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.albums).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Tracks array is present and is an array\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.tracks).to.exist.and.to.be.an('array');",
+									"});pm.test(\"Each album in the albums array has albumName, albumID, and image_URL properties if it is present\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.albums.forEach(function(album) {",
+									"        pm.expect(album.albumName).to.exist.and.to.not.be.empty;",
+									"        pm.expect(album.albumID).to.exist.and.to.not.be.empty;",
+									"        pm.expect(album.image_URL).to.exist.and.to.not.be.empty;",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each track in the tracks array has trackName, trackID, and image_URL properties if it is present\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.tracks.forEach(function(track) {",
+									"        pm.expect(track.trackName).to.exist.and.to.not.be.empty;",
+									"        pm.expect(track.trackID).to.exist.and.to.not.be.empty;",
+									"        pm.expect(track.image_URL).to.exist.and.to.not.be.empty;",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/artist/getArtist/:artistID&:username",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"getArtist",
+								":artistID&:username"
+							],
+							"variable": [
+								{
+									"key": "artistID&:username",
+									"value": "08GQAI4eElDnROBrJRGE0X&test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T16 - setDescription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field - description\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.description).to.exist.and.to.be.a('string');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.description).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Description should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description length is valid\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.description).to.exist.and.to.have.lengthOf.at.most(255, \"Description should not be too long\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"spotify_artist_ID\": \"08GQAI4eElDnROBrJRGE0X\",\n      \"descriptionText\": \"Test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artist/setDescription",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artist",
+								"setDescription"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "T18 - users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Username is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(user){",
+									"        pm.expect(user.username).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"pm.test(\"Verify the response contains 0 or more elements\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    pm.expect(responseData).to.have.lengthOf.at.least(0, \"Response should contain 0 or more elements\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search/users/:query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"users",
+								":query"
+							],
+							"variable": [
+								{
+									"key": "query",
+									"value": "t"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T18 - tracks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each track object's song_date is in the valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.forEach(function(track) {",
+									"        pm.expect(track.song_date).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/);",
+									"    });",
+									"});",
+									"pm.test(\"Each track object's track_name is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(track) {",
+									"        pm.expect(track).to.be.an('object');",
+									"        pm.expect(track.track_name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each track object's artist_names is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"",
+									"    responseData.forEach(function (track) {",
+									"        pm.expect(track.artist_names).to.be.a('string').and.to.have.lengthOf.at.least(1);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each track object's album_name is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"",
+									"    responseData.forEach(function (track) {",
+									"        pm.expect(track.album_name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each track object's song_date is a valid date format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"  ",
+									"  responseData.forEach(function (track) {",
+									"    pm.expect(track.song_date).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/);",
+									"  });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search/tracks/:query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"tracks",
+								":query"
+							],
+							"variable": [
+								{
+									"key": "query",
+									"value": "good morning"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T18 - artists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each element in the response array has the required fields - artist_name and artist_id\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(artist) {",
+									"        pm.expect(artist).to.have.property('artist_name').that.is.a('string');",
+									"        pm.expect(artist).to.have.property('artist_id').that.is.a('string');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Each artist_id is a string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  ",
+									"  responseData.forEach(function(artist) {",
+									"    pm.expect(artist.artist_id).to.be.a('string');",
+									"  });",
+									"});",
+									"",
+									"pm.test(\"Each artist_name is a string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(artist) {",
+									"        pm.expect(artist.artist_name).to.be.a('string');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search/artists/:query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"artists",
+								":query"
+							],
+							"variable": [
+								{
+									"key": "query",
+									"value": "kanye"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T18 - albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Each album object has the required properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"",
+									"    responseData.forEach(function (album) {",
+									"        pm.expect(album).to.have.property('album_name');",
+									"        pm.expect(album).to.have.property('artist_names');",
+									"        pm.expect(album).to.have.property('release_date');",
+									"        pm.expect(album).to.have.property('image_URL');",
+									"        pm.expect(album).to.have.property('album_id');",
+									"        pm.expect(album).to.have.property('artist_ids');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Each album object has a non-empty album name\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.forEach(function (album) {",
+									"        pm.expect(album.album_name).to.exist.and.to.have.lengthOf.at.least(1, \"Album name should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Each album object has a non-empty artist names\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.forEach(function (album) {",
+									"        pm.expect(album.artist_names).to.exist.and.to.have.lengthOf.at.least(1, \"Artist names should not be empty\");",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Each album object has a valid release date\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.forEach(function (album) {",
+									"        pm.expect(album.release_date).to.be.a('string').and.to.match(/\\d{4}-\\d{2}-\\d{2}/, \"Invalid release date format\");",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each album object has a non-empty album ID\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.forEach(function (album) {",
+									"        pm.expect(album.album_id).to.exist.and.to.have.lengthOf.at.least(1, \"Album ID should not be empty\");",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search/albums/:query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"albums",
+								":query"
+							],
+							"variable": [
+								{
+									"key": "query",
+									"value": "late regi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T18 - all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    pm.expect(responseData[0]).to.be.an('object');",
+									"    pm.expect(responseData[0].username).to.exist.and.to.be.a('string');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Username is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('array');",
+									"  pm.expect(responseData[0]).to.be.an('object');",
+									"  pm.expect(responseData[0].username).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response is in JSON format\", function () {",
+									"    pm.response.to.have.jsonBody();",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/search/all/:query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"all",
+								":query"
+							],
+							"variable": [
+								{
+									"key": "query",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Track",
+			"item": [
+				{
+					"name": "T20 - getTrack",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the 'track' array is present and contains the expected number of elements\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.track).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Track array should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the presence and length of the 'artist' array\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.artist).to.exist;\r",
+									"  pm.expect(responseData.artist).to.be.an('array');\r",
+									"  pm.expect(responseData.artist.length).to.equal(1);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the 'album' array is present in the response and contains the expected number of elements\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.album).to.exist.and.to.be.an('array');\r",
+									"    pm.expect(responseData.album.length).to.equal(1);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/track/getTrack/:trackID&:username",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								"getTrack",
+								":trackID&:username"
+							],
+							"variable": [
+								{
+									"key": "trackID&:username",
+									"value": "017PF4Q3l4DBUiWoXk4OWT&test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T15 - setReview",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the 'reviews' array is present and contains at least one element\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.reviews).to.exist.and.to.be.an('array').with.lengthOf.at.least(1);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each username in the reviews array is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.reviews).to.exist.and.to.be.an('array');\r",
+									"    \r",
+									"    responseData.reviews.forEach(function (review) {\r",
+									"        pm.expect(review.username).to.exist.and.to.be.a('string').and.to.not.be.empty;\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"spotifyTrackID\": \"017PF4Q3l4DBUiWoXk4OWT\",\r\n    \"reviewText\": \"this is a test review\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/track/setReview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								"setReview"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T13/T14 - add-listened-track",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required field 'message'\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The 'message' field is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/track/add-listened-track/:username/:s_track_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								"add-listened-track",
+								":username",
+								":s_track_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "test"
+								},
+								{
+									"key": "s_track_id",
+									"value": "017PF4Q3l4DBUiWoXk4OWT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T12 - setRating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"spotifyTrackID\": \"017PF4Q3l4DBUiWoXk4OWT\",\r\n    \"rating\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/track/setRating",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								"setRating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T10/T11 - add-watch-track",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has a message field\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message field is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is within acceptable range\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/track/add-watch-track/:username/:s_track_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"track",
+								"add-watch-track",
+								":username",
+								":s_track_id"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "test"
+								},
+								{
+									"key": "s_track_id",
+									"value": "017PF4Q3l4DBUiWoXk4OWT"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "T03 - login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required field - token\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.token).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Response has the required field - redirect\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.redirect).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Token is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");",
+									"});",
+									"",
+									"pm.test(\"Redirect is true\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.redirect).to.be.true",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"test\", \"password\": \"testtest\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T04 - login invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"test\", \"password\": \"testtesttt\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T01 - signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required field - bcrypt\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property(\"bcrypt\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"bcrypt is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.bcrypt).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"username\": \"test13\",\r\n   \"password\": \"testtest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T02 - signup invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"username\": \"test12\",\r\n   \"password\": \"testtest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T-23 followUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"followerUsername\": \"test\",\n            \"followeeUsername\": \"Admin\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/followUser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"followUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T21 - profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'followers' array is present\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.followers).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'following' array is present\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.following).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify the presence of 'lTracks' array\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.lTracks).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"The 'lAlbums' array is present\", function() {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.lAlbums).to.exist.and.to.be.an('array');",
+									"});// Test that each element in the 'followers' array has a valid username",
+									"pm.test(\"Each element in the 'followers' array has a valid username\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.followers.forEach(function (follower) {",
+									"        pm.expect(follower).to.be.an('object');",
+									"        pm.expect(follower.username).to.be.a('string').and.to.have.length.above(0);",
+									"    });",
+									"});",
+									"",
+									"// Test that each element in the 'following' array has a valid username",
+									"pm.test(\"Each element in the 'following' array has a valid username\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.following.forEach(function (followee) {",
+									"        pm.expect(followee).to.be.an('object');",
+									"        pm.expect(followee.username).to.be.a('string').and.to.have.length.above(0);",
+									"    });",
+									"});",
+									"",
+									"// Test that each element in the 'lTracks' array has valid properties",
+									"pm.test(\"Each element in the 'lTracks' array has valid properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.lTracks.forEach(function (track) {",
+									"        pm.expect(track).to.be.an('object');",
+									"        pm.expect(track.rating).to.be.a('number');",
+									"        pm.expect(track.datetime).to.be.a('string');",
+									"        pm.expect(track.track_name).to.be.a('string');",
+									"        pm.expect(track.spotify_track_ID).to.be.a('string');",
+									"        pm.expect(track.artist_names).to.be.a('string');",
+									"        pm.expect(track.artist_ids).to.be.a('string');",
+									"        pm.expect(track.album_name).to.be.a('string');",
+									"        pm.expect(track.spotify_album_ID).to.be.a('string');",
+									"        pm.expect(track.image_URL).to.be.a('string');",
+									"    });",
+									"});",
+									"",
+									"// Test that each element in the 'lAlbums' array has valid properties",
+									"pm.test(\"Each element in the 'lAlbums' array has valid properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.lAlbums.forEach(function (album) {",
+									"        pm.expect(album).to.be.an('object');",
+									"        pm.expect(album.rating).to.be.a('number');",
+									"        pm.expect(album.datetime).to.be.a('string');",
+									"        pm.expect(album.album_name).to.be.a('string');",
+									"        pm.expect(album.spotify_album_ID).to.be.a('string');",
+									"        pm.expect(album.artist_names).to.be.a('string');",
+									"        pm.expect(album.artist_ids).to.be.a('string');",
+									"        pm.expect(album.image_URL).to.be.a('string');",
+									"    });",
+									"});// Test that each element in the 'wTracks' array has valid properties",
+									"pm.test(\"Each element in the 'wTracks' array has valid properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.wTracks.forEach(function (track) {",
+									"        pm.expect(track).to.be.an('object');",
+									"        pm.expect(track.datetime).to.be.a('string');",
+									"        pm.expect(track.track_name).to.be.a('string');",
+									"        pm.expect(track.spotify_track_ID).to.be.a('string');",
+									"        pm.expect(track.artist_names).to.be.a('string');",
+									"        pm.expect(track.artist_ids).to.be.a('string');",
+									"        pm.expect(track.album_name).to.be.a('string');",
+									"        pm.expect(track.spotify_album_ID).to.be.a('string');",
+									"        pm.expect(track.image_URL).to.be.a('string');",
+									"    });",
+									"});",
+									"",
+									"// Test that each element in the 'wAlbums' array has valid properties",
+									"pm.test(\"Each element in the 'wAlbums' array has valid properties\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    responseData.wAlbums.forEach(function (album) {",
+									"        pm.expect(album).to.be.an('object');",
+									"        pm.expect(album.datetime).to.be.a('string');",
+									"        pm.expect(album.album_name).to.be.a('string');",
+									"        pm.expect(album.spotify_album_ID).to.be.a('string');",
+									"        pm.expect(album.artist_names).to.be.a('string');",
+									"        pm.expect(album.artist_ids).to.be.a('string');",
+									"        pm.expect(album.image_URL).to.be.a('string');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/profile/:username",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "T19 - getHome",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Check if ratingsFromFriends array is present and has at least 0 and at most 5 entries\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.ratingsFromFriends).to.exist.and.to.be.an('array');\r",
+									"    pm.expect(responseData.ratingsFromFriends.length).to.be.at.least(0).and.to.be.at.most(5);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the 'reviewsFromFriends' array is present and at least 0 and at most 5 entries\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.reviewsFromFriends).to.exist.and.to.be.an('array');\r",
+									"    pm.expect(responseData.reviewsFromFriends.length).to.be.at.least(0).and.to.be.at.most(5);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the presence of the 'reviews' array, and that it is at most 10 reviews large\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.reviews).to.exist.and.to.be.an('array');\r",
+									"  pm.expect(responseData.reviews.length).to.be.at.most(10);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the presence and size of the 'popular' array, and that it is at most 6 entries large\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData.popular).to.exist.and.to.be.an('array');\r",
+									"  pm.expect(responseData.popular.length).to.be.at.most(6);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/getHome/:getUsername",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"getHome",
+								":getUsername"
+							],
+							"variable": [
+								{
+									"key": "getUsername",
+									"value": "{{username}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({ key: 'Authorization', value: pm.variables.get(\"token\") });",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

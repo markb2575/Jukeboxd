@@ -23,6 +23,7 @@ function Home({ username }) {
 
     useEffect(() => {
         //console.log("username: ", username)
+        setLoading(true)
         if (username.length === 0) {
             return
         }
