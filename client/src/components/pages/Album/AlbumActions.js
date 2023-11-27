@@ -129,7 +129,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
     }).then(response => {
       if (response.status === 200) {
         setReviewed(false)
-        setReviewText(null)
+        setReviewText("")
 
         response.json().then(res => {
           if (res.reviews.length !== 0) {

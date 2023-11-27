@@ -117,7 +117,7 @@ router.get('/getReview/username=:username&spotifyAlbumID=:albumID', async (req, 
   try {
       const album_ID = await db.pool.query(`SELECT Albums.album_ID FROM Albums WHERE Albums.spotify_album_ID = '${spotifyAlbumID}';`) // Not returned to keep album_ID private
       const user_ID = await db.pool.query(`SELECT user_ID FROM Users WHERE username = '${username}';`) // Not returned to keep user_ID private
-
+      if (user_ID.length == 0 || album_ID.length == 0) return res.status(404).send()
       const review = await db.pool.query(`SELECT review, datetime FROM ReviewedAlbum WHERE user_ID = '${user_ID[0].user_ID}' AND album_ID = '${album_ID[0].album_ID}';`)
 
       return res.status(200).json({ "review": review })
