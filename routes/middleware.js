@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
             const user = req.user;
             const role = await db.pool.query(`select role from Users where binary username = '${user}';`)
             //console.log("username: ", user, "role: ", role)
-            console.log("role: ", role[0].role)
+            //console.log("role: ", role[0].role)
             req.role = role[0].role
             next()
             /*

@@ -35,6 +35,7 @@ const ttUnwatch = (props) => (
     Remove from your watch list
   </Tooltip>
 );
+
 function AlbumActions({ username, rated, radios, radioValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRadioValue, watchlist, setWatchlist }) {
   const [show, setShow] = useState(false); // Show review box
   const handleClose = () => {
@@ -147,6 +148,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
       }
     }).catch(error => console.error(error));
   }
+
   const handleShow = () => {
     if (reviewed) {
       fetch(`http://localhost:8080/album/getReview/username=${username}&spotifyAlbumID=${albumID}`, {
@@ -170,6 +172,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
     }
     setShow(true)
   };
+
   const handleListen = () => {
     if (listened) {
       //Remove from list
@@ -248,6 +251,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
       })
     }
   }
+
   return (
     <div className="centeredVerticalCol">
       <ListGroup>

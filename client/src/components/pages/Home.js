@@ -21,8 +21,9 @@ function Home({ username }) {
     const [displayPopular, setDisplayPopular] = useState(false)
     const [loading, setLoading] = useState(true);
 
+    /*
     useEffect(() => {
-        //console.log("username: ", username)
+        console.log("username: ", username)
         setLoading(true)
         if (username.length === 0) {
             return
@@ -33,6 +34,7 @@ function Home({ username }) {
         }).then(response => {
             if (response.status === 200) {
                 response.json().then(res => {
+                    console.log("getting home info")
                     if (res.ratingsFromFriends.length !== 0) {
                         setRatingsFromFriends(res.ratingsFromFriends)
                         if (res.ratingsFromFriends.length > 2) {
@@ -78,6 +80,76 @@ function Home({ username }) {
             }
         }).catch(error => console.error(error));
     }, [username]);
+    */
+
+    useEffect(() => {
+        setLoading(true)
+        //console.log("token: ", localStorage.token)
+        if (localStorage.token.length === 0) {
+            console.log("no token")
+            setLoading(false)
+            return
+        }
+        if (localStorage.token) {
+            //console.log("attempting to homeGet")
+            fetch('http://localhost:8080/user/getHome', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': localStorage.token
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    response.json().then(res => {
+                        //console.log("getting home info")
+                        if (res.ratingsFromFriends.length !== 0) {
+                            setRatingsFromFriends(res.ratingsFromFriends)
+                            if (res.ratingsFromFriends.length > 2) {
+                                setDisplayFriendActivity(true)
+                            } else {
+                                setDisplayFriendActivity(false)
+                            }
+                        } else {
+                            setRatingsFromFriends(null)
+                            setDisplayFriendActivity(false)
+                        }
+                        if (res.reviewsFromFriends.length !== 0) {
+                            setReviewsFromFriends(res.reviewsFromFriends)
+                            setReviewsFromFriendsExist(true)
+                        } else {
+                            setReviewsFromFriends(null)
+                            setReviewsFromFriendsExist(false)
+                        }
+                        if (res.reviews.length !== 0) {
+                            setReviews(res.reviews)
+                            setReviewsExist(true)
+                        } else {
+                            setReviews(null)
+                            setReviewsExist(false)
+                        }
+                        if (res.popular.length !== 0) {
+                            setPopular(res.popular)
+                            if (res.popular.length > 2) {
+                                setDisplayPopular(true)
+                            } else {
+                                setDisplayPopular(false)
+                            }
+                        } else {
+                            setPopular(null)
+                            setDisplayPopular(false)
+                        }
+                        setLoading(false)
+                    }).catch(e => {
+                        console.log(e);
+                    });
+                } else {
+                    console.log("something happened")
+                    setLoading(false)
+                }
+            }).catch(error => console.error(error));
+        }
+    }, [username]);
+
 
     function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
         // Create a Date object from the MariaDB datetime string

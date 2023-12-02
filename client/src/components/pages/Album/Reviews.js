@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card'
 import { Link } from "react-router-dom";
 
-function Reviews({reviewsExist, reviews}) {
+function Reviews({ reviewsExist, reviews }) {
   function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
     // Create a Date object from the MariaDB datetime string
     const datetimeObject = new Date(mariaDBDatetime);
