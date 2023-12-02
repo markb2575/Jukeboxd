@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
@@ -20,6 +20,7 @@ function Home({ username }) {
     const [displayFriendActivity, setDisplayFriendActivity] = useState(false)
     const [displayPopular, setDisplayPopular] = useState(false)
     const [loading, setLoading] = useState(true);
+    let navigate = useNavigate();
 
     /*
     useEffect(() => {
@@ -85,11 +86,6 @@ function Home({ username }) {
     useEffect(() => {
         setLoading(true)
         //console.log("token: ", localStorage.token)
-        if (localStorage.token.length === 0) {
-            console.log("no token")
-            setLoading(false)
-            return
-        }
         if (localStorage.token) {
             //console.log("attempting to homeGet")
             fetch('http://localhost:8080/user/getHome', {
@@ -147,6 +143,8 @@ function Home({ username }) {
                     setLoading(false)
                 }
             }).catch(error => console.error(error));
+        } else {
+            navigate("/login")
         }
     }, [username]);
 
