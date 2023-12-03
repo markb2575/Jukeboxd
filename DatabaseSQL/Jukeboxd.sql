@@ -1,20 +1,16 @@
-DROP DATABASE IF EXISTS Test;
-CREATE DATABASE IF NOT EXISTS Test;
+DROP DATABASE IF EXISTS Jukeboxd;
+CREATE DATABASE IF NOT EXISTS Jukeboxd;
 
--- # set time_zone="america/new_york";
+CREATE USER 'jukeboxdAdmin'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON Jukeboxd.* TO 'jukeboxdAdmin'@'localhost';
 
--- # CREATE USER 'test'@'localhost' IDENTIFIED BY 'password';
--- # GRANT ALL PRIVILEGES ON Test.* TO 'test'@'localhost';
-
-USE Test;
+USE Jukeboxd;
 
 CREATE TABLE Artists (
   artist_ID INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   spotify_artist_ID varchar(100) NOT NULL,
-  -- # user_ID INT DEFAULT NULL,
   description VARCHAR(500)
-  -- # FOREIGN KEY (user_ID) REFERENCES Users(user_ID) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE Users (
@@ -61,8 +57,6 @@ CREATE TABLE Tracks (
   disc_number INT NOT NULL,
   explicit BOOLEAN NOT NULL,
   duration INT NOT NULL,
-  -- # year INT NOT NULL,
-  -- # release_date DATE NOT NULL,
   FOREIGN KEY (album_ID) REFERENCES Albums(album_ID)
 );
 

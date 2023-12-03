@@ -46,6 +46,7 @@ function Reviews({ reviewsExist, reviews }) {
           :
           <div>No reviews exist yet</div>}
       </div>
+      <br></br>
     </div>
   )
 }
