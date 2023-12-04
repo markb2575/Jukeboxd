@@ -28,13 +28,10 @@
   margin: 5px 0;
 }
 
-.album-cover {
-  max-width: 100px;
-  max-height: 100px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+.album-cover:hover {
+  cursor: pointer;
+  border: 1px solid #000;
 }
-
 
 .search-results li {
   border: 1px solid #ccc;

@@ -1,6 +1,6 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import './Search.css'
 import { Row, Col, Container } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
@@ -10,16 +10,16 @@ function Search() {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
-  const location = useLocation();
   const [filter, setFilter] = useState('all'); // 'all' is the default filter
   const [pageNum, setPageNum] = useState(1);
+  const location = useLocation();
   const pageSize = 50; //Can be changed
-  const scrollRef = useRef();
+  const navigate = useNavigate();
 
-  let navigate = useNavigate();
-
-
-
+  /* 
+  This function is used to set the filter, page number, and scroll position when returning to the search results.
+  The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
+  */
   useEffect(() => {
     setFilter(JSON.parse(window.localStorage.getItem('filter')));
     setPageNum(JSON.parse(window.localStorage.getItem('page')));
@@ -27,7 +27,9 @@ function Search() {
   });
 
 
-  //listener for scroll, save scroll position for persistence
+  /*
+  Listener for scroll, save scroll position for persistence
+  */
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
@@ -36,29 +38,41 @@ function Search() {
     };
   }, []);
 
+  /*
+  This function updates the search parameter whenever the url parameter is changed.
+  This ensures that the page updates correctly when performing a new search
+  */
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const myParam = searchParams.get('q');
 
     if (myParam) {
       setQuery(myParam);
-      // No need to directly call fetchSearchResults here
     }
   }, [location.search]);
 
-  // Move the fetchSearchResults function call to a separate useEffect
+  /*
+  This function calls the function that fetches the search results whenever the query is updated.
+  This ensures that the displayed results always match the search query.
+  */
   useEffect(() => {
     if (query) {
       fetchSearchResults(query, filter);
     }
   }, [query]);
 
+  /*
+  This is called when the screen is scrolled, it saves the current scroll position into local storage so it can be recalled later.
+  */
   const handleScroll = () => {
     window.localStorage.setItem("scroll", JSON.stringify(window.scrollY))
   };
 
 
-  //save filter for persistence, reset back to page 1 on filter change
+  /*
+  This is called when a filter button is pressed.
+  It changes the filter state, saves info to local storage, resets the page number, and fetches new search results.
+  */
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
     window.localStorage.setItem('page', JSON.stringify(1));
@@ -67,26 +81,37 @@ function Search() {
     fetchSearchResults(query, newFilter);
   };
 
+  /*
+  This is called when the next page button is pressed.
+  It ensures there is another page to load, and then sets the page state
+  */
   const handleNext = () => {
     if (pageNum < Math.ceil(searchResults.length / pageSize)) {
       const n = pageNum + 1;
       window.localStorage.setItem('page', JSON.stringify(n));
 
       setPageNum(n);
-      fetchSearchResults(query, filter);
     }
   };
 
+  /*
+  This is called when the previous page button is pressed.
+  It ensures there is a previous page to load, and then sets the page state
+  */
   const handlePrev = () => {
     if (pageNum > 1) {
       const n = pageNum - 1;
       window.localStorage.setItem('page', JSON.stringify(n));
 
       setPageNum(n);
-      fetchSearchResults(query, filter);
     }
   };
 
+  /**
+     * Function that calls the API to search the database given a query and filter
+     * @param {*} searchQuery The string to search the databse for
+     * @param {*} filter The type of item to search for
+     */
   const fetchSearchResults = (searchQuery, filter) => {
     fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
       method: 'GET',
@@ -203,10 +228,10 @@ function Search() {
                 {result.track_name && (
                   <Card>
                     <Card.Header>Track</Card.Header>
-                    <Card.Img varient="top" src={result.image_URL} alt="Album Cover" />
+                    <Card.Img className="album-cover" onClick={() => navigate(`/track/${result.track_id}`)} varient="top" src={result.image_URL} alt="Album Cover" />
                     <Card.Footer>
                       <Card.Text>
-                        Track: <Link to={`/track/${result.track_id}`}>
+                        Title: <Link to={`/track/${result.track_id}`}>
                           {result.track_name}
                         </Link>
                         <br></br>
@@ -227,10 +252,10 @@ function Search() {
                 {result.album_name && !result.track_name && (
                   <Card>
                     <Card.Header>Album</Card.Header>
-                    <Card.Img varient="top" src={result.image_URL} alt="Album Cover" />
+                    <Card.Img className="album-cover" onClick={() => navigate(`/album/${result.album_id}`)} varient="top" src={result.image_URL} alt="Album Cover" />
                     <Card.Footer>
                       <Card.Text>
-                        Album: <Link to={`/album/${result.album_id}`}>
+                        Title: <Link to={`/album/${result.album_id}`}>
                           {result.album_name}
                         </Link>
                         <br></br>
