@@ -21,15 +21,16 @@ function Album({ username }) {
   const [releaseDate, setReleaseDate] = useState("")
   const [artistID, setArtistID] = useState(null)
   const [songs, setSongs] = useState(null)
-  const [radioValue, setRadioValue] = useState('0'); // Rating
-  const [reviewText, setReviewText] = useState("")
-  const [reviews, setReviews] = useState(null)
-  const [reviewsExist, setReviewsExist] = useState(false)
-  const [reviewed, setReviewed] = useState(false);
-  const [listened, setListened] = useState(false);
-  const [watchlist, setWatchlist] = useState(false);
-  const [rated, setRated] = useState(false);
+  const [ratingValue, setRatingValue] = useState('0'); // User's rating
+  const [reviewText, setReviewText] = useState("") // User's review text
+  const [reviews, setReviews] = useState(null) // Array that holds the reviews for the track
+  const [reviewsExist, setReviewsExist] = useState(false) // Boolean that determines if there are reviews, used to dynamically change the page layout
+  const [reviewed, setReviewed] = useState(false); // Boolean to determine if the user has reviewed the album, used to dynamically change the page layout
+  const [listened, setListened] = useState(false); // Boolean to determine if the user has listened to the album, used to dynamically change the page layout
+  const [watchlist, setWatchlist] = useState(false); // Boolean to determine if the user has added the album to their watchlist, used to dynamically change the page layout
+  const [rated, setRated] = useState(false); // Boolean to determine if the user has rated the album, used to dynamically change the page layout
 
+  // Radio buttons for the various ratings
   const radios = [
     { name: 'None', value: '0' },
     { name: '1', value: '1' },
@@ -63,12 +64,12 @@ function Album({ username }) {
         setImageURL(album.image_URL)
         setAlbumName(album.albumName)
         setReleaseDate(album.release_date.split("T")[0])
-        if (res.review.length === 1) {
+        if (res.review.length === 1) { // If the user has reviewed the album, then set the review text to their review, and set reviewed to true
           setReviewText(res.review[0].review)
           setReviewed(true)
         }
-        if (res.listened.length === 1) {
-          setRadioValue(res.listened[0].rating.toString())
+        if (res.listened.length === 1) { // If the user has listened to the album, then set listened true, and depending on if they've rated it, set that true and set the correct value
+          setRatingValue(res.listened[0].rating.toString())
           if (res.listened[0].rating.toString() !== '0') {
             setRated(true)
           } else {
@@ -76,10 +77,10 @@ function Album({ username }) {
           }
           setListened(true)
         }
-        if (res.watchlist.length === 1) {
+        if (res.watchlist.length === 1) { // If the user added the album to their watchlist, then set the boolean that tracks that to true
           setWatchlist(true)
         }
-        if (res.reviews.length !== 0) {
+        if (res.reviews.length !== 0) { // If there are reviews for the album, then set the boolean that tracks that to true, and set the array that stories the reviews
           setReviews(res.reviews)
           setReviewsExist(true)
         }
@@ -127,7 +128,7 @@ function Album({ username }) {
                   </div>
                 </Col>
                 <Col>
-                  <AlbumActions {...{username, rated, radios, radioValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRadioValue, watchlist, setWatchlist}}/>
+                  <AlbumActions {...{username, rated, radios, ratingValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRatingValue, watchlist, setWatchlist}}/>
                 </Col>
               </Row>
               <Row>

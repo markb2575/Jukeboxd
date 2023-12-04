@@ -4,6 +4,13 @@ import Card from 'react-bootstrap/Card'
 import { Link } from "react-router-dom";
 
 function Reviews({ reviewsExist, reviews }) {
+
+  /**
+   * Takes the datetime stored in the mariaDB database (which is in UTC), and converts it to the user's local timezone, then alters how it is displayed
+   * so it only shows the pertinent information
+   * @param {*} mariaDBDatetime The datetime from the mariaDB database, which is in UTC time
+   * @returns The pertinent datetime information from the mariaDB database but in the user's local timezone
+   */
   function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
     // Create a Date object from the MariaDB datetime string
     const datetimeObject = new Date(mariaDBDatetime);
@@ -21,6 +28,7 @@ function Reviews({ reviewsExist, reviews }) {
 
     return datetimeObject.toLocaleString(undefined, options);
   }
+
   return (
     <div>
       <div className="header">

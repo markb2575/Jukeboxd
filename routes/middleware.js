@@ -11,18 +11,13 @@ module.exports = function (req, res, next) {
 
         try {
             const user = req.user;
-            const role = await db.pool.query(`select role from Users where binary username = '${user}';`)
-            //console.log("username: ", user, "role: ", role)
-            //console.log("role: ", role[0].role)
-            req.role = role[0].role
-            next()
-            /*
-            if (role[0].role !== 0) {
-                return res.sendStatus(401)
-            } else {
-                next()
+            const role = await db.pool.query(`SELECT role FROM Users WHERE binary username = ?;`, [user])
+            req.role = -1 // set an identifier role for an invalid user
+            if (role.length !== 0) { // check if the user is in the database (if they aren't, then the query will return an empty array)
+                req.role = role[0].role // set the role to the users role if they are a valid user (i.e. they are in the database)
+                //console.log("role: ", req.role)
             }
-            */
+            next()
         } catch (err) {
             console.error(err.message);
             res.status(403);

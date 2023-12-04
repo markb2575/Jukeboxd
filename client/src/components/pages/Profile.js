@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-
 import NavbarComponent from "../routing/NavbarComponent";
 import Button from "react-bootstrap/esm/Button";
 import FollowersModal from './Popups/FollowersModal';
@@ -8,13 +7,8 @@ import FollowingModal from './Popups/FollowingModal';
 import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 import { IoStar, IoStarOutline } from "react-icons/io5";
-
-
-
-
-
 import "./Profile.css"
-import CardText from "react-bootstrap/esm/CardText";
+//import CardText from "react-bootstrap/esm/CardText";
 
 function Profile({ username }) {
     const { pathname } = useLocation();
@@ -34,9 +28,6 @@ function Profile({ username }) {
     const [followersModalShow, setFollowersModalShow] = useState(false);
     const [followingModalShow, setFollowingModalShow] = useState(false);
     const [activeTab, setActiveTab] = useState("#listened");
-
-
-
 
 
     const getProfileInfo = () => {
@@ -169,6 +160,11 @@ function Profile({ username }) {
 
     }
 
+    /**
+     * Function that converts an integer rating into empty and non-empty star icons
+     * @param {*} rating The user's rating for the given track or album
+     * @returns The user's rating but in the form of stars, or "not rated" if they don't have a rating
+     */
     function convertToStars(rating) {
         if (rating === 0) {
             return <>not rated</>;;
@@ -363,7 +359,7 @@ function Profile({ username }) {
                                         <p>{activeTab === "#listened" && item.rating > 0 ? ("Rating: " + item.rating) : (<></>)}
                                         {activeTab === "#listened" && item.rating === 0 ? ("No Rating") : (<></>)}
                                         </p>
-                                        
+
                                     </Card>
                                 ))
                             ) : (

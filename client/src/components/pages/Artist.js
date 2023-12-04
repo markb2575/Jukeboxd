@@ -20,12 +20,15 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
   const [albums, setAlbums] = useState(null);
   const [tracks, setTracks] = useState(null);
   const [activeTab, setActiveTab] = useState('#albums');
-  const [description, setDescription] = useState("");
-  const [showDescription, setShowDescription] = useState(false)
-  const [descriptionText, setDescriptionText] = useState("")
-  const [canEdit, setCanEdit] = useState(false)
+  const [description, setDescription] = useState(""); // Holds the artist's description
+  const [showDescription, setShowDescription] = useState(false) // Boolean to determine if there is a description or not, if not, then it displays default text
+  const [descriptionText, setDescriptionText] = useState("") // Holds the text for the description as the user writes it
+  const [canEdit, setCanEdit] = useState(false) // Boolean to determine if the user is linked to the artist or is an admin
   const [show, setShow] = useState(false); // Show edit description box
 
+  /**
+   * Handles closing the description modal box
+   */
   const handleClose = () => {
     setShow(false);
     if (showDescription === false) {
@@ -33,6 +36,10 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
     }
   }
 
+  /**
+   * Handles showing the description modal box. Gets the artist's description from the database each time a user opens the modal, so
+   * if the user wrote a description which they hit save on but was never actually saved, then it gives them the correct description (not what the frontend thinks is their description)
+   */
   const handleShow = () => {
     if (showDescription) {
       setArtistID(pathname.split("/artist/")[1])
@@ -59,17 +66,16 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
   };
 
   useEffect(() => {
-    // console.log("in useeffect")
+
     setArtistID(pathname.split("/artist/")[1])
     if (artistID.length === 0 || username.length === 0) return
-    //console.log(artistID, username)
-    //console.log("spotifyArtistID: ", spotify_artist_ID)
-    if (artistID === spotify_artist_ID || isAdmin) {
+
+    if (artistID === spotify_artist_ID || isAdmin) { // If the user is an admin or linked to the artist, then they should be able to edit/set a description
       setCanEdit(true)
-      //console.log("user is linked to this artist")
     } else {
       setCanEdit(false)
     }
+
     //check if artistID exists in database, if not, navigate to error page
     fetch(`http://localhost:8080/artist/getArtist/${artistID}&${username}`, {
       method: 'GET',
@@ -83,35 +89,31 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
         return
       }
       response.json().then(res => {
-        // res = res[0]
-        //console.log(res)
         setArtistName(res.artistName)
         setAlbums(res.albums)
         setTracks(res.tracks)
-        if (res.description !== null) {
-          //console.log("description: ", res.description)
+        if (res.description !== null) { // If there is a description for the artist, then we want to show it
           setDescription(res.description)
           setShowDescription(true)
         } else {
           setDescription("")
           setShowDescription(false)
         }
-        // setArtistID(res.artistID)
-        // setArtistName(res.artistName)
-        // setImageURL(res.image_URL)
-        // setAlbumName(res.name)
-        // setReleaseDate(res.release_date.split("T")[0])
+
         setLoading(false)
       }).catch(e => {
         console.log(e);
       });
 
       setLoading(false)
-      // checkStatus()
-      // Code for handling the response
     }).catch(error => console.error(error));
   }, [pathname, navigate, username, artistID, spotify_artist_ID, isAdmin]);
 
+  /**
+   * Handles saving the artist description. Gets the spotify_artist_ID, and the description text then sends it all to the backend
+   * to save the description depending on if the description is new/changed or not
+   * @param {*} e the action of clicking "save" on the description modal
+   */
   const handleSaveDescription = (e) => {
     e.preventDefault()
     setShow(false);
@@ -121,17 +123,20 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
       descriptionText: descriptionText,
     }
 
-    if (descriptionText !== "") {
+    if (descriptionText !== "") { // Prevent calling the backend if the description text is empty... i.e. if the user hit save on a blank description
       fetch('http://localhost:8080/artist/setDescription', {
         method: 'PUT',
         body: JSON.stringify(descriptionToSend),
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': localStorage.token
+        }
       }).then(response => {
         if (response.status === 200) {
-          if (showDescription === false) {
+          if (showDescription === false) { // If the artist didn't previously have a description, then we want to change the boolean value since now they do
             setShowDescription(true)
           } response.json().then(res => {
-            if (res.description !== null) {
+            if (res.description !== null) { // If the description is not null, then we want to show it
               setShowDescription(true)
               setDescription(res.description)
             } else {
@@ -147,11 +152,15 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
         }
       }).catch(error => console.error(error));
     }
-    if (showDescription === false) {
+    if (showDescription === false) { // If they didn't actually set a description, then set the description text back to empty
       setDescriptionText("")
     }
   }
 
+  /**
+   * Handles deleting the artist's description
+   * @param {*} e The action of clicking the "delete" button on the description modal
+   */
   const handleDeleteDescription = (e) => {
     e.preventDefault()
     setShow(false);
@@ -163,7 +172,10 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
     fetch('http://localhost:8080/artist/deleteDescription', {
       method: 'PUT',
       body: JSON.stringify(descriptionToDelete),
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': localStorage.token
+      }
     }).then(response => {
       if (response.status === 200) {
         setShowDescription(false)

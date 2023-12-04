@@ -22,34 +22,34 @@ function SignUp() {
     fetch('http://localhost:8080/user/signup', {
       method: 'POST',
       body: JSON.stringify(credentials),
-      headers: {'Content-Type': 'application/json'}
+      headers: { 'Content-Type': 'application/json' }
     }).then(response => {
-        if (response.status === 200) {
-            console.log(response)
-            navigate("/login")
-          } else {
-            setError("Username already taken, try something different")
-            setPassword("")
-            setUsername("")
-          }
+      if (response.status === 200) {
+        console.log(response)
+        navigate("/login")
+      } else {
+        setError("Username already taken, try something different")
+        setPassword("")
+        setUsername("")
+      }
     })
-    .catch(error => console.error(error));
-    
+      .catch(error => console.error(error));
+
 
   }
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6 col-lg-4">
-      <h2>Create an Account</h2>
+        <h2>Create an Account</h2>
         <form onSubmit={handleCreateAccount} className="mt-4">
-          {error && <p style={{lineHeight:.8}} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
+          {error && <p style={{ lineHeight: .8 }} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
           <div className="mb-3">
             <label className="form-label">Username</label>
-            <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
+            <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
           <div className="mb-3">
             <label className="form-label">Password</label>
-            <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <div className="mb-3">
             <button type="submit" className="btn btn-primary btn-block">Create Account</button>

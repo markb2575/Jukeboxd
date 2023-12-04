@@ -10,79 +10,22 @@ import Row from 'react-bootstrap/Row';
 import { IoStar, IoStarOutline } from "react-icons/io5";
 
 function Home({ username }) {
-    const [ratingsFromFriends, setRatingsFromFriends] = useState(null)
-    const [reviewsFromFriends, setReviewsFromFriends] = useState(null)
-    const [reviewsFromFriendsExist, setReviewsFromFriendsExist] = useState(false)
-    const [reviews, setReviews] = useState(null)
-    const [reviewsExist, setReviewsExist] = useState(false)
-    const [popular, setPopular] = useState(null)
+    const [ratingsFromFriends, setRatingsFromFriends] = useState(null) // Array that holds the 5 most recent albums or songs that friends have rated or marked listened
+    const [reviewsFromFriends, setReviewsFromFriends] = useState(null) // Array that holds the 6 most recent reviews from friends
+    const [reviewsFromFriendsExist, setReviewsFromFriendsExist] = useState(false) // Boolean to determine if there are reviews from friends
+    const [reviews, setReviews] = useState(null) // Array that stores the 10 most recent reviews
+    const [reviewsExist, setReviewsExist] = useState(false) // Boolean to determine if there are reviews
+    const [popular, setPopular] = useState(null) // Array that stores the popular albums/tracks for the past week
 
-    const [displayFriendActivity, setDisplayFriendActivity] = useState(false)
-    const [displayPopular, setDisplayPopular] = useState(false)
-    const [loading, setLoading] = useState(true);
+    const [displayFriendActivity, setDisplayFriendActivity] = useState(false) // Boolean to determine if there is enough friend activity to show
+    const [displayPopular, setDisplayPopular] = useState(false) // Boolean to determine if there are enough popular albums/tracks to show
+    const [loading, setLoading] = useState(true); // Boolean to prevent showing the page before the data has been received from the backend
     let navigate = useNavigate();
 
-    /*
-    useEffect(() => {
-        console.log("username: ", username)
-        setLoading(true)
-        if (username.length === 0) {
-            return
-        }
-        fetch(`http://localhost:8080/user/getHome/${username}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        }).then(response => {
-            if (response.status === 200) {
-                response.json().then(res => {
-                    console.log("getting home info")
-                    if (res.ratingsFromFriends.length !== 0) {
-                        setRatingsFromFriends(res.ratingsFromFriends)
-                        if (res.ratingsFromFriends.length > 2) {
-                            setDisplayFriendActivity(true)
-                        } else {
-                            setDisplayFriendActivity(false)
-                        }
-                    } else {
-                        setRatingsFromFriends(null)
-                        setDisplayFriendActivity(false)
-                    }
-                    if (res.reviewsFromFriends.length !== 0) {
-                        setReviewsFromFriends(res.reviewsFromFriends)
-                        setReviewsFromFriendsExist(true)
-                    } else {
-                        setReviewsFromFriends(null)
-                        setReviewsFromFriendsExist(false)
-                    }
-                    if (res.reviews.length !== 0) {
-                        setReviews(res.reviews)
-                        setReviewsExist(true)
-                    } else {
-                        setReviews(null)
-                        setReviewsExist(false)
-                    }
-                    if (res.popular.length !== 0) {
-                        setPopular(res.popular)
-                        if (res.popular.length > 2) {
-                            setDisplayPopular(true)
-                        } else {
-                            setDisplayPopular(false)
-                        }
-                    } else {
-                        setPopular(null)
-                        setDisplayPopular(false)
-                    }
-                    setLoading(false)
-                }).catch(e => {
-                    console.log(e);
-                });
-            } else {
-                console.log("something happened")
-            }
-        }).catch(error => console.error(error));
-    }, [username]);
-    */
-
+    /**
+     * Function that gets all the information to display on the homepage when a user navigates to the home page.
+     * Sets all the booleans to the appropriate values, and populates all the arrays based on the information it receives from the fetch
+     */
     useEffect(() => {
         setLoading(true)
         //console.log("token: ", localStorage.token)
@@ -100,7 +43,7 @@ function Home({ username }) {
                         //console.log("getting home info")
                         if (res.ratingsFromFriends.length !== 0) {
                             setRatingsFromFriends(res.ratingsFromFriends)
-                            if (res.ratingsFromFriends.length > 2) {
+                            if (res.ratingsFromFriends.length > 2) { // If there are at least 3 recent ratings/listened from friends, then display them
                                 setDisplayFriendActivity(true)
                             } else {
                                 setDisplayFriendActivity(false)
@@ -109,14 +52,14 @@ function Home({ username }) {
                             setRatingsFromFriends(null)
                             setDisplayFriendActivity(false)
                         }
-                        if (res.reviewsFromFriends.length !== 0) {
+                        if (res.reviewsFromFriends.length !== 0) { // If there is at least 1 review from friends, then display it/them
                             setReviewsFromFriends(res.reviewsFromFriends)
                             setReviewsFromFriendsExist(true)
                         } else {
                             setReviewsFromFriends(null)
                             setReviewsFromFriendsExist(false)
                         }
-                        if (res.reviews.length !== 0) {
+                        if (res.reviews.length !== 0) { // If there is at least 1 recent review, then display it/them
                             setReviews(res.reviews)
                             setReviewsExist(true)
                         } else {
@@ -125,7 +68,7 @@ function Home({ username }) {
                         }
                         if (res.popular.length !== 0) {
                             setPopular(res.popular)
-                            if (res.popular.length > 2) {
+                            if (res.popular.length > 2) { // If there are at least 3 popular songs/albums in the past week, then display them
                                 setDisplayPopular(true)
                             } else {
                                 setDisplayPopular(false)
@@ -143,12 +86,17 @@ function Home({ username }) {
                     setLoading(false)
                 }
             }).catch(error => console.error(error));
-        } else {
+        } else { // If the user is not in the database, or if someone attempts to go to the homepage without being logged in, then send them to the login screen
             navigate("/login")
         }
     }, [username]);
 
-
+    /**
+     * Takes the datetime stored in the mariaDB database (which is in UTC), and converts it to the user's local timezone, then alters how it is displayed
+     * so it only shows the pertinent information
+     * @param {*} mariaDBDatetime The datetime from the mariaDB database, which is in UTC time
+     * @returns The pertinent datetime information from the mariaDB database but in the user's local timezone
+     */
     function convertMariaDBDatetimeToLocalTime(mariaDBDatetime) {
         // Create a Date object from the MariaDB datetime string
         const datetimeObject = new Date(mariaDBDatetime);
@@ -167,6 +115,12 @@ function Home({ username }) {
         return datetimeObject.toLocaleString(undefined, options);
     }
 
+    /**
+     * Takes the datetime stored in the mariaDB database (which is in UTC), and converts it to the user's local timezone, then alters how it is displayed
+     * so it only shows the shorthand version of the pertinent information
+     * @param {*} mariaDBDatetime The datetime from the mariaDB database, which is in UTC time
+     * @returns The shorthand datetime from the mariaDB database but in the user's local timezone
+     */
     function convertMariaDBDatetimeToLocalTimeSmall(mariaDBDatetime) {
         // Create a Date object from the MariaDB datetime string
         const datetimeObject = new Date(mariaDBDatetime);
@@ -182,6 +136,11 @@ function Home({ username }) {
         return datetimeObject.toLocaleString(undefined, options);
     }
 
+    /**
+     * Function that converts an integer rating into empty and non-empty star icons
+     * @param {*} rating The user's rating for the given track or album
+     * @returns The user's rating but in the form of stars
+     */
     function convertToStars(rating) {
         if (rating === 0) {
             return <><IoStarOutline /><IoStarOutline /><IoStarOutline /><IoStarOutline /><IoStarOutline /></>;;
@@ -280,8 +239,8 @@ function Home({ username }) {
                         <br></br>
 
                         <Row>
+                        <h5>Most popular albums and tracks this week:</h5>
                             {displayPopular ? <>
-                                <h5>Most popular albums and tracks this week:</h5>
                                 <CardGroup className="me-2">
                                     {popular.map((result, idx) => (
                                         <Card key={idx}>

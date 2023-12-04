@@ -36,36 +36,47 @@ const ttUnwatch = (props) => (
   </Tooltip>
 );
 
-function AlbumActions({ username, rated, radios, radioValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRadioValue, watchlist, setWatchlist }) {
+function AlbumActions({ username, rated, radios, ratingValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRatingValue, watchlist, setWatchlist }) {
+
   const [show, setShow] = useState(false); // Show review box
+
+  /**
+  * Handles closing the review modal box
+  */
   const handleClose = () => {
     setShow(false);
     if (reviewed === false) {
       setReviewText("")
     }
   }
+
+  /**
+   * Handles saving a review. Gets the user's username, the albums spotify_album_ID, and review text from the reviewText variable, then
+   * sends it all to the backend to save their review depending on if it is new, or altered
+   * @param {*} e the action of clicking "save" on the review modal
+   */
   const handleSaveReview = (e) => {
     e.preventDefault()
-    setShow(false);
+    setShow(false); // Close the review modal
 
-    var reviewToSend = {
+    var reviewToSend = { // Get all the necessary information to pass to the backend into one set
       username: username,
       spotifyAlbumID: albumID,
       reviewText: reviewText,
     }
 
-    if (reviewText !== "") {
+    if (reviewText !== "") { // Prevent calling the backend if the review text is empty... i.e. if the user hit save on a blank review
       fetch('http://localhost:8080/album/setReview', {
         method: 'POST',
         body: JSON.stringify(reviewToSend),
         headers: { 'Content-Type': 'application/json' }
       }).then(response => {
         if (response.status === 200) {
-          if (reviewed === false) {
+          if (reviewed === false) { // If they hadn't reviewed it yet, then set the reviewed boolean to true
             setReviewed(true)
           }
           response.json().then(res => {
-            if (res.reviews.length !== 0) {
+            if (res.reviews.length !== 0) { // If there are now reviews on the album (which will always be the case if they successfully reviewed it), then display them
               setReviews(res.reviews)
               setReviewsExist(true)
             }
@@ -80,11 +91,15 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
         handleListen()
       }
     }
-    if (reviewed === false) {
+    if (reviewed === false) { // If they didn't actually review the album, then set the review text back to empty
       setReviewText("")
     }
   }
 
+  /**
+   * Handles setting the user's rating for the album
+   * @param {*} e the action of clicking one of the radio buttons
+   */
   const handleRate = (e) => {
     var newRating = {
       username: username,
@@ -92,7 +107,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
       rating: e.target.value
     }
 
-    if (e.target.value.toString() !== '0') {
+    if (e.target.value.toString() !== '0') { // Gets the rating that the user set based on the radio button that they clicked
       setRated(true)
     } else {
       setRated(false)
@@ -113,10 +128,13 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
     })
   }
 
-
+  /**
+   * Handles deleting the user's review
+   * @param {*} e The action of clicking the "delete" button on the review modal
+   */
   const handleDeleteReview = (e) => {
     e.preventDefault()
-    setShow(false);
+    setShow(false); // Closes the review modal
 
     var reviewToDelete = {
       username: username,
@@ -133,7 +151,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
         setReviewText("")
 
         response.json().then(res => {
-          if (res.reviews.length !== 0) {
+          if (res.reviews.length !== 0) { // Check to see if there are reviews still after the user's is deleted... if not then change the boolean to false
             setReviews(res.reviews)
             setReviewsExist(true)
           } else {
@@ -149,6 +167,10 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
     }).catch(error => console.error(error));
   }
 
+  /**
+   * Handles showing the review modal box. Gets the user's review from the database each time they open the modal, so
+   * if they wrote a review which they hit save on but was never actually saved, then it gives them the correct review (not what the frontend thinks is their review)
+   */
   const handleShow = () => {
     if (reviewed) {
       fetch(`http://localhost:8080/album/getReview/username=${username}&spotifyAlbumID=${albumID}`, {
@@ -158,7 +180,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
         if (response.status === 200) {
           response.json().then(res => {
             console.log('review: ', res.review[0].review)
-            setReviewText(res.review[0].review)
+            setReviewText(res.review[0].review) // Updates the frontend's review text to match what the database has stored as the user's review
           }).catch(e => {
             console.log(e);
           });
@@ -167,7 +189,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
         }
       }).catch(error => console.error(error));
     }
-    if (reviewed === false) {
+    if (reviewed === false) { // If the user has not reviewed the album, then the review text is blank
       setReviewText("")
     }
     setShow(true)
@@ -187,7 +209,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
           if (listened === true) {
             setListened(false)
             setRated(false)
-            setRadioValue('0')
+            setRatingValue('0')
           }
         } else {
           console.log("something happened")
@@ -263,7 +285,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
                 delay={{ show: 250, hide: 400 }}
                 overlay={ttNotListened}
               >
-                <Button title="Listened" onClick={handleListen}><IoEar size={30} /></Button>
+                <Button onClick={handleListen}><IoEar size={30} /></Button>
               </OverlayTrigger>
             </>
               : <><h4 className="subHeader2">Listen:</h4>
@@ -272,7 +294,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
                   delay={{ show: 250, hide: 400 }}
                   overlay={ttListened}
                 >
-                  <Button variant="outline-primary" title="Listen" onClick={handleListen}><IoEarOutline size={30} /></Button>
+                  <Button variant="outline-primary" onClick={handleListen}><IoEarOutline size={30} /></Button>
                 </OverlayTrigger>
               </>
             }
@@ -282,7 +304,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
                 delay={{ show: 250, hide: 400 }}
                 overlay={ttUnwatch}
               >
-                <Button title="Watchlisted" onClick={handleWatch}><IoAddCircle size={30} /></Button>
+                <Button onClick={handleWatch}><IoAddCircle size={30} /></Button>
               </OverlayTrigger>
             </>
               : <><h4 className="subHeader2">Save:</h4>
@@ -291,7 +313,7 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
                   delay={{ show: 250, hide: 400 }}
                   overlay={ttWatch}
                 >
-                  <Button variant="outline-primary" title="Watchlist" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button>
+                  <Button variant="outline-primary" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button>
                 </OverlayTrigger>
               </>
             }
@@ -312,8 +334,8 @@ function AlbumActions({ username, rated, radios, radioValue, reviewed, setReview
                   variant={'outline-primary'}
                   name="radio"
                   value={radio.value}
-                  checked={radioValue === radio.value}
-                  onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  checked={ratingValue === radio.value}
+                  onChange={(e) => setRatingValue(e.currentTarget.value)}
                 >
                   {radio.name}
 
