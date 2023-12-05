@@ -10,17 +10,15 @@ import AlbumActions from "./AlbumActions";
 import Reviews from "./Reviews";
 
 function Album({ username }) {
-  const { pathname } = useLocation();
-  let navigate = useNavigate();
-  const [albumID, setAlbumID] = useState(pathname.split("/album/")[1]);
-  const [loading, setLoading] = useState(true);
-  const [albums, setAlbums] = useState(null)
-  const [albumName, setAlbumName] = useState("")
-  const [imageURL, setImageURL] = useState("")
-  const [artistName, setArtistName] = useState("")
-  const [releaseDate, setReleaseDate] = useState("")
-  const [artistID, setArtistID] = useState(null)
-  const [songs, setSongs] = useState(null)
+  const { pathname } = useLocation(); // Fetches the url of the webpage
+  let navigate = useNavigate(); // Used to navigate to other urls
+  const [albumID, setAlbumID] = useState(pathname.split("/album/")[1]); // Gets the spotify album id from the url of the webpage
+  const [loading, setLoading] = useState(true); // Boolean used to prevent rendering until all required data has been loaded
+  const [albums, setAlbums] = useState(null) // List containing all albums
+  const [albumName, setAlbumName] = useState("") // String containing the name of the album
+  const [imageURL, setImageURL] = useState("") // String containing a url pointing to the album cover image
+  const [releaseDate, setReleaseDate] = useState("") // String containing the release date of the album
+  const [songs, setSongs] = useState(null) // Contains a list of all the songs in the album
   const [ratingValue, setRatingValue] = useState('0'); // User's rating
   const [reviewText, setReviewText] = useState("") // User's review text
   const [reviews, setReviews] = useState(null) // Array that holds the reviews for the track
@@ -59,8 +57,6 @@ function Album({ username }) {
         const album = res.album[0]
         setSongs(res.songs)
         setAlbums(res.album)
-        setArtistID(album.artistID)
-        setArtistName(album.artistName)
         setImageURL(album.image_URL)
         setAlbumName(album.albumName)
         setReleaseDate(album.release_date.split("T")[0])

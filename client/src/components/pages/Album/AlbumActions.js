@@ -12,30 +12,6 @@ import '../Track.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-const ttListened = (props) => (
-  <Tooltip id="button-tooltip" {...props}>
-    Mark as listened
-  </Tooltip>
-);
-
-const ttNotListened = (props) => (
-  <Tooltip id="button-tooltip" {...props}>
-    Mark as not listened
-  </Tooltip>
-);
-
-const ttWatch = (props) => (
-  <Tooltip id="button-tooltip" {...props}>
-    Add to your watch list
-  </Tooltip>
-);
-
-const ttUnwatch = (props) => (
-  <Tooltip id="button-tooltip" {...props}>
-    Remove from your watch list
-  </Tooltip>
-);
-
 function AlbumActions({ username, rated, radios, ratingValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRatingValue, watchlist, setWatchlist }) {
 
   const [show, setShow] = useState(false); // Show review box
@@ -283,7 +259,7 @@ function AlbumActions({ username, rated, radios, ratingValue, reviewed, setRevie
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={ttNotListened}
+                overlay={<Tooltip id="button-tooltip">Mark as not listened</Tooltip>}
               >
                 <Button onClick={handleListen}><IoEar size={30} /></Button>
               </OverlayTrigger>
@@ -292,7 +268,7 @@ function AlbumActions({ username, rated, radios, ratingValue, reviewed, setRevie
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={ttListened}
+                  overlay={<Tooltip id="button-tooltip">Mark as listened</Tooltip>}
                 >
                   <Button variant="outline-primary" onClick={handleListen}><IoEarOutline size={30} /></Button>
                 </OverlayTrigger>
@@ -302,7 +278,7 @@ function AlbumActions({ username, rated, radios, ratingValue, reviewed, setRevie
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={ttUnwatch}
+                overlay={<Tooltip id="button-tooltip">Remove from your watch list</Tooltip>}
               >
                 <Button onClick={handleWatch}><IoAddCircle size={30} /></Button>
               </OverlayTrigger>
@@ -311,7 +287,7 @@ function AlbumActions({ username, rated, radios, ratingValue, reviewed, setRevie
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={ttWatch}
+                  overlay={<Tooltip id="button-tooltip">Add to your watch list</Tooltip>}
                 >
                   <Button variant="outline-primary" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button>
                 </OverlayTrigger>
@@ -347,7 +323,6 @@ function AlbumActions({ username, rated, radios, ratingValue, reviewed, setRevie
 
         <ListGroup.Item>
           <div className="centeredHorizontal">
-            {/* <Button onClick={handleReview} variant="outline-primary" title="Review">Review</Button> */}
             {reviewed ? <Button onClick={handleShow} title="Review">Edit Review</Button> :
               <Button onClick={handleShow} variant="outline-primary" title="Review">Review</Button>}
 
