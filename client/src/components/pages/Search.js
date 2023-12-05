@@ -14,6 +14,7 @@ function Search() {
   const [pageNum, setPageNum] = useState(1);
   const location = useLocation();
   const pageSize = 50; //Can be changed
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
 
@@ -44,6 +45,7 @@ function Search() {
             if (pageNum > Math.ceil(data.length / pageSize)) {
               setPageNum(Math.ceil(data.length / pageSize));
             }
+            setLoading(false);
           } else {
             setNoResults(true);
   
@@ -59,10 +61,14 @@ function Search() {
   * The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
   */
   useEffect(() => {
+    console.log(window.localStorage.getItem('filter'),window.localStorage.getItem('page'),JSON.parse(window.localStorage.getItem("scroll")));
     setFilter(JSON.parse(window.localStorage.getItem('filter')));
     setPageNum(JSON.parse(window.localStorage.getItem('page')));
-    window.scrollTo(0, JSON.parse(window.localStorage.getItem("scroll")));
-  }, []);
+    if (!loading) {
+      window.scrollTo(0, JSON.parse(window.localStorage.getItem("scroll")));
+    }
+    
+  }, [loading]);
 
 
   /**
@@ -117,7 +123,6 @@ function Search() {
     setFilter(newFilter);
     window.localStorage.setItem('page', JSON.stringify(1));
     window.localStorage.setItem('filter', JSON.stringify(newFilter));
-
     fetchSearchResults(query, newFilter);
   };
 
