@@ -170,10 +170,14 @@ router.get('/follower=:followerUsername&followee=:followeeUsername', async (req,
     }
 });
 
+/**
+ * Returns the followers, following, listened to tracks/albums, and saved for later tracks/albums of the specified user
+ */
 router.get('/profile/:username', async (req, res) => {
 
     const username = req.params.username;
     try {
+        //get user_ID from username
         const tmp = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [username])
         var userID = null;
         if (tmp.length > 0) {
@@ -181,7 +185,7 @@ router.get('/profile/:username', async (req, res) => {
         } else {
             return res.status(400).send()
         }
-        //get Followers
+        //get followers
         const followersList = await db.pool.query(`SELECT U.username FROM Users U join Followers F on U.user_ID = F.follower WHERE F.followee = '${userID}'`)
         //get following
         const followingList = await db.pool.query(`SELECT U.username FROM Users U join Followers F on U.user_ID = F.followee WHERE F.follower = '${userID}'`)
@@ -288,7 +292,7 @@ router.get('/profile/:username', async (req, res) => {
         `)
 
 
-        //combine into JSON object
+        //combine into JSON object & return
 
         return res.status(200).json({
             followers: followersList,

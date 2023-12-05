@@ -10,6 +10,9 @@ import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/esm/Button";
 import Form from 'react-bootstrap/Form';
 
+import './Artist.css';
+
+
 
 function Artist({ username, spotify_artist_ID, isAdmin }) {
   const { pathname } = useLocation();
@@ -306,7 +309,7 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                   ) : (
                     albums.map((result, index) => (
                       <Col key={index} md={4} onClick={() => navigate(`/album/${result.albumID}`)}>
-                        <Card>
+                        <Card className="card-highlight">
                           <Card.Img varient="top" src={result.image_URL} />
                           <Card.Footer>{result.albumName}</Card.Footer>
                         </Card>
@@ -322,7 +325,7 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                   ) : (
                     tracks.map((result, index) => (
                       <Col key={index} md={4} onClick={() => navigate(`/track/${result.trackID}`)}>
-                        <Card>
+                        <Card className="card-highlight">
                           <Card.Img varient="top" src={result.image_URL} />
                           <Card.Footer>{result.trackName}</Card.Footer>
                         </Card>

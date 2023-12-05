@@ -3,6 +3,9 @@ const db = require('../db')
 const auth = require('./middleware')
 const router = express.Router();
 
+/**
+ * Makes sure the user is authorized to be on the page
+ */
 router.get('/', auth, async (req, res) => {
   try {
     const user = await req.user;
@@ -13,10 +16,12 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+/**
+ * Returns all users whose username contains the specified string
+ */
 router.get('/users/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const users = await db.pool.query(
@@ -24,8 +29,6 @@ router.get('/users/:query', async (req, res) => {
       [`%${query}%`]
     );
 
-
-    //console.log(users);
     return res.status(200).json(users);
 
   } catch (error) {
@@ -34,35 +37,36 @@ router.get('/users/:query', async (req, res) => {
   }
 });
 
+/**
+ * Returns all tracks whose title contains the specified string
+ */
 router.get('/tracks/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const songs = await db.pool.query(
-      `SELECT
-    T.name AS track_name,
-    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
-    AL.name AS album_name,
-    AL.release_date AS song_date,
-    AL.image_URL,
-    T.spotify_track_ID AS track_id,
-    AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
-FROM Tracks AS T
-JOIN Albums AS AL ON T.album_ID = AL.album_ID
-LEFT JOIN Track_Artists AS TA ON T.track_ID = TA.track_ID
-LEFT JOIN Artists AS A ON TA.artist_ID = A.artist_ID
-WHERE T.name LIKE ?
-GROUP BY T.spotify_track_ID, AL.album_ID;
-
-`,
+      `
+      SELECT
+        T.name AS track_name,
+        GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+        AL.name AS album_name,
+        AL.release_date AS song_date,
+        AL.image_URL,
+        T.spotify_track_ID AS track_id,
+        AL.spotify_album_ID AS album_id,
+        GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+      FROM Tracks AS T
+      JOIN Albums AS AL ON T.album_ID = AL.album_ID
+      LEFT JOIN Track_Artists AS TA ON T.track_ID = TA.track_ID
+      LEFT JOIN Artists AS A ON TA.artist_ID = A.artist_ID
+      WHERE T.name LIKE ?
+      GROUP BY T.spotify_track_ID, AL.album_ID;
+      `,
       [`%${query}%`]
     );
 
 
-    //console.log(songs);
     return res.status(200).json(songs);
 
   } catch (error) {
@@ -71,10 +75,12 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
   }
 });
 
+/**
+ * Returns all artists whose name contains the specified string
+ */
 router.get('/artists/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const artists = await db.pool.query(
@@ -83,7 +89,6 @@ router.get('/artists/:query', async (req, res) => {
     );
 
 
-    //console.log(artists);
     return res.status(200).json(artists);
 
   } catch (error) {
@@ -92,6 +97,9 @@ router.get('/artists/:query', async (req, res) => {
   }
 });
 
+/**
+ * Returns all albums whose title contains the specified string
+ */
 router.get('/albums/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
@@ -99,24 +107,24 @@ router.get('/albums/:query', async (req, res) => {
 
     // Use a parameterized query to safely search for users
     const albums = await db.pool.query(
-      `SELECT
-    AL.name AS album_name,
-    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
-    AL.release_date AS release_date,
-    AL.image_URL,
-    AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
-FROM Albums AS AL
-LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-WHERE AL.name LIKE ?
-GROUP BY AL.album_ID;
-`,
+      `
+      SELECT
+        AL.name AS album_name,
+        GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+        AL.release_date AS release_date,
+        AL.image_URL,
+        AL.spotify_album_ID AS album_id,
+        GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+      FROM Albums AS AL
+      LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+      LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+      WHERE AL.name LIKE ?
+      GROUP BY AL.album_ID;
+      `,
       [`%${query}%`]
     );
 
 
-    //console.log(albums);
     return res.status(200).json(albums);
 
   } catch (error) {
@@ -125,25 +133,29 @@ GROUP BY AL.album_ID;
   }
 });
 
+/**
+ * Returns all users, artists, tracks, and albums whose name/title contains the specified string
+ */
 router.get('/all/:query', async (req, res) => {
   try {
     const query = req.params.query; // Use req.params.query to access the query parameter
-    //console.log(query);
 
     // Use a parameterized query to safely search for users
     const albums = await db.pool.query(
-      `SELECT
-    AL.name AS album_name,
-    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
-    AL.release_date AS release_date,
-    AL.image_URL,
-    AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
-FROM Albums AS AL
-LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
-LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
-WHERE AL.name LIKE ?
-GROUP BY AL.album_ID;`,
+      `
+      SELECT
+        AL.name AS album_name,
+        GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+        AL.release_date AS release_date,
+        AL.image_URL,
+        AL.spotify_album_ID AS album_id,
+        GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+      FROM Albums AS AL
+      LEFT JOIN Album_Artists AS AA ON AL.album_ID = AA.album_ID
+      LEFT JOIN Artists AS A ON AA.artist_ID = A.artist_ID
+      WHERE AL.name LIKE ?
+      GROUP BY AL.album_ID;
+      `,
       [`%${query}%`]
     );
 
@@ -155,22 +167,23 @@ GROUP BY AL.album_ID;`,
 
 
     const songs = await db.pool.query(
-      `SELECT
-    T.name AS track_name,
-    GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
-    AL.name AS album_name,
-    AL.release_date AS song_date,
-    AL.image_URL,
-    T.spotify_track_ID AS track_id,
-    AL.spotify_album_ID AS album_id,
-    GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
-FROM Tracks AS T
-JOIN Albums AS AL ON T.album_ID = AL.album_ID
-LEFT JOIN Track_Artists AS TA ON T.track_ID = TA.track_ID
-LEFT JOIN Artists AS A ON TA.artist_ID = A.artist_ID
-WHERE T.name LIKE ?
-GROUP BY T.spotify_track_ID, AL.album_ID;
-`,
+      `
+      SELECT
+        T.name AS track_name,
+        GROUP_CONCAT(A.name SEPARATOR '|') AS artist_names,
+        AL.name AS album_name,
+        AL.release_date AS song_date,
+        AL.image_URL,
+        T.spotify_track_ID AS track_id,
+        AL.spotify_album_ID AS album_id,
+        GROUP_CONCAT(A.spotify_artist_ID SEPARATOR '|') AS artist_ids
+      FROM Tracks AS T
+      JOIN Albums AS AL ON T.album_ID = AL.album_ID
+      LEFT JOIN Track_Artists AS TA ON T.track_ID = TA.track_ID
+      LEFT JOIN Artists AS A ON TA.artist_ID = A.artist_ID
+      WHERE T.name LIKE ?
+      GROUP BY T.spotify_track_ID, AL.album_ID;
+      `,
       [`%${query}%`]
     );
 
@@ -184,7 +197,6 @@ GROUP BY T.spotify_track_ID, AL.album_ID;
     const all = users.concat(songs, artists, albums);
 
 
-    //console.log(all);
     return res.status(200).json(all);
 
   } catch (error) {

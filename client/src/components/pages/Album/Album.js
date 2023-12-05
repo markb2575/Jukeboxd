@@ -117,7 +117,7 @@ function Album({ username }) {
                 </Col>
                 <Col>
                   <div className="centeredVerticalCol">
-                    <h5>Songs:</h5>
+                    <h5>Tracks:</h5>
                     <div>
                       <ListGroup>
                         {songs.map((result, index) => (

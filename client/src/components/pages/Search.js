@@ -16,9 +16,9 @@ function Search() {
   const pageSize = 50; //Can be changed
   const navigate = useNavigate();
 
-  /* 
-  This function is used to set the filter, page number, and scroll position when returning to the search results.
-  The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
+  /** 
+  * This function is used to set the filter, page number, and scroll position when returning to the search results.
+  * The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
   */
   useEffect(() => {
     setFilter(JSON.parse(window.localStorage.getItem('filter')));
@@ -27,8 +27,8 @@ function Search() {
   });
 
 
-  /*
-  Listener for scroll, save scroll position for persistence
+  /**
+  * Listener for scroll, save scroll position for persistence
   */
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -38,9 +38,9 @@ function Search() {
     };
   }, []);
 
-  /*
-  This function updates the search parameter whenever the url parameter is changed.
-  This ensures that the page updates correctly when performing a new search
+  /**
+  * This function updates the search parameter whenever the url parameter is changed.
+  * This ensures that the page updates correctly when performing a new search
   */
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -51,9 +51,9 @@ function Search() {
     }
   }, [location.search]);
 
-  /*
-  This function calls the function that fetches the search results whenever the query is updated.
-  This ensures that the displayed results always match the search query.
+  /**
+  * This function calls the function that fetches the search results whenever the query is updated.
+  * This ensures that the displayed results always match the search query.
   */
   useEffect(() => {
     if (query) {
@@ -61,17 +61,19 @@ function Search() {
     }
   }, [query]);
 
-  /*
-  This is called when the screen is scrolled, it saves the current scroll position into local storage so it can be recalled later.
+  /**
+  * This is called when the screen is scrolled, it saves the current scroll position into local storage so it can be recalled later.
   */
   const handleScroll = () => {
     window.localStorage.setItem("scroll", JSON.stringify(window.scrollY))
   };
 
 
-  /*
-  This is called when a filter button is pressed.
-  It changes the filter state, saves info to local storage, resets the page number, and fetches new search results.
+  /**
+  * This is called when a filter button is pressed.
+  * It changes the filter state, saves info to local storage, resets the page number, and fetches new search results.
+  @param {*} newFilter The new filter to assign to the state
+
   */
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
@@ -81,9 +83,9 @@ function Search() {
     fetchSearchResults(query, newFilter);
   };
 
-  /*
-  This is called when the next page button is pressed.
-  It ensures there is another page to load, and then sets the page state
+  /**
+  * This is called when the next page button is pressed.
+  * It ensures there is another page to load, and then sets the page state
   */
   const handleNext = () => {
     if (pageNum < Math.ceil(searchResults.length / pageSize)) {
@@ -94,9 +96,9 @@ function Search() {
     }
   };
 
-  /*
-  This is called when the previous page button is pressed.
-  It ensures there is a previous page to load, and then sets the page state
+  /**
+  * This is called when the previous page button is pressed.
+  * It ensures there is a previous page to load, and then sets the page state
   */
   const handlePrev = () => {
     if (pageNum > 1) {
@@ -284,10 +286,6 @@ function Search() {
                 )}
               </Col>
             ))}
-
-
-
-
           </Row>
           <br></br>
         </Container>
@@ -296,144 +294,5 @@ function Search() {
   );
 
 }
-
-/*
-return (
-    <div>
-        <NavbarComponent />
-        <div>
-          <h4>Filter by:&nbsp;&nbsp;
-            <button
-              onClick={() => handleFilterChange('all')}
-              className={filter === 'all' ? 'active' : ''}
-            >
-              All
-            </button>
-            <button
-              onClick={() => handleFilterChange('tracks')}
-              className={filter === 'tracks' ? 'active' : ''}
-            >
-              Tracks
-            </button>
-            <button
-              onClick={() => handleFilterChange('albums')}
-              className={filter === 'albums' ? 'active' : ''}
-            >
-              Albums
-            </button>
-            <button
-              onClick={() => handleFilterChange('artists')}
-              className={filter === 'artists' ? 'active' : ''}
-            >
-              Artists
-            </button>
-            <button
-              onClick={() => handleFilterChange('users')}
-              className={filter === 'users' ? 'active' : ''}
-            >
-              Users
-            </button>
-          </h4>
-          {noResults ? (
-            <h5>No results found.</h5>
-          ) : (
-            <h5>
-              Page {pageNum} of {Math.ceil(searchResults.length / pageSize)} &nbsp;
-              <button
-                onClick={handlePrev}
-              >
-                Prev
-              </button>
-              <button
-                onClick={handleNext}
-              >
-                Next
-              </button>
-            </h5>
-          )}
-
-        </div>
-
-        {noResults ? (
-          <p></p>
-        ) : (
-
-          <div className="search-results">
-            {searchResults.slice((pageSize * (pageNum - 1)), (pageSize * (pageNum))).map((result, index) => (
-              <div className="result" key={index}>
-                {result.username && (
-                  <div className="user-result">
-                    <p>User:
-                      <Link to={`/user/${result.username}`}>
-                        {result.username}
-                      </Link>
-                    </p>
-
-                  </div>
-                )}
-                {result.track_name && (
-                  <div className="song-result">
-                    <img src={result.image_URL} alt="Album Cover" className="album-cover" />
-                    <div className="result-text">
-                      <p>Track: <Link to={`/track/${result.track_id}`}>
-                        {result.track_name}
-                      </Link>
-                      </p>
-                      <p>Artist(s):
-                        {result.artist_names.split('|').map((artist, i) => (
-                          <Link key={i} to={`/artist/${result.artist_ids.split('|')[i]}`}>
-                            {artist}
-                            {i < result.artist_names.split('|').length - 1 && ', '}
-                          </Link>
-                        ))}
-                      </p>
-                      <p>Album:
-                        <Link to={`/album/${result.album_id}`}>
-                          {result.album_name}
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {result.album_name && !result.track_name && (
-                  <div className="album-result">
-                    <img src={result.image_URL} alt="Album Cover" className="album-cover" />
-                    <div className="result-text">
-                      <p>Album:
-                        <Link to={`/album/${result.album_id}`}>
-                          {result.album_name}
-                        </Link>
-                      </p>
-                      <div className="artist-names">
-                        <p>Artist(s):
-                          {result.artist_names.split('|').map((artist, i) => (
-                            <Link key={i} to={`/artist/${result.artist_ids.split('|')[i]}`}>
-                              {artist}
-                              {i < result.artist_names.split('|').length - 1 && ', '}
-                            </Link>
-                          ))}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {result.artist_name && (
-                  <div className="artist-result">
-                    <p>Artist:
-                      <Link to={`/artist/${result.artist_id}`}>
-                        {result.artist_name}
-                      </Link>
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      );
-}
-      */
 
 export default Search;
