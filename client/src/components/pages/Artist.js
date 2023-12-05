@@ -16,13 +16,13 @@ import './Artist.css';
 
 function Artist({ username, spotify_artist_ID, isAdmin }) {
   const { pathname } = useLocation();
-  let navigate = useNavigate();
-  const [artistID, setArtistID] = useState(pathname.split("/artist/")[1]);
-  const [loading, setLoading] = useState(true);
-  const [artistName, setArtistName] = useState("");
-  const [albums, setAlbums] = useState(null);
-  const [tracks, setTracks] = useState(null);
-  const [activeTab, setActiveTab] = useState('#albums');
+  let navigate = useNavigate(); // Used to navigate to other urls
+  const [artistID, setArtistID] = useState(pathname.split("/artist/")[1]); // String containing the spotify artist id taken from the webpage url
+  const [loading, setLoading] = useState(true); // Boolean used to prevent rendering until all required data has been loaded 
+  const [artistName, setArtistName] = useState(""); // String containing artist name
+  const [albums, setAlbums] = useState(null); // List containing all albums belonging to the artist
+  const [tracks, setTracks] = useState(null); // List containing all tracks belonging to the artist
+  const [activeTab, setActiveTab] = useState('#albums'); // Holds the webpage's state regarding whether the album or songs tab is active
   const [description, setDescription] = useState(""); // Holds the artist's description
   const [showDescription, setShowDescription] = useState(false) // Boolean to determine if there is a description or not, if not, then it displays default text
   const [descriptionText, setDescriptionText] = useState("") // Holds the text for the description as the user writes it
