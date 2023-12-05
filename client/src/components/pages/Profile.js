@@ -32,7 +32,7 @@ function Profile({ username }) {
      * This function makes a call to the API to get all the info to display on a user's profile page, including followers, following, marked tracks and albums.
      * If it succeeds, it then sets this info into the profileInfo state.
      */
-    const getProfileInfo = () => {
+    const getProfileInfo = useCallback(() => {
         fetch(`http://localhost:8080/user/profile/${profileName}`, {
             method: 'GET',
             headers: {
@@ -52,7 +52,7 @@ function Profile({ username }) {
             setProfileInfo(data)// update the profileInfo
             setLoading(false);
         }).catch(error => console.error(error));
-    }
+    }, [navigate, profileName])
 
     const checkFollowStatus = useCallback(() => {
         fetch(`http://localhost:8080/user/follower=${username}&followee=${profileName}`, {
@@ -107,7 +107,7 @@ function Profile({ username }) {
 
         getProfileInfo()
 
-    }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus]);
+    }, [pathname, navigate, profileName, username, viewingOwnProfile, checkFollowStatus, getProfileInfo]);
 
     /**
      * This loads the active tab from local storage for persistience

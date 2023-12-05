@@ -89,7 +89,7 @@ function Home({ username }) {
         } else { // If the user is not in the database, or if someone attempts to go to the homepage without being logged in, then send them to the login screen
             navigate("/login")
         }
-    }, [username]);
+    }, [username, navigate]);
 
     /**
      * Takes the datetime stored in the mariaDB database (which is in UTC), and converts it to the user's local timezone, then alters how it is displayed

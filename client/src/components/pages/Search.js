@@ -1,6 +1,6 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import './Search.css'
 import { Row, Col, Container } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
@@ -16,6 +16,44 @@ function Search() {
   const pageSize = 50; //Can be changed
   const navigate = useNavigate();
 
+
+    /**
+     * Function that calls the API to search the database given a query and filter
+     * @param {*} searchQuery The string to search the databse for
+     * @param {*} filter The type of item to search for
+     */
+    const fetchSearchResults = useCallback((searchQuery, filter) => {
+      fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+  
+            throw new Error('Failed to fetch search results');
+          }
+        })
+        .then((data) => {
+          if (data.length > 0) {
+            setNoResults(false);
+            setSearchResults(data);
+            if (pageNum > Math.ceil(data.length / pageSize)) {
+              setPageNum(Math.ceil(data.length / pageSize));
+            }
+          } else {
+            setNoResults(true);
+  
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }, [pageNum]);
+
   /** 
   * This function is used to set the filter, page number, and scroll position when returning to the search results.
   * The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
@@ -24,7 +62,7 @@ function Search() {
     setFilter(JSON.parse(window.localStorage.getItem('filter')));
     setPageNum(JSON.parse(window.localStorage.getItem('page')));
     window.scrollTo(0, JSON.parse(window.localStorage.getItem("scroll")));
-  });
+  }, []);
 
 
   /**
@@ -59,7 +97,7 @@ function Search() {
     if (query) {
       fetchSearchResults(query, filter);
     }
-  }, [query]);
+  }, [query, fetchSearchResults, filter]);
 
   /**
   * This is called when the screen is scrolled, it saves the current scroll position into local storage so it can be recalled later.
@@ -108,44 +146,6 @@ function Search() {
       setPageNum(n);
     }
   };
-
-  /**
-     * Function that calls the API to search the database given a query and filter
-     * @param {*} searchQuery The string to search the databse for
-     * @param {*} filter The type of item to search for
-     */
-  const fetchSearchResults = (searchQuery, filter) => {
-    fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-
-          throw new Error('Failed to fetch search results');
-        }
-      })
-      .then((data) => {
-        if (data.length > 0) {
-          setNoResults(false);
-          setSearchResults(data);
-          if (pageNum > Math.ceil(data.length / pageSize)) {
-            setPageNum(Math.ceil(data.length / pageSize));
-          }
-        } else {
-          setNoResults(true);
-
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
-
 
   return (
     <div>
