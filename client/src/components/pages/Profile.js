@@ -53,7 +53,7 @@ function Profile({ username }) {
             setLoading(false);
         }).catch(error => console.error(error));
     }, [navigate, profileName])
-
+    // checks if the user is following the profile's user
     const checkFollowStatus = useCallback(() => {
         fetch(`http://localhost:8080/user/follower=${username}&followee=${profileName}`, {
             method: 'GET',

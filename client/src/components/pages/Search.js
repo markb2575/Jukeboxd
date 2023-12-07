@@ -7,15 +7,18 @@ import Card from 'react-bootstrap/Card';
 
 function Search() {
 
-  const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [noResults, setNoResults] = useState(false);
-  const [filter, setFilter] = useState('all'); // 'all' is the default filter
-  const [pageNum, setPageNum] = useState(1);
-  const location = useLocation();
-  const pageSize = 50; //Can be changed
-  const [loading, setLoading] = useState(true)
-  const navigate = useNavigate();
+  let location = useLocation();
+  let navigate = useNavigate();
+
+  const [query, setQuery] = useState(''); //Holds the query string that is being searched
+  const [searchResults, setSearchResults] = useState([]); //Holds the returned list of search results to display
+  const [noResults, setNoResults] = useState(false);  //Boolean that is true when there are no results found from the search
+  const [filter, setFilter] = useState('all'); //Holds the string representing the current;y selected filter
+  const [pageNum, setPageNum] = useState(1);  //Holds the current page number that is being viewed
+  const [loading, setLoading] = useState(true); //Boolean that is true if the server is still fetching search results
+
+  const pageSize = 50; //Holds the number of results to display per page
+
 
 
     /**

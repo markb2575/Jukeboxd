@@ -55,6 +55,9 @@ router.get('/getNavBar', auth, async (req, res) => {
     }
 });
 
+/**
+ * Takes users login credentials and validate the user
+ */
 router.post('/login', async (req, res) => {
     let credentials = req.body;
 
@@ -79,6 +82,9 @@ router.post('/login', async (req, res) => {
     }
 });
 
+/**
+ * Takes users credentials at signup and inserts username and encrypted password into the database
+ */
 router.post('/signup', async (req, res) => {
     let credentials = req.body;
 
@@ -89,60 +95,84 @@ router.post('/signup', async (req, res) => {
     credentials.username = credentials.username.replace("`", "\\`")
 
     try {
+        // check if the username exists in the database already
         const exists = await db.pool.query(`SELECT * FROM Users WHERE binary username = ?;`, [credentials.username])
-        console.log(exists)
+        // console.log(exists)
+        // if the username already exists return 400 error
         if (exists.length === 1) return res.status(400).send({ "exists": true })
+        // hash the password using bcrypt
         const hashed_password = await bcrypt.hash(credentials.password, await bcrypt.genSalt())
+        // insert the username and encrypted password into the database
         await db.pool.query("insert into Users(username, password) values (?,?);", [credentials.username, hashed_password]);
+        // send back a response with status 200
         return res.status(200).send({ "bcrypt": hashed_password })
     } catch (err) {
         throw err;
     }
 });
 
+/**
+ * Checks if a username exists in database
+ */
 router.get('/findUser/:username', async (req, res) => {
     let params = req.params;
     try {
+        // check if the username exists in the database already
         const user = await db.pool.query(`SELECT * FROM Users WHERE binary username = ?;`, [params.username]);
-        // if username could not be found
-        console.log(user)
+        // if username could not be found return 404 error
+        // console.log(user)
         if (user.length === 0) return res.status(404).send()
+        // if username is found return 200
         return res.status(200).send()
     } catch (err) {
         throw err;
     }
 });
-
+/**
+ * Follows a user
+ */
 router.post('/followUser', async (req, res) => {
     let usernames = req.body;
     try {
+        // Attempt to get the user_ID of the follower and the followee
         const followerID = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [usernames.followerUsername])
         const followeeID = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [usernames.followeeUsername])
+        // If either of the users don't exists return 400 error
         if (followeeID.length === 0 || followerID.length === 0) return res.status(400).send()
         // check if follower already follows followee
         const exists = await db.pool.query(`SELECT * FROM Followers WHERE follower = '${followerID[0].user_ID}' AND followee = '${followeeID[0].user_ID}';`)
         if (exists.length != 0) return res.status(403).send()
+        // insert a row into Followers indicating a follower follows followee
         await db.pool.query("INSERT INTO Followers(follower, followee) values (?,?);", [followerID[0].user_ID, followeeID[0].user_ID])
         return res.status(200).send()
     } catch (err) {
         throw err;
     }
 });
+/**
+ * Unfollows a user
+ */
 router.post('/unfollowUser', async (req, res) => {
     let usernames = req.body;
     try {
+        // Attempt to get the user_ID of the follower and the followee
         const followerID = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [usernames.followerUsername])
         const followeeID = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [usernames.followeeUsername])
+        // If either of the users don't exists return 400 error
         if (followeeID.length === 0 || followerID.length === 0) return res.status(400).send()
         // // check if follower already follows followee
         const exists = await db.pool.query(`SELECT * FROM Followers WHERE follower = '${followerID[0].user_ID}' AND followee = '${followeeID[0].user_ID}';`)
         if (exists.length === 0) return res.status(403).send()
+        // Remove from this row from Followers table
         await db.pool.query(`DELETE FROM Followers WHERE follower = '${followerID[0].user_ID}' AND followee = '${followeeID[0].user_ID}';`)
         return res.status(200).send()
     } catch (err) {
         throw err;
     }
 });
+/**
+ * Checks whether a user follows another user
+ */
 router.get('/follower=:followerUsername&followee=:followeeUsername', async (req, res) => {
     //console.log("inside check status")
     //console.log("params",req.params)
@@ -150,16 +180,19 @@ router.get('/follower=:followerUsername&followee=:followeeUsername', async (req,
     const followeeUsername = req.params.followeeUsername;
     try {
         //console.log(followerUsername,followeeUsername)
+        // Attempt to get the user_ID of the follower and the followee
         const followerID = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [followerUsername])
         const followeeID = await db.pool.query(`SELECT user_ID FROM Users WHERE binary username = ?;`, [followeeUsername])
         if (followeeID.length === 0 || followerID.length === 0) return res.status(400).send()
         // // check if follower already follows followee
         const exists = await db.pool.query(`SELECT * FROM Followers WHERE follower = '${followerID[0].user_ID}' AND followee = '${followeeID[0].user_ID}';`)
         if (exists.length === 0) {
-            console.log("not following")
+            // console.log("not following")
+            // Return that the user is following
             return res.status(200).json({ 'isFollowing': false })
         } else if (exists.length === 1) {
-            console.log("already following")
+            // console.log("already following")
+            // Return that the user is not following
             return res.status(200).json({ 'isFollowing': true })
         }
         return res.status(400).send()
