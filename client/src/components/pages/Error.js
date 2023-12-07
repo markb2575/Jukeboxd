@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
 
 function Error() {
