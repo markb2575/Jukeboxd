@@ -1,8 +1,8 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Search.css'
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Nav } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
 
 function Search() {
@@ -21,56 +21,56 @@ function Search() {
 
 
 
-    /**
-     * Function that calls the API to search the database given a query and filter
-     * @param {*} searchQuery The string to search the databse for
-     * @param {*} filter The type of item to search for
-     */
-    const fetchSearchResults = useCallback((searchQuery, filter) => {
-      fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+  /**
+   * Function that calls the API to search the database given a query and filter
+   * @param {*} searchQuery The string to search the databse for
+   * @param {*} filter The type of item to search for
+   */
+  const fetchSearchResults = useCallback((searchQuery, filter) => {
+    fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+
+          throw new Error('Failed to fetch search results');
+        }
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-  
-            throw new Error('Failed to fetch search results');
+      .then((data) => {
+        if (data.length > 0) {
+          setNoResults(false);
+          setSearchResults(data);
+          if (pageNum > Math.ceil(data.length / pageSize)) {
+            setPageNum(Math.ceil(data.length / pageSize));
           }
-        })
-        .then((data) => {
-          if (data.length > 0) {
-            setNoResults(false);
-            setSearchResults(data);
-            if (pageNum > Math.ceil(data.length / pageSize)) {
-              setPageNum(Math.ceil(data.length / pageSize));
-            }
-            setLoading(false);
-          } else {
-            setNoResults(true);
-  
-          }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    }, [pageNum]);
+          setLoading(false);
+        } else {
+          setNoResults(true);
+
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, [pageNum]);
 
   /** 
   * This function is used to set the filter, page number, and scroll position when returning to the search results.
   * The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
   */
   useEffect(() => {
-    console.log(window.localStorage.getItem('filter'),window.localStorage.getItem('page'),JSON.parse(window.localStorage.getItem("scroll")));
+    console.log(window.localStorage.getItem('filter'), window.localStorage.getItem('page'), JSON.parse(window.localStorage.getItem("scroll")));
     setFilter(JSON.parse(window.localStorage.getItem('filter')));
     setPageNum(JSON.parse(window.localStorage.getItem('page')));
     if (!loading) {
       window.scrollTo(0, JSON.parse(window.localStorage.getItem("scroll")));
     }
-    
+
   }, [loading]);
 
 
@@ -161,36 +161,27 @@ function Search() {
       <Container>
         <br></br>
         <h4>Filter by:&nbsp;&nbsp;
-          <button
-            onClick={() => handleFilterChange('all')}
-            className={filter === 'all' ? 'active' : ''}
+          <Nav
+            variant="underline"
+            defaultActiveKey="#albums"
+            onSelect={(eventKey) => handleFilterChange(eventKey)}
           >
-            All
-          </button>
-          <button
-            onClick={() => handleFilterChange('tracks')}
-            className={filter === 'tracks' ? 'active' : ''}
-          >
-            Tracks
-          </button>
-          <button
-            onClick={() => handleFilterChange('albums')}
-            className={filter === 'albums' ? 'active' : ''}
-          >
-            Albums
-          </button>
-          <button
-            onClick={() => handleFilterChange('artists')}
-            className={filter === 'artists' ? 'active' : ''}
-          >
-            Artists
-          </button>
-          <button
-            onClick={() => handleFilterChange('users')}
-            className={filter === 'users' ? 'active' : ''}
-          >
-            Users
-          </button>
+            <Nav.Item>
+              <Nav.Link eventKey="all">All</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="tracks">Tracks</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="albums">Albums</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="artists">Artists</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="users">Users</Nav.Link>
+            </Nav.Item>
+          </Nav>
         </h4>
         {noResults ? (
           <h5>No results found.</h5>
@@ -198,11 +189,13 @@ function Search() {
           <h5>
             Page {pageNum} of {Math.ceil(searchResults.length / pageSize)} &nbsp;
             <button
+              className="border rounded p-2 m-1"
               onClick={handlePrev}
             >
               Prev
             </button>
             <button
+              className="border rounded p-2 m-1"
               onClick={handleNext}
             >
               Next
