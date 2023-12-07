@@ -13,6 +13,7 @@ function NavbarComponent() {
     const [searchString, setSearchString] = useState("");
     const [username, setUsername] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
+    const [currentColor, setCurrentColor] = useState("");
 
     useEffect(() => {
         if (localStorage.token) {
@@ -70,9 +71,9 @@ function NavbarComponent() {
 
     return (
 
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" style={{backgroundColor:'#f0f0f0'}}>
             <Container>
-                <Navbar.Brand onClick={() => navigate("/")}>Jukeboxd</Navbar.Brand>
+                <Navbar.Brand onClick={() => navigate("/")} onMouseOver={() => setCurrentColor("text-secondary")}  onMouseOut={() => setCurrentColor("text-black")} className={currentColor} style={{cursor:'pointer'}}>Jukeboxd</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav className="justify-content-end">
