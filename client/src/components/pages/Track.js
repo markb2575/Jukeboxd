@@ -16,31 +16,6 @@ import './Track.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-const ttListened = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-        Mark as listened
-    </Tooltip>
-);
-
-const ttNotListened = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-        Mark as not listened
-    </Tooltip>
-);
-
-const ttWatch = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-        Add to your watch list
-    </Tooltip>
-);
-
-const ttUnwatch = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-        Remove from your watch list
-    </Tooltip>
-);
-
-
 function Track({ username }) {
     const { pathname } = useLocation();
     let navigate = useNavigate();
@@ -429,7 +404,7 @@ function Track({ username }) {
                                                         <OverlayTrigger
                                                             placement="top"
                                                             delay={{ show: 250, hide: 400 }}
-                                                            overlay={ttNotListened}
+                                                            overlay={<Tooltip id="button-tooltip">Mark as not listened</Tooltip>}
                                                         >
                                                             <Button onClick={handleListen}><IoEar size={30} /></Button>
                                                         </OverlayTrigger>
@@ -438,7 +413,7 @@ function Track({ username }) {
                                                             <OverlayTrigger
                                                                 placement="top"
                                                                 delay={{ show: 250, hide: 400 }}
-                                                                overlay={ttListened}
+                                                                overlay={<Tooltip id="button-tooltip">Mark as listened</Tooltip>}
                                                             >
                                                                 <Button variant="outline-primary" onClick={handleListen}><IoEarOutline size={30} /></Button>
                                                             </OverlayTrigger>
@@ -448,7 +423,7 @@ function Track({ username }) {
                                                         <OverlayTrigger
                                                             placement="top"
                                                             delay={{ show: 250, hide: 400 }}
-                                                            overlay={ttUnwatch}
+                                                            overlay={<Tooltip id="button-tooltip">Remove from your watch list</Tooltip>}
                                                         >
                                                             <Button onClick={handleWatch}><IoAddCircle size={30} /></Button>
                                                         </OverlayTrigger>
@@ -457,7 +432,7 @@ function Track({ username }) {
                                                             <OverlayTrigger
                                                                 placement="top"
                                                                 delay={{ show: 250, hide: 400 }}
-                                                                overlay={ttWatch}
+                                                                overlay={<Tooltip id="button-tooltip">Add to your watch list</Tooltip>}
                                                             >
                                                                 <Button variant="outline-primary" onClick={handleWatch}><IoAddCircleOutline size={30} /></Button>
                                                             </OverlayTrigger>
