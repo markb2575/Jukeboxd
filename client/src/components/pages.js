@@ -8,7 +8,7 @@ import Album from "./pages/Album/Album"
 import Artist from "./pages/Artist"
 import Track from "./pages/Track"
 import Admin from "./pages/Admin"
-
+// Gets all of the pages into one export for easy importing into Navigation.js
 export {
   Home,
   Login,

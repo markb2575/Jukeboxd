@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
-
+// Renders an error page the user can be redirected to
 function Error() {
   return (
     <div>

@@ -13,13 +13,17 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+/**
+ * Returns the artist name, thier albums, their tracks, and thier description
+ */
 router.get('/getArtist/:artistID&:username', async (req, res) => {
   let params = req.params;
   try {
+    // Select artist name, albums, and tracks
     const artist = await db.pool.query(`SELECT Artists.name AS artistName, Artists.description AS artistDescription FROM Artists WHERE Artists.spotify_artist_ID = '${params.artistID}';`);
     const albums = await db.pool.query(`SELECT Albums.name AS albumName, Albums.spotify_album_ID AS albumID, Albums.image_URL FROM Albums, Album_Artists, Artists WHERE Albums.album_ID = Album_Artists.album_ID AND Album_Artists.artist_ID = Artists.artist_ID AND Artists.spotify_artist_ID = '${params.artistID}';`);
     const tracks = await db.pool.query(`SELECT Tracks.name AS trackName, Tracks.spotify_track_ID AS trackID, Albums.image_URL FROM Tracks LEFT JOIN Albums ON Tracks.album_ID = Albums.album_ID LEFT JOIN Track_Artists ON Track_Artists.track_ID = Tracks.track_ID LEFT JOIN Artists ON Artists.artist_ID = Track_Artists.artist_ID WHERE Artists.spotify_artist_ID = '${params.artistID}';`);
-
+    // If no artist was found return 404 error
     if (artist.length == 0) return res.status(404).send()
     return res.status(200).json({ "artistName": artist[0].artistName, "albums": albums, "tracks": tracks, "description": artist[0].artistDescription })
   } catch (err) {
