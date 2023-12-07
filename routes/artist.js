@@ -112,7 +112,6 @@ router.put('/setDescription', auth, async (req, res) => {
 
       // Get the current description for the artist with the given spotify_artist_ID
       const currDescription = await db.pool.query(`SELECT description FROM Artists WHERE artist_ID = '${artist_ID[0].artist_ID}';`)
-
       //console.log(currDescription)
 
       try {
@@ -120,7 +119,7 @@ router.put('/setDescription', auth, async (req, res) => {
           if (currDescription[0].description === params.descriptionText) { // check if the description is the same
             //console.log("description is the same") // Description is the same, so do nothing
           } else { // If the description is not the same (this includes if it is null (i.e. no description)) then update it
-            await db.pool.query(`UPDATE Artists SET description = '${params.descriptionText}' WHERE artist_ID = '${artist_ID[0].artist_ID}';`)
+            await db.pool.query(`UPDATE Artists SET description = ? WHERE artist_ID = ?;`, [params.descriptionText, artist_ID[0].artist_ID])
             //console.log("description updated")
           }
           // Get the new description from the database, then send that back to the frontend with status 200
