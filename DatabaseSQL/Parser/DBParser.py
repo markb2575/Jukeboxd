@@ -1,7 +1,7 @@
 '''
 Python script which parses the data.csv file then creates SQL queries to saturate our database with the artists, albums, and tracks data.
 
-Written by Mark Bassily, modified and finished and Jacob Gorelick.
+Written by Mark Bassily and Jacob Gorelick.
 '''
 
 import csv
@@ -133,7 +133,7 @@ def Albums():
     fw.close()
     f.close()
     print("Completed Albums")
-    print(f"{len(Albums)} {len(set(Albums))}")
+    print(f"{len(Albums)} {len(set(Albums))}") # Print how many albums there are (size of the albums dict)
 
 
 '''
@@ -188,9 +188,11 @@ def Tracks():
     fw.close()
     f.close()
     print("Completed Tracks")
-    print(f"{len(Tracks)} {len(set(Tracks))}")
+    print(f"{len(Tracks)} {len(set(Tracks))}") # Print how many tracks there are (size of the tracks dict)
 
-
+'''
+Commands to run the functions. Uncomment the function you wish to run, and comment out the other functions. Could most likely run all three at once, but it hasn't been tested
+'''
 Artists() # Create the artists.sql file with all the artists sql queries
 #Albums() # Create the albums.sql file with all the albums sql queries
 #Tracks() # Create the tracks.sql file with all the tracks sql queries
