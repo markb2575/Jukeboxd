@@ -162,7 +162,8 @@ function Search() {
         <br></br>
         <h4>Filter by:&nbsp;&nbsp;
           <Nav
-            variant="underline"
+            className="mt-2"
+            variant="tabs"
             defaultActiveKey="#albums"
             onSelect={(eventKey) => handleFilterChange(eventKey)}
           >
