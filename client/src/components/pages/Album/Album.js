@@ -124,11 +124,11 @@ function Album({ username }) {
                   </div>
                 </Col>
                 <Col>
-                  <AlbumActions {...{username, rated, radios, ratingValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRatingValue, watchlist, setWatchlist}}/>
+                  <AlbumActions {...{ username, rated, radios, ratingValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRatingValue, watchlist, setWatchlist }} />
                 </Col>
               </Row>
               <Row style={{ marginTop: '20px', marginBottom: '20px' }}>
-                <Reviews {...{reviewsExist, reviews}}/>
+                <Reviews {...{ reviewsExist, reviews }} />
               </Row>
             </Container>
           </div>

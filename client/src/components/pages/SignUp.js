@@ -6,6 +6,7 @@ function SignUp() {
   const [error, setError] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
   const handleCreateAccount = (e) => {
     e.preventDefault()
     //create a request to create account with the following object
@@ -17,6 +18,13 @@ function SignUp() {
     if (credentials.password.length < 8) {
       setError("Password must be at least 8 characters")
       return
+    }
+
+    // Validate the username using a regular expression -- only allows letters and numbers
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    if (!usernameRegex.test(credentials.username)) {
+      setError("Username must contain only letters and numbers");
+      return;
     }
 
     fetch('http://localhost:8080/user/signup', {
@@ -37,6 +45,7 @@ function SignUp() {
 
 
   }
+
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-6 col-lg-4">

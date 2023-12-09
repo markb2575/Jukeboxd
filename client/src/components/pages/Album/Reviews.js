@@ -42,7 +42,7 @@ function Reviews({ reviewsExist, reviews }) {
                 <Card>
                   <Card.Header>Reviewed by <Link to={`/user/${result.username}`}>{result.username}</Link> </Card.Header>
                   <Card.Body>
-                    <Card.Text>
+                    <Card.Text style={{ whiteSpace: "pre-line" }}>
                       {result.review}
                     </Card.Text>
                   </Card.Body>

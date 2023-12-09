@@ -71,9 +71,9 @@ function NavbarComponent() {
 
     return (
 
-        <Navbar expand="lg" style={{backgroundColor:'#f0f0f0'}}>
+        <Navbar expand="lg" style={{ backgroundColor: '#f0f0f0' }}>
             <Container>
-                <Navbar.Brand onClick={() => navigate("/")} onMouseOver={() => setCurrentColor("text-secondary")}  onMouseOut={() => setCurrentColor("text-black")} className={currentColor} style={{cursor:'pointer'}}>Jukeboxd</Navbar.Brand>
+                <Navbar.Brand onClick={() => navigate("/")} onMouseOver={() => setCurrentColor("text-secondary")} onMouseOut={() => setCurrentColor("text-black")} className={currentColor} style={{ cursor: 'pointer' }}>Jukeboxd</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav className="justify-content-end">

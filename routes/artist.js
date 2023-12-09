@@ -108,11 +108,13 @@ router.put('/setDescription', auth, async (req, res) => {
     // Ensure the user is linked to the artist, or that the user is an Admin
     if (user[0].artist_ID === artist_ID[0].artist_ID || user[0].role === 0) {
 
-      // Remove potential issues from the description text
+      // Remove potential issues from the description text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+      /*
       params.descriptionText = params.descriptionText.replace("\\", "\\\\")
       params.descriptionText = params.descriptionText.replace(";", "\\;")
       params.descriptionText = params.descriptionText.replace("'", "\\'")
       params.descriptionText = params.descriptionText.replace("`", "\\`")
+      */
 
       // Get the current description for the artist with the given spotify_artist_ID
       const currDescription = await db.pool.query(`SELECT description FROM Artists WHERE artist_ID = '${artist_ID[0].artist_ID}';`)

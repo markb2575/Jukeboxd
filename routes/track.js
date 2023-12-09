@@ -95,11 +95,13 @@ router.post('/setReview', async (req, res) => {
   let params = req.body;
 
   try {
-    // Remove any potential issues from the review text
+    // Remove any potential issues from the review text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+    /*
     params.reviewText = params.reviewText.replace("\\", "\\\\")
     params.reviewText = params.reviewText.replace(";", "\\;")
     params.reviewText = params.reviewText.replace("'", "\\'")
     params.reviewText = params.reviewText.replace("`", "\\`")
+    */
 
     // Calls getTrackID to get the track_ID of the track with the given spotify_track_ID
     const track_ID = await getTrackID(params.spotifyTrackID)

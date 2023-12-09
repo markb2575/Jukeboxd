@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, useLocation} from "react-router"
+import { Routes, Route, useNavigate, useLocation } from "react-router"
 import { Home, Login, SignUp, Profile, Search, Error, Album, Artist, Track, Admin } from "../pages"
 import { useEffect, useState } from "react";
 
@@ -20,7 +20,7 @@ export default function Navigation() {
                 if (response.status !== 500) {
                     response.json().then(res => {
                         setUsername(res.username);
-                        if (res.role === 0){
+                        if (res.role === 0) {
                             setIsAdmin(true)
                         } else {
                             setIsAdmin(false)
@@ -46,16 +46,16 @@ export default function Navigation() {
     }, [navigate, location.pathname]);
     return (
         <Routes>
-            <Route path="/" element={<Home username={username}/>} />
+            <Route path="/" element={<Home username={username} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/user/:username" element={<Profile username={username}/>} />
-            <Route path="/album/:albumID" element={<Album username={username}/>} />
-            <Route path="/artist/:artistID" element={<Artist username={username} spotify_artist_ID={spotifyArtistID} isAdmin={isAdmin}/>} />
-            <Route path="/track/:trackID" element={<Track username={username}/>} />
+            <Route path="/user/:username" element={<Profile username={username} />} />
+            <Route path="/album/:albumID" element={<Album username={username} />} />
+            <Route path="/artist/:artistID" element={<Artist username={username} spotify_artist_ID={spotifyArtistID} isAdmin={isAdmin} />} />
+            <Route path="/track/:trackID" element={<Track username={username} />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/admin" element={<Admin username={username} isAdmin={isAdmin}/>} />
-            <Route path="/404" element={<Error username={username}/>} />
+            <Route path="/admin" element={<Admin username={username} isAdmin={isAdmin} />} />
+            <Route path="/404" element={<Error username={username} />} />
         </Routes>
     )
 }

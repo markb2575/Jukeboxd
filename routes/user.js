@@ -61,11 +61,13 @@ router.get('/getNavBar', auth, async (req, res) => {
 router.post('/login', async (req, res) => {
     let credentials = req.body;
 
-    // Remove any potential issues from the username text
+    // Remove any potential issues from the username text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+    /*
     credentials.username = credentials.username.replace("\\", "\\\\")
     credentials.username = credentials.username.replace(";", "\\;")
     credentials.username = credentials.username.replace("'", "\\'")
     credentials.username = credentials.username.replace("`", "\\`")
+    */
 
     try {
         const hashed_password = await db.pool.query(`SELECT password FROM Users WHERE binary username = ?;`, [credentials.username]);
@@ -88,11 +90,13 @@ router.post('/login', async (req, res) => {
 router.post('/signup', async (req, res) => {
     let credentials = req.body;
 
-    // Remove any potential issues from the username text
+    // Remove any potential issues from the username text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+    /*
     credentials.username = credentials.username.replace("\\", "\\\\")
     credentials.username = credentials.username.replace(";", "\\;")
     credentials.username = credentials.username.replace("'", "\\'")
     credentials.username = credentials.username.replace("`", "\\`")
+    */
 
     try {
         // check if the username exists in the database already

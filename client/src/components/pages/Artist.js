@@ -202,7 +202,7 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
               <Card>
                 <Card.Header>About</Card.Header>
                 <Card.Body>
-                  <Card.Text>
+                  <Card.Text style={{ whiteSpace: "pre-line" }}>
                     {showDescription ?
                       <>{description}</>
                       :

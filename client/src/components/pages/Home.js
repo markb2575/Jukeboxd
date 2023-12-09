@@ -206,7 +206,7 @@ function Home({ username }) {
                                             <Card>
                                                 <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
                                                 <Card.Body>
-                                                    <Card.Text>
+                                                    <Card.Text style={{ whiteSpace: "pre-line" }}>
                                                         {result.review}
                                                     </Card.Text>
                                                 </Card.Body>
@@ -257,7 +257,7 @@ function Home({ username }) {
                                             <Card>
                                                 <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
                                                 <Card.Body>
-                                                    <Card.Text>
+                                                    <Card.Text style={{ whiteSpace: "pre-line" }}>
                                                         {result.review}
                                                     </Card.Text>
                                                 </Card.Body>
