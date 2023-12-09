@@ -169,11 +169,11 @@ function Home({ username }) {
                 :
                 <>
                     <div className="header" style={{ marginTop: '20px' }}>
-                        <h2>Welcome back, {username}</h2>
+                        <h1>Welcome back, {username}</h1>
                     </div>
                     <Container>
                         {displayFriendActivity ? <>
-                            <h4 style={{ marginTop: '30px', marginBottom: '20px' }}>Recent activity from friends</h4>
+                            <h4 style={{ marginTop: '20px', marginBottom: '20px' }}>Recent activity from friends</h4>
                             <CardGroup className="me-2">
                                 {ratingsFromFriends.map((result, idx) => (
                                     <Card key={idx}>
@@ -199,7 +199,7 @@ function Home({ username }) {
 
                         <Row>
                             {reviewsFromFriendsExist ? <>
-                                <h4 style={{ marginTop: '30px'}}>Recent reviews from friends:</h4>
+                                <h4 style={{ marginTop: '30px' }}>Recent reviews from friends:</h4>
                                 <Row xs={1} md={2} className="g-4" style={{ marginTop: '-5px' }}>
                                     {reviewsFromFriends.map((result, idx) => (
                                         <Col key={idx}>
@@ -231,7 +231,7 @@ function Home({ username }) {
                         </Row>
 
                         <Row>
-                        <h4 style={{ marginTop: '30px', marginBottom: '20px' }}>Most popular albums and tracks this week:</h4>
+                            <h4 style={{ marginTop: '30px', marginBottom: '20px' }}>Most popular albums and tracks this week:</h4>
                             {displayPopular ? <>
                                 <CardGroup className="me-2">
                                     {popular.map((result, idx) => (
@@ -249,8 +249,8 @@ function Home({ username }) {
                         </Row>
 
                         <Row style={{ marginBottom: '20px' }}>
+                            <h4 style={{ marginTop: '30px' }}>Recent reviews:</h4>
                             {reviewsExist ? <>
-                                <h4 style={{ marginTop: '30px' }}>Recent reviews:</h4>
                                 <Row xs={1} md={2} className="g-4" style={{ marginTop: '-5px' }}>
                                     {reviews.map((result, idx) => (
                                         <Col key={idx}>

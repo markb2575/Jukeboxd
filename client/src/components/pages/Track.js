@@ -15,6 +15,7 @@ import Card from 'react-bootstrap/Card'
 import './Track.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import Table from 'react-bootstrap/Table';
 
 function Track({ username }) {
     const { pathname } = useLocation();
@@ -367,7 +368,7 @@ function Track({ username }) {
                 null
             ) : (
 
-                <div>
+                <div style={{ marginTop: '10px' }}>
                     <div className="header">
                         <h3 className="subHeader">Track:</h3> <h1 className="subHeader">{track.trackName}</h1>
                     </div>
@@ -376,13 +377,78 @@ function Track({ username }) {
                     </div>
                     <div>
                         <Container>
-                            <Row>
+                            <Row style={{ marginTop: '20px' }}>
                                 <Col>
                                     <img className="album-cover-track" src={album.image_URL} alt="Album Cover" onClick={() => navigate(`/album/${album.albumID}`)} style={{
                                         "width": "400px",
                                         "height": "auto"
                                     }} />
                                 </Col>
+
+
+                                <Col>
+                                    <div className="centeredVerticalCol">
+                                        <ListGroup>
+                                            <ListGroup.Item><h5>Album: <Link to={`/album/${album.albumID}`}>{album.name}</Link></h5></ListGroup.Item>
+                                            <ListGroup.Item><h5>Track Duration: {track.duration}</h5></ListGroup.Item>
+                                            {track.explicit ?
+                                                <ListGroup.Item><h5>Explicit: Yes</h5></ListGroup.Item>
+                                                :
+                                                <ListGroup.Item><h5>Explicit: No</h5></ListGroup.Item>}
+                                            <ListGroup.Item><h5>Track Number: {track.track_number}</h5></ListGroup.Item>
+                                            <ListGroup.Item><h5>Disc Number: {track.disc_number}</h5></ListGroup.Item>
+
+                                        </ListGroup>
+                                    </div>
+                                </Col>
+
+
+                                {/*
+                                <Col>
+                                    <div className="centeredVerticalCol">
+                                        <Table size="sm">
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><h5>Album:</h5></td>
+                                                    <td><Link to={`/album/${album.albumID}`}>{album.name}</Link></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><h5>Track Duration:</h5></td>
+                                                    <td>{track.duration}</td>
+                                                </tr>
+
+                                                {track.explicit ?
+                                                    <tr>
+                                                        <td><h5>Explicit:</h5></td>
+                                                        <td>Yes</td>
+                                                    </tr>
+                                                    :
+                                                    <tr>
+                                                        <td><h5>Explicit:</h5></td>
+                                                        <td>No</td>
+                                                    </tr>}
+
+                                                <tr>
+                                                    <td><h5>Track Number:</h5></td>
+                                                    <td>{track.track_number}</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><h5>Disc Number:</h5></td>
+                                                    <td>{track.disc_number}</td>
+                                                </tr>
+                                            </tbody>
+                                        </Table>
+                                    </div>
+                                </Col>
+                                */}
+
+                                {/*
                                 <Col>
                                     <div className="centeredVerticalCol">
                                         <h5>Album: <Link to={`/album/${album.albumID}`}>{album.name}</Link></h5>
@@ -394,6 +460,8 @@ function Track({ username }) {
                                         </div>
                                     </div>
                                 </Col>
+                                */}
+
                                 <Col>
                                     <div className="centeredVerticalCol">
                                         <ListGroup>
@@ -438,8 +506,6 @@ function Track({ username }) {
                                                             </OverlayTrigger>
                                                         </>
                                                     }
-                                                    {/* <h4 className="subHeader2">Listen:</h4><Button variant="outline-primary" title="Listen"><IoEarOutline size={30} /></Button>
-                                                    <h4 className="subHeader2">Save:</h4><Button variant="outline-primary" title="Watchlist"><IoAddCircleOutline size={30} /></Button> */}
                                                 </div>
                                             </ListGroup.Item>
 
@@ -470,7 +536,6 @@ function Track({ username }) {
 
                                             <ListGroup.Item>
                                                 <div className="centeredHorizontal">
-                                                    {/* <Button onClick={handleReview} variant="outline-primary" title="Review">Review</Button> */}
                                                     {reviewed ? <Button onClick={handleShow} title="Review">Edit Review</Button> :
                                                         <Button onClick={handleShow} variant="outline-primary" title="Review">Review</Button>}
 
@@ -536,11 +601,11 @@ function Track({ username }) {
                                     </div>
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row style={{ marginTop: '20px', marginBottom: '20px' }}>
                                 <div className="header">
                                     <h3>Reviews:</h3>
                                 </div>
-                                <div style={{ marginBottom: '20px' }}>
+                                <div>
                                     {reviewsExist ?
 
                                         <Row xs={1} md={2} className="g-4">
@@ -567,9 +632,10 @@ function Track({ username }) {
                         </Container>
                     </div>
                 </div>
-            )}
+            )
+            }
 
-        </div>
+        </div >
     );
 }
 

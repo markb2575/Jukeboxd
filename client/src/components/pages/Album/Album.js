@@ -94,7 +94,7 @@ function Album({ username }) {
       {loading ? (
         null
       ) : (
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <div className="header">
             <h3 className="subHeader">Album:</h3> <h1 className="subHeader">{albumName}</h1>
           </div>
@@ -104,7 +104,7 @@ function Album({ username }) {
           </div>
           <div>
             <Container>
-              <Row>
+              <Row style={{ marginTop: '20px' }}>
                 <Col>
                   <img className="album-cover-album" src={imageURL} alt="Album Cover" style={{
                     "width": "400px",
@@ -127,7 +127,7 @@ function Album({ username }) {
                   <AlbumActions {...{username, rated, radios, ratingValue, reviewed, setReviewText, albumID, reviewText, setReviewed, setReviews, setReviewsExist, setRated, listened, setListened, setRatingValue, watchlist, setWatchlist}}/>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginTop: '20px', marginBottom: '20px' }}>
                 <Reviews {...{reviewsExist, reviews}}/>
               </Row>
             </Container>
