@@ -61,7 +61,7 @@ router.get('/getNavBar', auth, async (req, res) => {
 router.post('/login', async (req, res) => {
     let credentials = req.body;
 
-    // Remove any potential issues from the username text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+    // Remove any potential issues from the username text -- beacuse the queries are parameterized this isn't strictly necessary anymore
     /*
     credentials.username = credentials.username.replace("\\", "\\\\")
     credentials.username = credentials.username.replace(";", "\\;")
@@ -90,7 +90,7 @@ router.post('/login', async (req, res) => {
 router.post('/signup', async (req, res) => {
     let credentials = req.body;
 
-    // Remove any potential issues from the username text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+    // Remove any potential issues from the username text -- beacuse the queries are parameterized this isn't strictly necessary anymore
     /*
     credentials.username = credentials.username.replace("\\", "\\\\")
     credentials.username = credentials.username.replace(";", "\\;")

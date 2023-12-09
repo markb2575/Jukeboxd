@@ -89,7 +89,7 @@ router.post('/setReview', async (req, res) => {
   let params = req.body;
 
   try {
-    // Remove any potential issues from the review text -- beacuse the queries are paramaterized this isn't strictly necessary anymore
+    // Remove any potential issues from the review text -- beacuse the queries are parameterized this isn't strictly necessary anymore
     /*
     params.reviewText = params.reviewText.replace("\\", "\\\\")
     params.reviewText = params.reviewText.replace(";", "\\;")
