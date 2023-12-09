@@ -168,19 +168,16 @@ function Home({ username }) {
             {loading ? null
                 :
                 <>
-                    <br></br>
-                    <div className="header">
+                    <div className="header" style={{ marginTop: '20px' }}>
                         <h2>Welcome back, {username}</h2>
                     </div>
                     <Container>
                         {displayFriendActivity ? <>
-                            <br></br>
-                            <br></br>
-                            <h5>Recent activity from friends</h5>
+                            <h4 style={{ marginTop: '30px', marginBottom: '20px' }}>Recent activity from friends</h4>
                             <CardGroup className="me-2">
                                 {ratingsFromFriends.map((result, idx) => (
                                     <Card key={idx}>
-                                        <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>
+                                        <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img className="album-cover-home" varient="top" src={result.image_URL} /></Link>
                                         <Card.Footer>
                                             <div>
                                                 <small><Link to={`/user/${result.username}`}>{result.username}</Link></small>
@@ -197,19 +194,16 @@ function Home({ username }) {
                                     </Card>
                                 ))}
                             </CardGroup>
-                            <br></br>
-                            <br></br>
                         </>
                             : <></>}
 
                         <Row>
                             {reviewsFromFriendsExist ? <>
-                                <h5>Recent reviews from friends:</h5>
-                                <Row xs={1} md={2} className="g-4">
+                                <h4 style={{ marginTop: '30px'}}>Recent reviews from friends:</h4>
+                                <Row xs={1} md={2} className="g-4" style={{ marginTop: '-5px' }}>
                                     {reviewsFromFriends.map((result, idx) => (
                                         <Col key={idx}>
                                             <Card>
-                                                {/*<Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>*/}
                                                 <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
                                                 <Card.Body>
                                                     <Card.Text>
@@ -235,17 +229,14 @@ function Home({ username }) {
                                 <></>}
 
                         </Row>
-                        <br></br>
-                        <br></br>
 
                         <Row>
-                        <h5>Most popular albums and tracks this week:</h5>
+                        <h4 style={{ marginTop: '30px', marginBottom: '20px' }}>Most popular albums and tracks this week:</h4>
                             {displayPopular ? <>
                                 <CardGroup className="me-2">
                                     {popular.map((result, idx) => (
                                         <Card key={idx}>
-                                            {/*<Card.Header>{result.item_type}</Card.Header>*/}
-                                            <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>
+                                            <Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img className="album-cover-home" varient="top" src={result.image_URL} /></Link>
                                             <Card.Body>
                                                 <small><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link></small>
                                             </Card.Body>
@@ -253,21 +244,17 @@ function Home({ username }) {
                                     ))}
                                 </CardGroup>
                             </>
-                                : <div>Not enough ratings or reviews this week</div>}
+                                : <div style={{ marginTop: '20px' }}>Not enough ratings or reviews this week</div>}
 
                         </Row>
 
-                        <br></br>
-                        <br></br>
-
-                        <Row>
+                        <Row style={{ marginBottom: '20px' }}>
                             {reviewsExist ? <>
-                                <h5>Recent reviews:</h5>
-                                <Row xs={1} md={2} className="g-4">
+                                <h4 style={{ marginTop: '30px' }}>Recent reviews:</h4>
+                                <Row xs={1} md={2} className="g-4" style={{ marginTop: '-5px' }}>
                                     {reviews.map((result, idx) => (
                                         <Col key={idx}>
                                             <Card>
-                                                {/*<Link to={`/${result.item_type}/${result.spotify_item_ID}`}><Card.Img varient="top" src={result.image_URL} /></Link>*/}
                                                 <Card.Header><Link to={`/${result.item_type}/${result.spotify_item_ID}`}>{result.name}</Link> </Card.Header>
                                                 <Card.Body>
                                                     <Card.Text>
@@ -290,9 +277,8 @@ function Home({ username }) {
                                 </Row>
                             </>
                                 :
-                                <div>No reviews exist yet</div>}
+                                <div style={{ marginTop: '20px' }}>No reviews exist yet</div>}
                         </Row>
-                        <br></br>
                     </Container>
                 </>
             }

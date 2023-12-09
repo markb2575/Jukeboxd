@@ -380,14 +380,13 @@ function Admin({ username, isAdmin }) {
                 null
             ) : (
                 <>
-                    <div className="header">
+                    <div className="header" style={{ marginTop: '20px' }}>
                         <h2>Admin Menu</h2>
                     </div>
                     <Container>
 
-                        <br></br>
                         {showUsers && showArtists ?
-                            <Form>
+                            <Form style={{ marginTop: '20px' }}>
                                 <Row>
                                     <Col xs="3">
                                         <Form.Control
@@ -428,8 +427,6 @@ function Admin({ username, isAdmin }) {
                                         </Col>
                                     )}
                                 </Row>
-                                <br></br>
-                                <br></br>
                             </Form>
                             : null
                         }
@@ -440,6 +437,7 @@ function Admin({ username, isAdmin }) {
                             id="admin-tabs"
                             className="mb-3"
                             justify
+                            style={{ marginTop: '20px' }}
                         >
                             <Tab eventKey="users" title="Users">
                                 {showUsers ?

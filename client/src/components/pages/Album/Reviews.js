@@ -34,7 +34,7 @@ function Reviews({ reviewsExist, reviews }) {
       <div className="header">
         <h3>Reviews:</h3>
       </div>
-      <div>
+      <div style={{ marginBottom: '20px' }}>
         {reviewsExist ?
           <Row xs={1} md={2} className="g-4">
             {reviews.map((result, idx) => (
@@ -54,7 +54,6 @@ function Reviews({ reviewsExist, reviews }) {
           :
           <div>No reviews exist yet</div>}
       </div>
-      <br></br>
     </div>
   )
 }

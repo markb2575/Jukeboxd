@@ -1,12 +1,18 @@
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .card-img-custom {
-    max-width: 200px; /* Set the maximum width as needed */
-    /* max-height: 200px; /* Set the maximum height as needed */
-    width: auto; /* Allow the width to adjust according to the aspect ratio */
-    height: auto; /* Allow the height to adjust according to the aspect ratio */
-  }
+.card-img-custom {
+  max-width: 200px; /* Set the maximum width as needed */
+  /* max-height: 200px; /* Set the maximum height as needed */
+  width: auto; /* Allow the width to adjust according to the aspect ratio */
+  height: auto; /* Allow the height to adjust according to the aspect ratio */
+}
+
+
+.album-cover-home:hover {
+  cursor: pointer;
+  border: 1px solid #000;
+}

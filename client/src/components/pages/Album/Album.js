@@ -106,7 +106,7 @@ function Album({ username }) {
             <Container>
               <Row>
                 <Col>
-                  <img src={imageURL} alt="Album Cover" style={{
+                  <img className="album-cover-album" src={imageURL} alt="Album Cover" style={{
                     "width": "400px",
                     "height": "auto"
                   }} />

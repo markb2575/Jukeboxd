@@ -86,3 +86,15 @@
 .buttonLeft {
     align-items: start;
 }
+
+.album-cover-track {
+    border: 2px solid #000;
+}
+
+.album-cover-album {
+    border: 2px solid #000;
+}
+
+.album-cover-track:hover {
+    cursor: pointer;
+}

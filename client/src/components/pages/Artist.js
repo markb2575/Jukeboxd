@@ -190,16 +190,17 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
   }
 
   return (
-    <div>
+    <div style={{ marginBottom: '20px' }}>
       <NavbarComponent />
       {loading ? (
         null
       ) : (
         <div className="container mt-3">
-          <Row className="justify-content-between">
+          <h1 style={{ marginTop: '20px' }}>{artistName}</h1>
+          <Row className="justify-content-between" style={{ marginTop: '20px' }}>
             <Col md={3}>
               <Card>
-                <Card.Header>{artistName}</Card.Header>
+                <Card.Header>About</Card.Header>
                 <Card.Body>
                   <Card.Text>
                     {showDescription ?
@@ -210,12 +211,9 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                   </Card.Text>
                 </Card.Body>
 
-
-
                 <>
                   {canEdit ?
                     <Card.Footer>
-                      {/* <Button onClick={handleDescription} variant="outline-primary" title="Description">Description</Button> */}
                       {showDescription ? <Button onClick={handleShow} title="Description">Edit Description</Button> :
                         <Button onClick={handleShow} variant="outline-primary" title="Description">Add Description</Button>}
 
@@ -227,7 +225,6 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                           <Form>
                             <Form.Group
                               className="mb-3"
-                              controlId="exampleForm.ControlTextarea1"
                             >
                               <Form.Label>Edit your description:</Form.Label>
                               <Form.Control as="textarea" rows={10} maxLength={500} value={descriptionText} onChange={(e) => setDescriptionText(e.target.value)} />
@@ -258,7 +255,6 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                             <Form>
                               <Form.Group
                                 className="mb-3"
-                                controlId="exampleForm.ControlTextarea1"
                               >
                                 <Form.Label>Add a description:</Form.Label>
                                 <Form.Control as="textarea" rows={10} maxLength={500} value={descriptionText} onChange={(e) => setDescriptionText(e.target.value)} />
@@ -276,18 +272,12 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
                           </Modal.Footer>
                         </Modal>}
                     </Card.Footer>
-
-
                     :
                     null}
                 </>
-
-
-
-
               </Card>
-
             </Col>
+
             <Col md={8} className="float-right border rounded p-3">
               <Nav
                 variant="underline"
@@ -338,7 +328,6 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
           </Row>
         </div>
       )}
-      <br></br>
     </div>
   );
 }

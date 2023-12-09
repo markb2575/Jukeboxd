@@ -378,7 +378,7 @@ function Track({ username }) {
                         <Container>
                             <Row>
                                 <Col>
-                                    <img src={album.image_URL} alt="Album Cover" onClick={() => navigate(`/album/${album.albumID}`)} style={{
+                                    <img className="album-cover-track" src={album.image_URL} alt="Album Cover" onClick={() => navigate(`/album/${album.albumID}`)} style={{
                                         "width": "400px",
                                         "height": "auto"
                                     }} />
@@ -540,7 +540,7 @@ function Track({ username }) {
                                 <div className="header">
                                     <h3>Reviews:</h3>
                                 </div>
-                                <div>
+                                <div style={{ marginBottom: '20px' }}>
                                     {reviewsExist ?
 
                                         <Row xs={1} md={2} className="g-4">
@@ -562,7 +562,6 @@ function Track({ username }) {
 
                                         :
                                         <div>No reviews exist yet</div>}
-                                    <br></br>
                                 </div>
                             </Row>
                         </Container>

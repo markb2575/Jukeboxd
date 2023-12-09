@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate, useLocation} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavbarComponent from "../routing/NavbarComponent";
 import Button from "react-bootstrap/esm/Button";
 import FollowersModal from './Popups/FollowersModal';
@@ -8,6 +8,8 @@ import Nav from 'react-bootstrap/Nav';
 import Card from 'react-bootstrap/Card';
 import { IoStar, IoStarOutline } from "react-icons/io5";
 import "./Profile.css"
+import { Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/esm/Container";
 
 function Profile({ username }) {
     const { pathname } = useLocation();
@@ -119,7 +121,7 @@ function Profile({ username }) {
 
     /**
      * This function ensures that when a username is clicked from the followers or following list that the modal will close and then navigate to their profile page.
-     * @param {*} clickedUsername The username that was clicked on 
+     * @param {*} clickedUsername The username that was clicked on
      */
     const handleUsernameClick = (clickedUsername) => {
         setFollowersModalShow(false)
@@ -203,30 +205,33 @@ function Profile({ username }) {
     return (
         <div>
             <NavbarComponent />
-            {loading ? (
-                null
-            ) : (
-                viewingOwnProfile ? (
-                    <h1 > {username} (You)</h1>
+            <div style={{ marginTop: '20px' }}>
+                {loading ? (
+                    null
                 ) : (
-                    <div>
-                        <h1>{profileName}   <Button style={{ marginLeft: '10px' }} onClick={handleFollowUser}>{isFollowing ? "Unfollow User" : "Follow User"}</Button>
-                        </h1>
-                    </div>
-                )
+                    viewingOwnProfile ? (
+                        <h1>{username}</h1>
+                    ) : (
+                        <div>
+                            <h1>{profileName}   <Button style={{ marginLeft: '10px' }} onClick={handleFollowUser}>{isFollowing ? "Unfollow User" : "Follow User"}</Button>
+                            </h1>
+                        </div>
+                    )
 
-            )}
+                )}
+            </div>
 
             {!loading && (
-                <div className="center">
+                <div className="center" style={{ marginTop: '20px' }}>
                     <div className="rounded-container">
                         <div className="rounded-content">
-                            <p className="followers-link" onClick={() => setFollowersModalShow(true)}>
+                            <div className="followers-link" onClick={() => setFollowersModalShow(true)}>
                                 Followers: {profileInfo.followers.length}
-                            </p>                            <div className="divider"></div>
-                            <p className="following-link" onClick={() => setFollowingModalShow(true)}>
+                            </div>
+                            <div className="divider"></div>
+                            <div className="following-link" onClick={() => setFollowingModalShow(true)}>
                                 Following: {profileInfo.following.length}
-                            </p>
+                            </div>
                         </div>
                     </div>
 
@@ -235,69 +240,78 @@ function Profile({ username }) {
 
             )}
 
-            {!loading && (
-                <div className="v-center">
-                    <Nav variant="tabs" defaultActiveKey={JSON.parse(window.localStorage.getItem('tab'))} onSelect={handleTabChange}>
-                        <Nav.Item>
-                            <Nav.Link href="#listened">Listened To</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link href="#watchlist">Save For Later</Nav.Link>
-                        </Nav.Item>
-                    </Nav>
-                    <h4 style={{ textAlign: "left" }}>Tracks</h4>
-                    <div className="scrolling-container">
-                        <div className="card-container">
-                            {profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].length > 0 ? (
-                                profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].map((item, i) => (
-                                    <Card key={i} className="scrolling-card" onClick={() => navigate(`/track/${item.spotify_track_ID}`)}>
-                                        <Card.Img src={item.image_URL} alt={item.name} />
-                                        <Card.Title>{item.track_name}</Card.Title>
-                                        <div>{activeTab === "#listened" ?
-                                            <div>
-                                                <small>Rating: {convertToStars(item.rating)}</small>
-                                            </div>
-
-                                            :
-                                            (<></>)
-                                        }
-                                        </div>
-
-                                    </Card>
-                                ))
-                            ) : (
-                                <p>No results found.</p>
-                            )}
+            <Container>
+                {!loading && (
+                    <>
+                        <div className="v-center" style={{ marginTop: '20px' }}>
+                            <Nav variant="tabs" defaultActiveKey={JSON.parse(window.localStorage.getItem('tab'))} onSelect={handleTabChange}>
+                                <Nav.Item>
+                                    <Nav.Link href="#listened">Listened To</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link href="#watchlist">Save For Later</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
                         </div>
-                    </div>
-                    <div style={{ padding: "5px" }}>
-                    </div>
-                    <h4 style={{ textAlign: "left" }}>Albums</h4>
-                    <div className="scrolling-container" style={{ marginBottom: '10px' }}>
-                        <div className="card-container">
-                            {profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].length > 0 ? (
-                                profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].map((item, i) => (
-                                    <Card key={i} className="scrolling-card" onClick={() => navigate(`/album/${item.spotify_album_ID}`)}>
-                                        <Card.Img src={item.image_URL} alt={item.name} />
-                                        <Card.Title>{item.album_name}</Card.Title>
-                                        <div>{activeTab === "#listened" ?
-                                            <div>
-                                                <small>Rating: {convertToStars(item.rating)}</small>
-                                            </div>
+                        <Row className="justify-content-between" style={{ marginTop: '20px', marginBottom: '20px' }}>
+                            <Col md={6}>
+                                <h4 style={{ textAlign: 'center' }}>Tracks</h4>
+                                <div className="scrolling-container2">
+                                    <Row md={2} className="g-4">
+                                        {profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].length > 0 ? (
+                                            profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].map((item, i) => (
+                                                <Col md={4}>
+                                                    <Card key={i} className="scrolling-card2" onClick={() => navigate(`/track/${item.spotify_track_ID}`)}>
+                                                        <Card.Img src={item.image_URL} alt={item.name} />
+                                                        <Card.Footer>
+                                                            <Card.Title>{item.track_name}</Card.Title>
+                                                            <Card.Text>{activeTab === "#listened" ?
+                                                                <small>Rating: {convertToStars(item.rating)}</small>
+                                                                :
+                                                                (<></>)
+                                                            }
+                                                            </Card.Text>
+                                                        </Card.Footer>
 
-                                            :
-                                            (<></>)
-                                        }
-                                        </div>
-                                    </Card>
-                                ))
-                            ) : (
-                                <p>No results found.</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
+                                                    </Card>
+                                                </Col>
+                                            ))
+                                        ) : (
+                                            <div style={{ alignItems: 'center' }}>No results found.</div>
+                                        )}
+                                    </Row>
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <h4 style={{ textAlign: 'center' }}>Albums</h4>
+                                <div className="scrolling-container2">
+                                    <Row md={2} className="g-4">
+                                        {profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].length > 0 ? (
+                                            profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].map((item, i) => (
+                                                <Col md={4}>
+                                                    <Card key={i} className="scrolling-card2" onClick={() => navigate(`/album/${item.spotify_album_ID}`)}>
+                                                        <Card.Img src={item.image_URL} alt={item.name} />
+                                                        <Card.Footer>
+                                                            <Card.Title>{item.album_name}</Card.Title>
+                                                            {activeTab === "#listened" ?
+                                                                <small>Rating: {convertToStars(item.rating)}</small>
+                                                                :
+                                                                (<></>)
+                                                            }
+                                                        </Card.Footer>
+                                                    </Card>
+                                                </Col>
+                                            ))
+                                        ) : (
+                                            <div style={{ alignItems: 'center' }}>No results found.</div>
+                                        )}
+                                    </Row>
+                                </div>
+                            </Col>
+                        </Row>
+                    </>
+                )}
+            </Container>
 
             <FollowersModal
                 show={followersModalShow}
@@ -318,3 +332,124 @@ function Profile({ username }) {
 }
 
 export default Profile;
+
+/*
+return (
+    <div>
+        <NavbarComponent />
+        {loading ? (
+            null
+        ) : (
+            viewingOwnProfile ? (
+                <h1 > {username} (You)</h1>
+            ) : (
+                <div>
+                    <h1>{profileName}   <Button style={{ marginLeft: '10px' }} onClick={handleFollowUser}>{isFollowing ? "Unfollow User" : "Follow User"}</Button>
+                    </h1>
+                </div>
+            )
+
+        )}
+
+        {!loading && (
+            <div className="center">
+                <div className="rounded-container">
+                    <div className="rounded-content">
+                        <p className="followers-link" onClick={() => setFollowersModalShow(true)}>
+                            Followers: {profileInfo.followers.length}
+                        </p>                            <div className="divider"></div>
+                        <p className="following-link" onClick={() => setFollowingModalShow(true)}>
+                            Following: {profileInfo.following.length}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+        )}
+
+        {!loading && (
+            <div className="v-center">
+                <Nav variant="tabs" defaultActiveKey={JSON.parse(window.localStorage.getItem('tab'))} onSelect={handleTabChange}>
+                    <Nav.Item>
+                        <Nav.Link href="#listened">Listened To</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="#watchlist">Save For Later</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                <h4 style={{ textAlign: "left" }}>Tracks</h4>
+                <div className="scrolling-container">
+                    <div className="card-container">
+                        {profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].length > 0 ? (
+                            profileInfo[activeTab === "#listened" ? "lTracks" : "wTracks"].map((item, i) => (
+                                <Card key={i} className="scrolling-card" onClick={() => navigate(`/track/${item.spotify_track_ID}`)}>
+                                    <Card.Img src={item.image_URL} alt={item.name} />
+                                    <Card.Title>{item.track_name}</Card.Title>
+                                    <div>{activeTab === "#listened" ?
+                                        <div>
+                                            <small>Rating: {convertToStars(item.rating)}</small>
+                                        </div>
+
+                                        :
+                                        (<></>)
+                                    }
+                                    </div>
+
+                                </Card>
+                            ))
+                        ) : (
+                            <p>No results found.</p>
+                        )}
+                    </div>
+                </div>
+                <div style={{ padding: "5px" }}>
+                </div>
+                <h4 style={{ textAlign: "left" }}>Albums</h4>
+                <div className="scrolling-container" style={{ marginBottom: '10px' }}>
+                    <div className="card-container">
+                        {profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].length > 0 ? (
+                            profileInfo[activeTab === "#listened" ? "lAlbums" : "wAlbums"].map((item, i) => (
+                                <Card key={i} className="scrolling-card" onClick={() => navigate(`/album/${item.spotify_album_ID}`)}>
+                                    <Card.Img src={item.image_URL} alt={item.name} />
+                                    <Card.Title>{item.album_name}</Card.Title>
+                                    <div>{activeTab === "#listened" ?
+                                        <div>
+                                            <small>Rating: {convertToStars(item.rating)}</small>
+                                        </div>
+
+                                        :
+                                        (<></>)
+                                    }
+                                    </div>
+                                </Card>
+                            ))
+                        ) : (
+                            <p>No results found.</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+        )}
+
+        <FollowersModal
+            show={followersModalShow}
+            onHide={() => setFollowersModalShow(false)}
+            followers={profileInfo.followers}
+            onUsernameClick={handleUsernameClick}
+        />
+
+        <FollowingModal
+            show={followingModalShow}
+            onHide={() => setFollowingModalShow(false)}
+            following={profileInfo.following}
+            onUsernameClick={handleUsernameClick}
+        />
+
+    </div >
+);
+}
+
+export default Profile;
+*/

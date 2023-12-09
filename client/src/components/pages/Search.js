@@ -159,8 +159,7 @@ function Search() {
     <div>
       <NavbarComponent />
       <Container>
-        <br></br>
-        <h4>Filter by:&nbsp;&nbsp;
+        <h4 style={{ marginTop: '20px' }}>Filter by:
           <Nav
             className="mt-2"
             variant="tabs"
@@ -210,13 +209,12 @@ function Search() {
         <p></p>
       ) : (
         <Container>
-          <Row xs={1} md={2} className="g-4">
+          <Row xs={1} md={2} className="g-4" style={{ marginBottom: '20px' }}>
 
 
 
             {searchResults.slice((pageSize * (pageNum - 1)), (pageSize * (pageNum))).map((result, index) => (
-              <Col key={index} md={3}>
-                <br></br>
+              <Col key={index} md={3} style={{ marginTop: '30px' }}>
                 {result.username && (
                   <Card>
                     <Card.Header>User</Card.Header>
@@ -289,7 +287,6 @@ function Search() {
               </Col>
             ))}
           </Row>
-          <br></br>
         </Container>
       )}
     </div>
