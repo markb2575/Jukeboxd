@@ -155,6 +155,12 @@ function Track({ username }) {
             reviewText: reviewText,
         }
 
+        // Validate the input using a regular expression -- only allows letters, numbers, and some symbols
+        const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+        if (!inputRegex.test(reviewToSend.reviewText)) {
+            return;
+        }
+
         if (reviewText !== "") { // Prevent calling the backend if the review text is empty... i.e. if the user hit save on a blank review
             fetch('http://localhost:8080/track/setReview', {
                 method: 'POST',

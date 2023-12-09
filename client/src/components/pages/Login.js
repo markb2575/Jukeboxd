@@ -21,6 +21,20 @@ function Login() {
             password: e.target[1].value
         }
 
+        // Validate the username using a regular expression -- only allows letters and numbers
+        const usernameRegex = /^[a-zA-Z0-9]+$/;
+        if (!usernameRegex.test(credentials.username)) {
+            setError("Username must contain only letters and numbers");
+            return;
+        }
+
+        // Validate the password using a regular expression -- only allows letters, numbers, and some symbols
+        const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+        if (!passwordRegex.test(credentials.password)) {
+            setError("Password contains prohibited values");
+            return;
+        }
+
         fetch('http://localhost:8080/user/login', {
             method: 'POST',
             body: JSON.stringify(credentials),

@@ -27,6 +27,13 @@ function SignUp() {
       return;
     }
 
+    // Validate the password using a regular expression -- only allows letters, numbers, and some symbols
+    const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+    if (!passwordRegex.test(credentials.password)) {
+      setError("Password contains prohibited values");
+      return;
+    }
+
     fetch('http://localhost:8080/user/signup', {
       method: 'POST',
       body: JSON.stringify(credentials),

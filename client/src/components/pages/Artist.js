@@ -126,6 +126,12 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
       descriptionText: descriptionText,
     }
 
+    // Validate the input using a regular expression -- only allows letters, numbers, and some symbols
+    const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+    if (!inputRegex.test(descriptionToSend.descriptionText)) {
+      return;
+    }
+
     if (descriptionText !== "") { // Prevent calling the backend if the description text is empty... i.e. if the user hit save on a blank description
       fetch('http://localhost:8080/artist/setDescription', {
         method: 'PUT',

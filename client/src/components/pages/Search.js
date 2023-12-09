@@ -27,6 +27,12 @@ function Search() {
    * @param {*} filter The type of item to search for
    */
   const fetchSearchResults = useCallback((searchQuery, filter) => {
+    // Validate the input using a regular expression -- only allows letters, numbers, and some symbols
+    const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+    if (!inputRegex.test(searchQuery)) {
+      return;
+    }
+
     fetch(`http://localhost:8080/search/${filter}/${searchQuery}`, {
       method: 'GET',
       headers: {
@@ -59,7 +65,7 @@ function Search() {
       });
   }, [pageNum]);
 
-  /** 
+  /**
   * This function is used to set the filter, page number, and scroll position when returning to the search results.
   * The purpose is to make the user experience more seamless as it returns you to the exact same place that you were looking at.
   */
