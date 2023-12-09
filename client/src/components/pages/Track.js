@@ -155,8 +155,8 @@ function Track({ username }) {
             reviewText: reviewText,
         }
 
-        // Validate the input using a regular expression -- only allows letters, numbers, and some symbols
-        const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+        // Validate the input using a regular expression -- only allows letters, numbers, whitespace, and some symbols
+        const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`|= \n\r\t]*$/;
         if (!inputRegex.test(reviewToSend.reviewText)) {
             return;
         }

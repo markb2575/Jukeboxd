@@ -27,8 +27,8 @@ function Search() {
    * @param {*} filter The type of item to search for
    */
   const fetchSearchResults = useCallback((searchQuery, filter) => {
-    // Validate the input using a regular expression -- only allows letters, numbers, and some symbols
-    const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+    // Validate the input using a regular expression -- only allows letters, numbers, whitespace, and some symbols
+    const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`|= \n\r\t]*$/;
     if (!inputRegex.test(searchQuery)) {
       return;
     }

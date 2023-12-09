@@ -126,8 +126,8 @@ function Artist({ username, spotify_artist_ID, isAdmin }) {
       descriptionText: descriptionText,
     }
 
-    // Validate the input using a regular expression -- only allows letters, numbers, and some symbols
-    const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
+    // Validate the input using a regular expression -- only allows letters, numbers, whitespace, and some symbols
+    const inputRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`|= \n\r\t]*$/;
     if (!inputRegex.test(descriptionToSend.descriptionText)) {
       return;
     }
