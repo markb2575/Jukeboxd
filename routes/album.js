@@ -243,6 +243,9 @@ router.post('/setRating', async (req, res) => {
 
 });
 
+/**
+ * Adds the specified album to the user's listened to list
+ */
 router.post('/add-listened-album/:username/:s_album_id', auth, async (req, res) => {
   try {
     const { username, s_album_id } = req.params;
@@ -264,6 +267,9 @@ router.post('/add-listened-album/:username/:s_album_id', auth, async (req, res) 
   }
 });
 
+/**
+ * Adds the specified album to the user's save for later list
+ */
 router.post('/add-watch-album/:username/:s_album_id', auth, async (req, res) => {
   try {
     const { username, s_album_id } = req.params;
@@ -285,6 +291,9 @@ router.post('/add-watch-album/:username/:s_album_id', auth, async (req, res) => 
   }
 });
 
+/**
+ * Deletes the specified album from the user's listened to list
+ */
 router.delete('/delete-listened-album/:username/:s_album_id', auth, async (req, res) => {
   try {
     const { username, s_album_id } = req.params;
@@ -306,6 +315,9 @@ router.delete('/delete-listened-album/:username/:s_album_id', auth, async (req, 
   }
 });
 
+/**
+ * Deletes the specified album from the user's save for later list
+ */
 router.delete('/delete-watch-album/:username/:s_album_id', auth, async (req, res) => {
   try {
     const { username, s_album_id } = req.params;

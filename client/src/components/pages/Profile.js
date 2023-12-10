@@ -12,23 +12,24 @@ import { Row, Col } from "react-bootstrap";
 import Container from "react-bootstrap/esm/Container";
 
 function Profile({ username }) {
-    const { pathname } = useLocation();
-    const navigate = useNavigate();
-    const [profileName, setProfileName] = useState(pathname.split("/user/")[1]);
-    const [viewingOwnProfile, setViewingOwnProfile] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [isFollowing, setIsFollowing] = useState(false)
-    const [profileInfo, setProfileInfo] = useState({
-        followers: [],
-        following: [],
-        lTracks: [],
-        lAlbums: [],
-        wTracks: [],
-        wAlbums: []
+    let navigate = useNavigate();
+
+    const { pathname } = useLocation(); //used to store the url path
+    const [profileName, setProfileName] = useState(pathname.split("/user/")[1]);    //hold the username of the currently viewed profile
+    const [viewingOwnProfile, setViewingOwnProfile] = useState(false);  //boolean that is set true when you are viewing your own profile
+    const [loading, setLoading] = useState(true);   //boolean that is set true when the profile info is still being fetched
+    const [isFollowing, setIsFollowing] = useState(false)   //boolean that is true if the currently logged in user is following the viewed profile
+    const [profileInfo, setProfileInfo] = useState({    //JSON object to hold the user's information
+        followers: [],  //holds followers
+        following: [],  //holds followed users
+        lTracks: [],    //holds listened to tracks
+        lAlbums: [],    //holds listened to albums
+        wTracks: [],    //holds tracks that were saved for later
+        wAlbums: []     //holds albums that were saved for later
     });
-    const [followersModalShow, setFollowersModalShow] = useState(false);
-    const [followingModalShow, setFollowingModalShow] = useState(false);
-    const [activeTab, setActiveTab] = useState("#listened");
+    const [followersModalShow, setFollowersModalShow] = useState(false);    //boolean that is true when the followers popup should be displayed
+    const [followingModalShow, setFollowingModalShow] = useState(false);    //boolean that is true when the followed users popup should be displayed
+    const [activeTab, setActiveTab] = useState("#listened");    //holds the last open tab on the profile page to remember where the user left off
 
     /**
      * This function makes a call to the API to get all the info to display on a user's profile page, including followers, following, marked tracks and albums.
