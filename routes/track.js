@@ -256,6 +256,9 @@ router.post('/setRating', async (req, res) => {
 
 });
 
+/**
+ * Adds the specified track to the user's listened to list
+ */
 router.post('/add-listened-track/:username/:s_track_id', auth, async (req, res) => {
   try {
     const { username, s_track_id } = req.params;
@@ -277,6 +280,9 @@ router.post('/add-listened-track/:username/:s_track_id', auth, async (req, res) 
   }
 });
 
+/**
+ * Adds the specified track to the user's save for later list
+ */
 router.post('/add-watch-track/:username/:s_track_id', auth, async (req, res) => {
   try {
     const { username, s_track_id } = req.params;
@@ -298,6 +304,9 @@ router.post('/add-watch-track/:username/:s_track_id', auth, async (req, res) => 
   }
 });
 
+/**
+ * Deletes the specified track from the user's listened to list
+ */
 router.delete('/delete-listened-track/:username/:s_track_id', auth, async (req, res) => {
   try {
     const { username, s_track_id } = req.params;
@@ -319,6 +328,9 @@ router.delete('/delete-listened-track/:username/:s_track_id', auth, async (req, 
   }
 });
 
+/**
+ * Deletes the specified track from the user's save for later list
+ */
 router.delete('/delete-watch-track/:username/:s_track_id', auth, async (req, res) => {
   try {
     const { username, s_track_id } = req.params;
