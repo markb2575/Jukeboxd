@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import './Login.css'
 
 
 function Login() {
@@ -19,20 +21,6 @@ function Login() {
         var credentials = {
             username: e.target[0].value,
             password: e.target[1].value
-        }
-
-        // Validate the username using a regular expression -- only allows letters and numbers
-        const usernameRegex = /^[a-zA-Z0-9]+$/;
-        if (!usernameRegex.test(credentials.username)) {
-            setError("Username must contain only letters and numbers");
-            return;
-        }
-
-        // Validate the password using a regular expression -- only allows letters, numbers, and some symbols
-        const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
-        if (!passwordRegex.test(credentials.password)) {
-            setError("Password contains prohibited values");
-            return;
         }
 
         fetch('http://localhost:8080/user/login', {
@@ -55,10 +43,17 @@ function Login() {
 
     }
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="col-md-6 col-lg-4">
-                <h2>Login</h2>
-                <form onSubmit={handleLogin} className="mt-4">
+        <div className="login-page">
+      <Container fluid>
+        <Row>
+          <Col md={6} className="left-section">
+            <h1>Welcome to Jukeboxd</h1>
+            {/* Add your floating geometric shapes here */}
+          </Col>
+          <Col md={6} className="right-section">
+            <div className="login-box">
+              <h2>Login</h2>
+              <form onSubmit={handleLogin} className="mt-4">
                     {error && <p style={{ lineHeight: .8 }} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
                     <div className="mb-3">
                         <label className="form-label">Username</label>
@@ -76,7 +71,11 @@ function Login() {
                     <Link to="/signup">Need an account?</Link>
                 </p>
             </div>
-        </div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+    
     );
 }
 
