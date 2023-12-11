@@ -1,12 +1,15 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import './SignUp.css'
+
+
 
 function SignUp() {
   let navigate = useNavigate();
   const [error, setError] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-
   const handleCreateAccount = (e) => {
     e.preventDefault()
     //create a request to create account with the following object
@@ -20,63 +23,59 @@ function SignUp() {
       return
     }
 
-    // Validate the username using a regular expression -- only allows letters and numbers
-    const usernameRegex = /^[a-zA-Z0-9]+$/;
-    if (!usernameRegex.test(credentials.username)) {
-      setError("Username must contain only letters and numbers");
-      return;
-    }
-
-    // Validate the password using a regular expression -- only allows letters, numbers, and some symbols
-    const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-"'`| ]*$/;
-    if (!passwordRegex.test(credentials.password)) {
-      setError("Password contains prohibited values");
-      return;
-    }
-
     fetch('http://localhost:8080/user/signup', {
       method: 'POST',
       body: JSON.stringify(credentials),
-      headers: { 'Content-Type': 'application/json' }
+      headers: {'Content-Type': 'application/json'}
     }).then(response => {
-      if (response.status === 200) {
-        console.log(response)
-        navigate("/login")
-      } else {
-        setError("Username already taken, try something different")
-        setPassword("")
-        setUsername("")
-      }
+        if (response.status === 200) {
+            console.log(response)
+            navigate("/login")
+          } else {
+            setError("Username already taken, try something different")
+            setPassword("")
+            setUsername("")
+          }
     })
-      .catch(error => console.error(error));
-
+    .catch(error => console.error(error));
+    
 
   }
-
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="col-md-6 col-lg-4">
-        <h2>Create an Account</h2>
-        <form onSubmit={handleCreateAccount} className="mt-4">
-          {error && <p style={{ lineHeight: .8 }} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
-          <div className="mb-3">
-            <label className="form-label">Username</label>
-            <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div className="mb-3">
-            <button type="submit" className="btn btn-primary btn-block">Create Account</button>
-          </div>
-        </form>
-        <p className="">
-          <Link to="/login">Already have an account?</Link>
-        </p>
-      </div>
+        <div className="login-page">
+      <Container fluid>
+        <Row>
+          <Col md={6} className="left-section">
+            <h1>Welcome to Jukeboxd</h1>
+          </Col>
+          <Col md={6} className="right-section">
+            <div className="login-box">
+              <h2>Login</h2>
+               <form onSubmit={handleCreateAccount} className="mt-4">
+                      {error && <p style={{lineHeight:.8}} className="alert alert-danger alert-dismissible fade show" role="alert">{error}</p>}
+                      <div className="mb-3">
+                        <label className="form-label">Username</label>
+                        <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                      </div>
+                      <div className="mb-3">
+                        <button type="submit" className="btn btn-primary btn-block">Create Account</button>
+                      </div>
+                    </form>
+                    <p className="">
+                      <Link to="/login">Already have an account?</Link>
+                    </p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
-  );
+    
+    );
 }
+
 
 export default SignUp;
