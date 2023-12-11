@@ -1,0 +1,47 @@
+.login-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #4b6cb7, #182848);
+  overflow: hidden;
+}
+
+.left-section {
+  color: #fff;
+  padding: 50px;
+  text-align: center;
+}
+
+.right-section {
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  width: 60%;
+  min-width: 400px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 30px; /* Increased padding for more space */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-box Form {
+  max-width: 300px; /* Adjust the maximum width of the form */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+.login-box Button {
+  margin-top: 30px;
+  display: block;
+  width: 100%;
+}
